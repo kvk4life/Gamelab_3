@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Combat : MonoBehaviour {
 
-	public int attackDamage;
+	public int attackDamageLeft, attackDamageRight;
 
 	public float rayDis;
 	public float cooldownStats;
@@ -32,32 +32,30 @@ public class Combat : MonoBehaviour {
 
 	public void TriggerDetect () {
 
-		if(Input.GetAxis("Triggers") < 0 && mayAttack == true){
-			myAttack = AttackRight;
-			myAttack(2);
+		float getInput;
+		getInput = Input.GetAxis("Triggers");
+
+		if(getInput < 0 && mayAttack == true){
+			RaycastShooter(transform.position, transform.forward,  rayHit, rayDis, getInput);
 		}
-		else if(Input.GetAxis("Triggers") > 0 && mayAttack == true){
-			myAttack = AttackLeft;
-			myAttack(1);
+		else if(getInput > 0 && mayAttack == true){
+			RaycastShooter(transform.position, transform.forward,  rayHit, rayDis, getInput);
 		}
+
 	}
 
-	public void AttackLeft (int num) {
+	public void AttackLeft (int attackDamage) {
 
-		print("Weapon:" + num);
-
+		print("DamageLeft:" + attackDamage);
+		
 		StartCoroutine(CoolDown(cooldownStats));
-		if(Physics.Raycast(transform.position, transform.forward, out rayHit, rayDis)){
-			if(rayHit.transform.tag == "Enemy"){
-				healthEnemy = rayHit.transform.gameObject.GetComponent<EnemyHealthTestSven>();
-				healthEnemy.EnemyHealth(attackDamage);
-			}
-		}
+		healthEnemy = rayHit.transform.gameObject.GetComponent<EnemyHealthTestSven>();
+		healthEnemy.EnemyHealth(attackDamage);
 	}
 
-	public void AttackRight (int num) {
+	public void AttackRight (int attackDamage) {
 
-		print("Weapon:" + num);
+		print("DamageRight:" + attackDamage);
 
 	}
 
@@ -69,16 +67,37 @@ public class Combat : MonoBehaviour {
 		mayAttack = true;
 	}
 
+	public void RaycastShooter (Vector3 origin, Vector3 direction, RaycastHit hit, float distance, float input){
+
+		if(Physics.Raycast(origin, direction, out hit, distance) && input < 0){
+			if(hit.transform.tag == "Enemy"){
+				rayHit = hit;
+				myAttack = AttackRight;
+				myAttack(attackDamageRight);
+				print("IsHittedRight");
+			}
+		}
+
+		if(Physics.Raycast(origin, direction, out hit, distance) && input > 0){
+			if(hit.transform.tag == "Enemy"){
+				rayHit = hit;
+				myAttack = AttackLeft;
+				myAttack(attackDamageLeft);
+				print("IsHittedLeft");
+			}
+		}
+	}
+
 	public void TriggerDetectTest (){					//Weghalen nadat het systeem volledig werkt met controller
 
 		if(Input.GetButtonDown("Attack Left")){
 			myAttack = AttackLeft;
-			myAttack(1);
+			myAttack(10);
 		}
 
 		if(Input.GetButtonDown("Attack Right")){
 			myAttack = AttackLeft;
-			myAttack(2);
+			myAttack(25);
 		}
 	}
 
