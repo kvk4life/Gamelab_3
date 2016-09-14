@@ -3,6 +3,7 @@ using System.Collections;
 
 public class MinionSpawner : MonoBehaviour {
 
+	public GameObject[] minionList;
 	public float nextWaveTime;
 	public int maxMeleeMinions, maxRangeMinions, superMinionCounter;
 	public float timeBetweenMinions;
@@ -72,12 +73,15 @@ public class MinionSpawner : MonoBehaviour {
 		switch (MinionToSpawn){
 		case 0:
 			print("Melee spawned");
+			Instantiate(minionList[MinionToSpawn], transform.position, transform.rotation);
 			break;
 		case 1:
 			print("Range spawned");
+			Instantiate(minionList[MinionToSpawn], transform.position, transform.rotation);
 			break;
 		case 2:
 			print("Super Spawned");
+			Instantiate(minionList[MinionToSpawn], transform.position, transform.rotation);
 			break;
 
 		}

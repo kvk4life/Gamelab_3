@@ -27,6 +27,8 @@ public class SpawnJungle : MonoBehaviour {
 
 	public void SpawnCamp(){
 		for(int i = 0; i <= campArray.Length; i++){
+			GameObject temp = Instantiate(campArray[i], spawnPointsArray[i].transform.position, transform.rotation) as GameObject;
+			temp.GetComponent<MinionStats>().minionCampNumber = campNumber;
 			//GameObject temp = instance i at spawnpost i as gameobject
 			// give campnumber to minion.
 		}
