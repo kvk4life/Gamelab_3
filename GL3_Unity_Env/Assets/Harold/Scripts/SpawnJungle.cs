@@ -27,7 +27,6 @@ public class SpawnJungle : MonoBehaviour {
 
 	public void SpawnCamp(){
 		for(int i = 0; i <= campArray.Length; i++){
-			
 			//GameObject temp = instance i at spawnpost i as gameobject
 			// give campnumber to minion.
 		}
