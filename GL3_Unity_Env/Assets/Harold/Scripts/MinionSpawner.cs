@@ -20,7 +20,6 @@ public class MinionSpawner : MonoBehaviour {
 
 	IEnumerator SpawnWave(float time) {
 		yield return new WaitForSeconds(time);
-		print("Spawn Wave");
 		currentWaveMinions = 0;
 		minionNumber = 0;
 		superMinionCounter--;
@@ -36,7 +35,7 @@ public class MinionSpawner : MonoBehaviour {
 
 		if(currentWaveMinions == maxMinions && superMinionCounter == 0){
 			minionNumber++;
-			MinionList(minionNumber);
+			MinionSpawn(minionNumber);
 			superMinionCounter = superMinionCounterReset;
 		}
 			
@@ -50,7 +49,7 @@ public class MinionSpawner : MonoBehaviour {
 				AddToLeftToSpawn(minionNumber);
 			}
 
-			MinionList(minionNumber);
+			MinionSpawn(minionNumber);
 			leftToSpawn--;
 			currentWaveMinions++;
 			StartCoroutine(SpawnMinions(timeBetweenMinions));
@@ -68,23 +67,8 @@ public class MinionSpawner : MonoBehaviour {
 		}
 	}
 
-	void MinionList(int MinionToSpawn){
-		
-		switch (MinionToSpawn){
-		case 0:
-			print("Melee spawned");
-			Instantiate(minionList[MinionToSpawn], transform.position, transform.rotation);
-			break;
-		case 1:
-			print("Range spawned");
-			Instantiate(minionList[MinionToSpawn], transform.position, transform.rotation);
-			break;
-		case 2:
-			print("Super Spawned");
-			Instantiate(minionList[MinionToSpawn], transform.position, transform.rotation);
-			break;
-
-		}
+	void MinionSpawn(int MinionToSpawn){
+		Instantiate(minionList[MinionToSpawn], transform.position, transform.rotation);
 	}
 }
 

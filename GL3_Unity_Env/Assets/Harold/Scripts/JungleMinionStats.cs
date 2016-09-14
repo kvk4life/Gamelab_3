@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MinionStats : MonoBehaviour {
+public class JungleMinionStats : MonoBehaviour {
 
 	public int health, minionCampNumber;
 	private int maxHealth;
@@ -10,6 +10,7 @@ public class MinionStats : MonoBehaviour {
 
 	void Start () {
 		maxHealth = health;
+		spawnManagerObject = GameObject.FindGameObjectWithTag("SpawnManager");
 		spawnScript = spawnManagerObject.GetComponent<SpawnManager>();
 	}
 
