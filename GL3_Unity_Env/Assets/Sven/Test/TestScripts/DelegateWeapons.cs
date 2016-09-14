@@ -3,18 +3,20 @@ using System.Collections;
 
 public class DelegateWeapons : MonoBehaviour {
 
-	public bool mayAttack;
+	public delegate void RightHandedLight ();
+	public delegate void LeftHandedLight ();
 
-	public delegate void RightHandedLight (int num);
-
-	RightHandedLight rhLight;
+	public RightHandedLight rhLight;
+	public LeftHandedLight lhLight;
 
 	void Start () {
 	
 	}
 	
 	void Update () {
-	
+		
+		TriggerDetect();
+
 	}
 
 	public void TriggerDetect (){
@@ -24,11 +26,13 @@ public class DelegateWeapons : MonoBehaviour {
 
 		if(getInput < 0){
 			if(rhLight != null){
-				
+				rhLight();
 			}
 		}
 		else if(getInput > 0){
-			
+			if(lhLight != null){
+				lhLight();
+			}
 		}
 	}
 }
