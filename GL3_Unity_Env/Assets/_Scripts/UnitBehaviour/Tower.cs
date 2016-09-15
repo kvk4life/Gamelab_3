@@ -59,7 +59,6 @@ public class Tower : Base {
 				} 
 				else {
 					targetList.RemoveAt (i);
-					print ("Target dieded");
 				}
 			}
 		}
