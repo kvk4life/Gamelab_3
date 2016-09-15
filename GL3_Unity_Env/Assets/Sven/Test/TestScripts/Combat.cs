@@ -5,8 +5,6 @@ public class Combat : MonoBehaviour {
 
 	public int damage;
 
-	public float cooldown;
-
 	public bool mayAttack;
 
 	public DelegateWeapons delegateWeapon;
@@ -29,19 +27,21 @@ public class Combat : MonoBehaviour {
 
 		delegateWeapon.rhLight = null;
 		delegateWeapon.lhLight = null;
+		delegateWeapon.rhHeavy = null;
+		delegateWeapon.lhHeavy = null;
 		delegateWeapon.rhLight = Attack;
 		delegateWeapon.lhLight = Attack;
+		delegateWeapon.rhHeavy = Attack;
+		delegateWeapon.lhHeavy = Attack;
 
 	}
 
 
-	public void Attack () {
+	public void Attack (int damage, float cooldown) {
 		
 		if(mayAttack == true){
 			StartCoroutine(CoolDown(cooldown));
-			print ("Doet Het");
-			//healthEnemy = rayHit.transform.gameObject.GetComponent<EnemyHealthTestSven>();
-			//healthEnemy.EnemyHealth(attackDamage);
+			print (damage);
 		}
 	}
 

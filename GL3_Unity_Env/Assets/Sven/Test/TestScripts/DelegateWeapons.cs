@@ -3,11 +3,19 @@ using System.Collections;
 
 public class DelegateWeapons : MonoBehaviour {
 
-	public delegate void RightHandedLight ();
-	public delegate void LeftHandedLight ();
+	public delegate void RightHandedLight (int damage, float cooldown);
+	public delegate void LeftHandedLight (int damage, float cooldown);
+	public delegate void RightHandedHeavy (int damage, float cooldown);
+	public delegate void LeftHandedHeavy (int damage, float cooldown);
 
 	public RightHandedLight rhLight;
 	public LeftHandedLight lhLight;
+	public RightHandedHeavy rhHeavy;
+	public LeftHandedHeavy lhHeavy;
+
+	public int damageRHL, damageRHH, damageLHL, damageLHH;
+
+	public float cooldownRHL, cooldownRHH, cooldownLHL, cooldownLHH;
 
 	void Start () {
 	
@@ -21,17 +29,29 @@ public class DelegateWeapons : MonoBehaviour {
 
 	public void TriggerDetect (){
 
-		float getInput;
-		getInput = Input.GetAxis("Triggers");
+		float getInputTriggers;
+		getInputTriggers = Input.GetAxis("Triggers");
 
-		if(getInput < 0){
-			if(rhLight != null){
-				rhLight();
+		if(getInputTriggers < 0){
+			if(rhHeavy != null){
+				rhHeavy (damageRHH, cooldownRHH);
 			}
 		}
-		else if(getInput > 0){
+		else if(getInputTriggers > 0){
+			if(lhHeavy != null){
+				lhHeavy (damageLHH, cooldownLHH);
+			}
+		}
+
+		if(Input.GetButtonDown("LB")){
 			if(lhLight != null){
-				lhLight();
+				lhLight (damageLHL, cooldownLHL);
+			}
+		}
+
+		if(Input.GetButtonDown("RB")){
+			if(rhLight != null){
+				rhLight (damageRHL, cooldownRHL);
 			}
 		}
 	}
