@@ -4,6 +4,7 @@ using System.Collections;
 public class MinionSpawner : MonoBehaviour {
 
 	public GameObject[] minionList;
+	public Transform[] waypointList;
 	public float nextWaveTime;
 	public int maxMeleeMinions, maxRangeMinions, superMinionCounter;
 	public float timeBetweenMinions;
@@ -68,7 +69,8 @@ public class MinionSpawner : MonoBehaviour {
 	}
 
 	void MinionSpawn(int MinionToSpawn){
-		Instantiate(minionList[MinionToSpawn], transform.position, transform.rotation);
+		GameObject temp = Instantiate(minionList[MinionToSpawn], transform.position, transform.rotation) as GameObject;
+		temp.GetComponent<MinionBehavior>().spawner = gameObject;
 	}
 }
 
