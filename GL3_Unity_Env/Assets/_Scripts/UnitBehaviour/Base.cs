@@ -10,6 +10,8 @@ public abstract class Base : MonoBehaviour {
 
 	public abstract void TargetSelect ();
 
+	public abstract void RecieveDamage (int recievedDamage);
+
 	public abstract void HealthChecker ();
 
 	public abstract void Death ();
