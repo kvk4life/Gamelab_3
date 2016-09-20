@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class MinionBehavior : MonoBehaviour {
 
 	public int moveSpeed;
+	public string[] taggList;
 	public GameObject spawner;
 	private MinionSpawner spawnScript;
 	[SerializeField]
@@ -32,13 +33,27 @@ public class MinionBehavior : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerEnter(Collider wayPoint){
-		if(wayPoint.transform == wayPointList[counter]){
+	void OnTriggerEnter(Collider trigger){
+		if(trigger.transform == wayPointList[counter]){
 			counter++;
 			if(counter >= wayPointList.Count){
 				counter = 0;
 			}
 			curretTarget = wayPointList[counter];
 		}
+		else{
+			Agro(trigger.gameObject);
+		}
+
+	}
+
+
+	void Agro(GameObject target){
+		for(int i = 0; i <= taggList.Length-1; i++){
+			if(target.transform.tag == taggList[i]){
+				curretTarget = target.transform;
+				break;
+			}
+		}	
 	}
 }
