@@ -1,11 +1,18 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Combat : MonoBehaviour {
 
 	public int damage;
 
 	public bool mayAttack;
+
+	public float radius;
+
+	public LayerMask mask;
+
+	public List<GameObject> lockedOn = new List<GameObject>();
 
 	public DelegateWeapons delegateWeapon;
 	public EnemyHealthTestSven healthEnemy;
@@ -20,6 +27,7 @@ public class Combat : MonoBehaviour {
 	void Update () {
 
 		FillDelegate ();
+		LockOn();
 	
 	}
 
@@ -43,6 +51,16 @@ public class Combat : MonoBehaviour {
 			StartCoroutine(CoolDown(cooldown));
 			print (damage);
 		}
+	}
+
+	public void LockOn (){
+
+		Collider[] colliders = Physics.OverlapSphere(transform.position, radius, mask);
+        foreach (Collider hit in colliders) {
+        	if(!lockedOn.Contains(hit.transform.gameObject)){
+        		lockedOn.Add(hit.transform.gameObject);
+        	}
+        }
 	}
 
 	IEnumerator CoolDown (float cooldown){
