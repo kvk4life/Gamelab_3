@@ -11,8 +11,11 @@ public class MinionBehavior : MonoBehaviour {
 	[SerializeField]
 	private Transform curretTarget;
 	private int counter;
+	public bool enemy; //tijdelijk om te checcken voor allie of enemy
 
-	public List<Transform> wayPointList = new List<Transform>();
+	private List<Transform> wayPointList = new List<Transform>();
+	public List<GameObject> enemyList = new List<GameObject>();
+	private List<GameObject> allyList = new List<GameObject>();
 
 
 	void Start () {
@@ -22,6 +25,13 @@ public class MinionBehavior : MonoBehaviour {
 	}
 
 	void Update () {
+		if(enemyList.Count > 0){
+			curretTarget = enemyList[0].transform;
+		}
+		else{
+			curretTarget = wayPointList[counter];
+		}
+
 		transform.LookAt(curretTarget.position);
 		transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
 
@@ -41,18 +51,49 @@ public class MinionBehavior : MonoBehaviour {
 			}
 			curretTarget = wayPointList[counter];
 		}
-		else{
-			Agro(trigger.gameObject);
+
+		if(trigger.gameObject.GetComponent<MinionBehavior>() != null){
+			print("Found");
+			AgroAdd(trigger.gameObject);
 		}
 
 	}
 
+	void OnTriggerExit(Collider trigger){
+		if(trigger.GetComponent<MinionBehavior>() != null){
+			print("Lost");
+			AgroRemove(trigger.gameObject);
+		}
 
-	void Agro(GameObject target){
+	}
+
+	void AgroRemove(GameObject target){
 		for(int i = 0; i <= taggList.Length-1; i++){
 			if(target.transform.tag == taggList[i]){
-				curretTarget = target.transform;
-				break;
+				if(target.gameObject.GetComponent<MinionBehavior>().enemy == true){
+					enemyList.Remove(target);
+				}
+				else{
+					allyList.Remove(target);
+					break;
+				}
+			}
+		}
+	}
+
+	void AgroAdd(GameObject target){
+		for(int i = 0; i <= taggList.Length-1; i++){
+			if(target.transform.tag == taggList[i]){
+				if(target.GetComponent<MinionBehavior>().enemy == true){
+					enemyList.Add(target);
+					print("enemyAdded");
+				}
+				else{
+					allyList.Add(target);
+					break;
+				}
+				//curretTarget = target.transform;
+
 			}
 		}	
 	}
