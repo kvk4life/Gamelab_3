@@ -76,6 +76,4 @@ public class Combat : MonoBehaviour {
 		print("Recharged");
 		mayAttack = true;
 	}
-
-
 }
