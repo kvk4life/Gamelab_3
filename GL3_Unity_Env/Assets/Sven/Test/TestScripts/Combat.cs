@@ -7,6 +7,7 @@ public class Combat : MonoBehaviour {
 	public int damage;
 
 	public bool mayAttack;
+	public bool lockSwitch;
 
 	public float radius;
 
@@ -27,8 +28,11 @@ public class Combat : MonoBehaviour {
 	void Update () {
 
 		FillDelegate ();
-		LockOn();
-	
+
+		if(Input.GetButtonDown("R3")){
+			lockSwitch =! lockSwitch;
+			LockOn(lockSwitch);
+		}
 	}
 
 	public void FillDelegate (){
@@ -53,13 +57,15 @@ public class Combat : MonoBehaviour {
 		}
 	}
 
-	public void LockOn (){
+	public void LockOn (bool mayLock){
 
-		Collider[] colliders = Physics.OverlapSphere(transform.position, radius, mask);
-        foreach (Collider hit in colliders) {
-        	if(!lockedOn.Contains(hit.transform.gameObject)){
-        		lockedOn.Add(hit.transform.gameObject);
-        	}
+		if(mayLock == true){
+			Collider[] colliders = Physics.OverlapSphere(transform.position, radius, mask);
+	        foreach (Collider hit in colliders) {
+	        	if(!lockedOn.Contains(hit.transform.gameObject)){
+	        		lockedOn.Add(hit.transform.gameObject);
+	        	}
+	        }
         }
 	}
 
