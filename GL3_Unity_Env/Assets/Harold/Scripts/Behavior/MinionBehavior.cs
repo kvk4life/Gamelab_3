@@ -11,11 +11,11 @@ public class MinionBehavior : MonoBehaviour {
 	[SerializeField]
 	private Transform curretTarget;
 	private int counter;
-	public bool enemy; //tijdelijk om te checcken voor allie of enemy
+	public int teamNumber; //tijdelijk om te checcken voor allie of enemy
 
 	private List<Transform> wayPointList = new List<Transform>();
-	public List<GameObject> enemyList = new List<GameObject>();
-	public List<GameObject> allyList = new List<GameObject>();
+	private List<GameObject> enemyList = new List<GameObject>();
+	private List<GameObject> allyList = new List<GameObject>();
 
 
 	void Start () {
@@ -68,7 +68,7 @@ public class MinionBehavior : MonoBehaviour {
 	void AgroRemove(GameObject target){
 		for(int i = 0; i <= taggList.Length-1; i++){
 			if(target.transform.tag == taggList[i]){
-				if(target.gameObject.GetComponent<MinionBehavior>().enemy == true){
+				if(target.gameObject.GetComponent<MinionBehavior>().teamNumber != teamNumber){
 					enemyList.Remove(target);
 				}
 				else{
@@ -82,7 +82,7 @@ public class MinionBehavior : MonoBehaviour {
 	void AgroAdd(GameObject target){
 		for(int i = 0; i <= taggList.Length-1; i++){
 			if(target.transform.tag == taggList[i]){
-				if(target.GetComponent<MinionBehavior>().enemy == true){
+				if(target.GetComponent<MinionBehavior>().teamNumber != teamNumber){
 					enemyList.Add(target);
 					print("enemyAdded");
 				}

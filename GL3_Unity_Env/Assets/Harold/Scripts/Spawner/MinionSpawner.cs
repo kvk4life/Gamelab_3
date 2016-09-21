@@ -6,13 +6,15 @@ public class MinionSpawner : MonoBehaviour {
 	public GameObject[] minionList;
 	public Transform[] waypointList;
 	public int team;
-	public float nextWaveTime;
-	public int maxMeleeMinions, maxRangeMinions, superMinionCounter;
+	public float nextWaveTime, timeBeforeFirstWave;
+	private bool gameStart;
+	public int[] maxMinionsList;
+	public int superMinionCounter;
 	public float timeBetweenMinions;
 	private int currentWaveMinions, minionNumber, superMinionCounterReset, leftToSpawn, maxMinions;
-	public bool enemyBool;
 
 	void Start () {
+		gameStart = true;
 		StartMinionSpawn();
 		superMinionCounterReset = superMinionCounter;
 	}
@@ -22,7 +24,11 @@ public class MinionSpawner : MonoBehaviour {
 	}
 
 	IEnumerator SpawnWave(float time) {
-		yield return new WaitForSeconds(time);
+		if(gameStart){
+			yield return new WaitForSeconds(time);
+			gameStart = false;
+			time = nextWaveTime;
+		}
 		currentWaveMinions = 0;
 		minionNumber = 0;
 		superMinionCounter--;
@@ -34,7 +40,7 @@ public class MinionSpawner : MonoBehaviour {
 
 	IEnumerator SpawnMinions(float time){
 		yield return new WaitForSeconds(time);
-		maxMinions = maxMeleeMinions + maxRangeMinions;
+		CountTotalMinions();
 
 		if(currentWaveMinions == maxMinions && superMinionCounter == 0){
 			minionNumber++;
@@ -59,13 +65,19 @@ public class MinionSpawner : MonoBehaviour {
 		}
 	}
 
+	void CountTotalMinions(){
+		for(int i = 0; i <= maxMinionsList.Length; i++){
+			maxMinions+= maxMinionsList[i];
+		}
+	}
+
 	void AddToLeftToSpawn(int NumberMinion){
 		switch (NumberMinion){
 		case 0:
-			leftToSpawn+= maxMeleeMinions;
+			leftToSpawn+= maxMinionsList[NumberMinion];
 			break;
 		case 1:
-			leftToSpawn+= maxRangeMinions;
+			leftToSpawn+= maxMinionsList[minionNumber];
 			break;
 		}
 	}
@@ -73,12 +85,7 @@ public class MinionSpawner : MonoBehaviour {
 	void MinionSpawn(int MinionToSpawn){
 		GameObject temp = Instantiate(minionList[MinionToSpawn], transform.position, transform.rotation) as GameObject;
 		temp.GetComponent<MinionBehavior>().spawner = gameObject;
-		if(team == 1){
-			temp.GetComponent<MinionBehavior>().enemy = false;
-		}
-		else{
-			temp.GetComponent<MinionBehavior>().enemy = true;
-		}
+		temp.GetComponent<MinionBehavior>().teamNumber = team;
 	}
 }
 
