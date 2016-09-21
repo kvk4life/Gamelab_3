@@ -5,10 +5,12 @@ public class MinionSpawner : MonoBehaviour {
 
 	public GameObject[] minionList;
 	public Transform[] waypointList;
+	public int team;
 	public float nextWaveTime;
 	public int maxMeleeMinions, maxRangeMinions, superMinionCounter;
 	public float timeBetweenMinions;
 	private int currentWaveMinions, minionNumber, superMinionCounterReset, leftToSpawn, maxMinions;
+	public bool enemyBool;
 
 	void Start () {
 		StartMinionSpawn();
@@ -71,6 +73,12 @@ public class MinionSpawner : MonoBehaviour {
 	void MinionSpawn(int MinionToSpawn){
 		GameObject temp = Instantiate(minionList[MinionToSpawn], transform.position, transform.rotation) as GameObject;
 		temp.GetComponent<MinionBehavior>().spawner = gameObject;
+		if(team == 1){
+			temp.GetComponent<MinionBehavior>().enemy = false;
+		}
+		else{
+			temp.GetComponent<MinionBehavior>().enemy = true;
+		}
 	}
 }
 

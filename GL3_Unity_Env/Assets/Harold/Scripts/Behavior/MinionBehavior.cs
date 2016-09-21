@@ -15,7 +15,7 @@ public class MinionBehavior : MonoBehaviour {
 
 	private List<Transform> wayPointList = new List<Transform>();
 	public List<GameObject> enemyList = new List<GameObject>();
-	private List<GameObject> allyList = new List<GameObject>();
+	public List<GameObject> allyList = new List<GameObject>();
 
 
 	void Start () {
@@ -53,7 +53,6 @@ public class MinionBehavior : MonoBehaviour {
 		}
 
 		if(trigger.gameObject.GetComponent<MinionBehavior>() != null){
-			print("Found");
 			AgroAdd(trigger.gameObject);
 		}
 
@@ -61,7 +60,6 @@ public class MinionBehavior : MonoBehaviour {
 
 	void OnTriggerExit(Collider trigger){
 		if(trigger.GetComponent<MinionBehavior>() != null){
-			print("Lost");
 			AgroRemove(trigger.gameObject);
 		}
 
