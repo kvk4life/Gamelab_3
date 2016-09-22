@@ -13,7 +13,7 @@ public class Combat : MonoBehaviour {
 
 	public LayerMask mask;
 
-	public List<GameObject> lockedOn = new List<GameObject>();
+	public List<Transform> lockedOn = new List<Transform>();
 
 	public DelegateWeapons delegateWeapon;
 	public EnemyHealthTestSven healthEnemy;
@@ -62,11 +62,30 @@ public class Combat : MonoBehaviour {
 		if(mayLock == true){
 			Collider[] colliders = Physics.OverlapSphere(transform.position, radius, mask);
 	        foreach (Collider hit in colliders) {
-	        	if(!lockedOn.Contains(hit.transform.gameObject)){
-	        		lockedOn.Add(hit.transform.gameObject);
+	        	if(!lockedOn.Contains(hit.transform)){
+	        		lockedOn.Add(hit.transform);
 	        	}
 	        }
+	        GetClosestEnemy(lockedOn);
         }
+	}
+
+	Transform GetClosestEnemy (List<Transform> closeEnemyList){
+
+		Transform tMin = null;
+		float minDist = Mathf.Infinity;
+		Vector3 currentPos = transform.position;
+		foreach(Transform t in closeEnemyList){
+			float dist = Vector3.Distance(t.position, currentPos);
+			if(dist < minDist){
+				tMin = t;
+				minDist = dist;
+			}
+		}
+
+		print(tMin);
+		return tMin;
+
 	}
 
 	IEnumerator CoolDown (float cooldown){
