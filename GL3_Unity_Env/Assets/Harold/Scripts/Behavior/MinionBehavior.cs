@@ -27,6 +27,7 @@ public class MinionBehavior : MonoBehaviour {
 	void Update () {
 		if(enemyList.Count > 0){
 			curretTarget = enemyList[0].transform;
+			Attack();
 		}
 		else{
 			curretTarget = wayPointList[counter];
@@ -35,6 +36,9 @@ public class MinionBehavior : MonoBehaviour {
 		transform.LookAt(curretTarget.position);
 		transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
 
+	}
+
+	void Attack(){
 	}
 
 	void AddWayPoints(){
@@ -82,7 +86,7 @@ public class MinionBehavior : MonoBehaviour {
 	void AgroAdd(GameObject target){
 		for(int i = 0; i <= taggList.Length-1; i++){
 			if(target.transform.tag == taggList[i]){
-				if(target.GetComponent<MinionBehavior>().teamNumber != teamNumber){
+				if(target.gameObject.GetComponent<MinionBehavior>().teamNumber != teamNumber){
 					enemyList.Add(target);
 					print("enemyAdded");
 				}

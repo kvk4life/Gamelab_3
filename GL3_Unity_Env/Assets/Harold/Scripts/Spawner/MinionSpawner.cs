@@ -25,7 +25,7 @@ public class MinionSpawner : MonoBehaviour {
 
 	IEnumerator SpawnWave(float time) {
 		if(gameStart){
-			yield return new WaitForSeconds(time);
+			yield return new WaitForSeconds(timeBeforeFirstWave);
 			gameStart = false;
 			time = nextWaveTime;
 		}
@@ -33,6 +33,7 @@ public class MinionSpawner : MonoBehaviour {
 		minionNumber = 0;
 		superMinionCounter--;
 		AddToLeftToSpawn(minionNumber);
+		CountTotalMinions();
 		StartCoroutine(SpawnMinions(timeBetweenMinions));
 		yield return new WaitForSeconds(time);
 		StartCoroutine(SpawnWave(nextWaveTime));
@@ -40,7 +41,6 @@ public class MinionSpawner : MonoBehaviour {
 
 	IEnumerator SpawnMinions(float time){
 		yield return new WaitForSeconds(time);
-		CountTotalMinions();
 
 		if(currentWaveMinions == maxMinions && superMinionCounter == 0){
 			minionNumber++;
@@ -66,7 +66,8 @@ public class MinionSpawner : MonoBehaviour {
 	}
 
 	void CountTotalMinions(){
-		for(int i = 0; i <= maxMinionsList.Length; i++){
+		maxMinions = 0;
+		for(int i = 0; i <= maxMinionsList.Length-1; i++){
 			maxMinions+= maxMinionsList[i];
 		}
 	}
@@ -77,7 +78,7 @@ public class MinionSpawner : MonoBehaviour {
 			leftToSpawn+= maxMinionsList[NumberMinion];
 			break;
 		case 1:
-			leftToSpawn+= maxMinionsList[minionNumber];
+			leftToSpawn+= maxMinionsList[NumberMinion];
 			break;
 		}
 	}
