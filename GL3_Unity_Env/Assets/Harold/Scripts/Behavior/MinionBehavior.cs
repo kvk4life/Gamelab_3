@@ -5,13 +5,16 @@ using System.Collections.Generic;
 public class MinionBehavior : MonoBehaviour {
 
 	public int moveSpeed;
+	public float timeBetweenAttacks, attackRange;
 	public string[] taggList;
 	public GameObject spawner;
 	private MinionSpawner spawnScript;
 	[SerializeField]
 	private Transform curretTarget;
-	private int counter;
+	private int counter, resetMoveSpeed;
 	public int teamNumber; //tijdelijk om te checcken voor allie of enemy
+	public MinionStats statsClass;
+	private bool attackOff;
 
 	private List<Transform> wayPointList = new List<Transform>();
 	private List<GameObject> enemyList = new List<GameObject>();
@@ -20,25 +23,63 @@ public class MinionBehavior : MonoBehaviour {
 
 	void Start () {
 		spawnScript = spawner.GetComponent<MinionSpawner>();
+		statsClass = GetComponent<MinionStats>();
+		attackOff = true;
 		AddWayPoints();
 		curretTarget = wayPointList[counter];
+		resetMoveSpeed = moveSpeed;
 	}
 
 	void Update () {
-		if(enemyList.Count > 0){
-			curretTarget = enemyList[0].transform;
-			Attack();
-		}
-		else{
-			curretTarget = wayPointList[counter];
-		}
-
 		transform.LookAt(curretTarget.position);
 		transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
 
+		if(enemyList.Count > 0){
+			DistanceChecker();
+		}
 	}
 
-	void Attack(){
+	public void Damaged(int Damage, bool magic){
+		//armour or magic ressist retract
+		statsClass.health-= Damage;
+
+		if(statsClass.health <= 0){
+			Destroy(gameObject);
+		}
+	}
+
+	void DistanceChecker(){
+		var distance = Vector3.Distance(transform.position, curretTarget.position);
+
+		if(distance <= attackRange){
+			moveSpeed = 0;
+		}
+		else{
+			moveSpeed = resetMoveSpeed;
+		}
+	}
+
+	void CheckTarget(){
+		if(enemyList.Count > 0){
+			curretTarget = enemyList[0].transform;
+			if(attackOff){
+				StartCoroutine(Attacking(timeBetweenAttacks));
+				attackOff = false;
+			}
+		}
+		else{
+			curretTarget = wayPointList[counter];
+			StopCoroutine("Attacking");
+			attackOff = true;
+		}
+	}
+
+	IEnumerator Attacking(float attackTime) {
+		if(curretTarget.tag == taggList[0]){
+		}
+		yield return new WaitForSeconds(attackTime);
+		StartCoroutine(Attacking(timeBetweenAttacks));
+		//curretTarget.
 	}
 
 	void AddWayPoints(){
@@ -81,6 +122,7 @@ public class MinionBehavior : MonoBehaviour {
 				}
 			}
 		}
+		CheckTarget();
 	}
 
 	void AgroAdd(GameObject target){
@@ -97,6 +139,7 @@ public class MinionBehavior : MonoBehaviour {
 				//curretTarget = target.transform;
 
 			}
-		}	
+		}
+		CheckTarget();
 	}
 }
