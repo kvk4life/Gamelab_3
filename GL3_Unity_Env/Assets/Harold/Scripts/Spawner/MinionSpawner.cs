@@ -86,7 +86,7 @@ public class MinionSpawner : MonoBehaviour {
 	void MinionSpawn(int MinionToSpawn){
 		GameObject temp = Instantiate(minionList[MinionToSpawn], transform.position, transform.rotation) as GameObject;
 		temp.GetComponent<MinionBehavior>().spawner = gameObject;
-		temp.GetComponent<MinionBehavior>().teamNumber = team;
+		temp.GetComponent<Stats>().teamNumber = team;
 	}
 }
 

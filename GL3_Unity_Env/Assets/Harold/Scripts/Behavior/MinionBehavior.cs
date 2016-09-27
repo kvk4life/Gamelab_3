@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class MinionBehavior : MonoBehaviour {
 
-	public int moveSpeed;
+    public int moveSpeed;
 	public float timeBetweenAttacks, attackRange;
 	public string[] taggList;
 	public GameObject spawner;
@@ -13,7 +13,7 @@ public class MinionBehavior : MonoBehaviour {
 	private Transform curretTarget;
 	private int counter, resetMoveSpeed;
 	public int teamNumber; //tijdelijk om te checcken voor allie of enemy
-	public MinionStats statsClass;
+	public Stats statsClass;
 	private bool attackOff;
 
 	private List<Transform> wayPointList = new List<Transform>();
@@ -23,7 +23,7 @@ public class MinionBehavior : MonoBehaviour {
 
 	void Start () {
 		spawnScript = spawner.GetComponent<MinionSpawner>();
-		statsClass = GetComponent<MinionStats>();
+		statsClass = GetComponent<Stats>();
 		attackOff = true;
 		AddWayPoints();
 		curretTarget = wayPointList[counter];
@@ -31,56 +31,17 @@ public class MinionBehavior : MonoBehaviour {
 	}
 
 	void Update () {
-		transform.LookAt(curretTarget.position);
+
+        transform.LookAt(curretTarget.position);
+		
 		transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
 
-		if(enemyList.Count > 0){
-			DistanceChecker();
-		}
+
+        if(statsClass.currentHealth <= 0) {
+            Destroy(gameObject);
+        }
 	}
-
-	public void Damaged(int Damage, bool magic){
-		//armour or magic ressist retract
-		statsClass.health-= Damage;
-
-		if(statsClass.health <= 0){
-			Destroy(gameObject);
-		}
-	}
-
-	void DistanceChecker(){
-		var distance = Vector3.Distance(transform.position, curretTarget.position);
-
-		if(distance <= attackRange){
-			moveSpeed = 0;
-		}
-		else{
-			moveSpeed = resetMoveSpeed;
-		}
-	}
-
-	void CheckTarget(){
-		if(enemyList.Count > 0){
-			curretTarget = enemyList[0].transform;
-			if(attackOff){
-				StartCoroutine(Attacking(timeBetweenAttacks));
-				attackOff = false;
-			}
-		}
-		else{
-			curretTarget = wayPointList[counter];
-			StopCoroutine("Attacking");
-			attackOff = true;
-		}
-	}
-
-	IEnumerator Attacking(float attackTime) {
-		if(curretTarget.tag == taggList[0]){
-		}
-		yield return new WaitForSeconds(attackTime);
-		StartCoroutine(Attacking(timeBetweenAttacks));
-		//curretTarget.
-	}
+ 
 
 	void AddWayPoints(){
 		for(int i = 0; i < spawnScript.waypointList.Length; i++){
@@ -97,14 +58,14 @@ public class MinionBehavior : MonoBehaviour {
 			curretTarget = wayPointList[counter];
 		}
 
-		if(trigger.gameObject.GetComponent<MinionBehavior>() != null){
+		if(trigger.gameObject.GetComponent<Stats>() != null){
 			AgroAdd(trigger.gameObject);
 		}
 
 	}
 
 	void OnTriggerExit(Collider trigger){
-		if(trigger.GetComponent<MinionBehavior>() != null){
+		if(trigger.GetComponent<Stats>() != null){
 			AgroRemove(trigger.gameObject);
 		}
 
@@ -113,7 +74,7 @@ public class MinionBehavior : MonoBehaviour {
 	void AgroRemove(GameObject target){
 		for(int i = 0; i <= taggList.Length-1; i++){
 			if(target.transform.tag == taggList[i]){
-				if(target.gameObject.GetComponent<MinionBehavior>().teamNumber != teamNumber){
+				if(target.gameObject.GetComponent<Stats>().teamNumber != teamNumber){
 					enemyList.Remove(target);
 				}
 				else{
@@ -122,7 +83,6 @@ public class MinionBehavior : MonoBehaviour {
 				}
 			}
 		}
-		CheckTarget();
 	}
 
 	void AgroAdd(GameObject target){
@@ -140,6 +100,5 @@ public class MinionBehavior : MonoBehaviour {
 
 			}
 		}
-		CheckTarget();
 	}
 }
