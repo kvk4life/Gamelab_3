@@ -6,10 +6,14 @@ public class Combat : MonoBehaviour {
 
 	public int damage;
 
+	public Animator anim;
+
 	public bool mayAttack;
 	public bool lockSwitch;
 
 	public float radius;
+
+	public GameObject attackCollision;
 
 	public LayerMask mask;
 
@@ -53,7 +57,8 @@ public class Combat : MonoBehaviour {
 		
 		if(mayAttack == true){
 			StartCoroutine(CoolDown(cooldown));
-			print (damage);
+			anim.SetTrigger("Attack01");
+			attackCollision.GetComponent<DamageTest>().GetDamage(damage);
 		}
 	}
 
