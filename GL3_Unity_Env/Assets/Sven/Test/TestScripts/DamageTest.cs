@@ -21,7 +21,6 @@ public class DamageTest : MonoBehaviour {
 
 		if(col.transform.tag == "Enemy" && player.GetComponent<Combat>().mayAttack == false){
 			col.gameObject.GetComponent<EnemyHealthTestSven>().EnemyHealth(damageTest);
-			print(col.transform.name);
 		}
 	}
 
