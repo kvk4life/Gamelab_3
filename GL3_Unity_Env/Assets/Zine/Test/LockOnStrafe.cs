@@ -8,6 +8,7 @@ public class LockOnStrafe : MonoBehaviour
     public Image border1, border2;
     public Orbit orbit;
     public bool triggerPressed;
+    public Combat combat;
     // Use this for initialization
     void Start()
     {
@@ -42,6 +43,15 @@ public class LockOnStrafe : MonoBehaviour
                 triggerPressed=true;
             }
 
+        }
+
+        if(Input.GetButtonDown("R3"))
+        {
+            combat.GetClosestEnemy(combat.lockedOn);
+            orbit.ExitSprint();
+            orbit.camMode=CameraMode.LockOn;
+            StopAllCoroutines();
+            StartCoroutine(LockOn());
         }
 
         if(Input.GetAxis("Triggers")==0)

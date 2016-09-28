@@ -5,7 +5,11 @@ public class DamageTest : MonoBehaviour {
 
 	int damageTest;
 
+	GameObject player;
+
 	void Start () {
+
+		player = GameObject.Find("Pig Benis01");
 	
 	}
 	
@@ -15,7 +19,7 @@ public class DamageTest : MonoBehaviour {
 
 	void OnCollisionEnter (Collision col){
 
-		if(col.transform.tag == "Enemy"){
+		if(col.transform.tag == "Enemy" && player.GetComponent<Combat>().mayAttack == false){
 			col.gameObject.GetComponent<EnemyHealthTestSven>().EnemyHealth(damageTest);
 			print(col.transform.name);
 		}

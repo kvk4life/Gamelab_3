@@ -6,6 +6,7 @@ public enum CameraMode
     ThirdPerson,
     ThirdPersonStrafe,
     FirstPerson,
+    LockOn,
 }
 public class Orbit : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class Orbit : MonoBehaviour
     public Transform camRotator;
     public bool lerpBack;
     public float jumpForce;
+    public Combat combat;
     // Use this for initialization
     void Start()
     {
@@ -56,6 +58,12 @@ public class Orbit : MonoBehaviour
             case CameraMode.ThirdPersonStrafe:
                 CameraLerp(cameraLocStrafe);
                 transform.LookAt(camRotator);
+                obj.transform.position += obj.transform.forward * Input.GetAxis("LeftJoyY") * Time.deltaTime * moveSpeed;
+                obj.transform.position += obj.transform.right * Input.GetAxis("LeftJoyX") * Time.deltaTime * moveSpeed;
+                obj.transform.Rotate(0, Input.GetAxis("RightJoyX") * rotSpeed * Time.deltaTime, 0);
+                break;
+            case CameraMode.LockOn:
+                CameraLerp(combat.closestEnemy);
                 obj.transform.position += obj.transform.forward * Input.GetAxis("LeftJoyY") * Time.deltaTime * moveSpeed;
                 obj.transform.position += obj.transform.right * Input.GetAxis("LeftJoyX") * Time.deltaTime * moveSpeed;
                 obj.transform.Rotate(0, Input.GetAxis("RightJoyX") * rotSpeed * Time.deltaTime, 0);

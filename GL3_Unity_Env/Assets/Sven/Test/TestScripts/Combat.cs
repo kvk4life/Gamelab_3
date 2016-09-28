@@ -6,14 +6,15 @@ public class Combat : MonoBehaviour {
 
 	public int damage;
 
-	public Animator anim;
-
 	public bool mayAttack;
 	public bool lockSwitch;
 
 	public float radius;
 
 	public GameObject attackCollision;
+	public GameObject camera;
+	public Transform closestEnemy;
+	public Animator anim;
 
 	public LayerMask mask;
 
@@ -32,10 +33,10 @@ public class Combat : MonoBehaviour {
 	void Update () {
 
 		FillDelegate ();
-
 		if(Input.GetButtonDown("R3")){
 			lockSwitch =! lockSwitch;
 			LockOn(lockSwitch);
+			GetClosestEnemy(lockedOn);
 		}
 	}
 
@@ -71,11 +72,10 @@ public class Combat : MonoBehaviour {
 	        		lockedOn.Add(hit.transform);
 	        	}
 	        }
-	        GetClosestEnemy(lockedOn);
         }
 	}
 
-	Transform GetClosestEnemy (List<Transform> closeEnemyList){
+	public Transform GetClosestEnemy (List<Transform> closeEnemyList){
 
 		Transform tMin = null;
 		float minDist = Mathf.Infinity;
@@ -89,6 +89,8 @@ public class Combat : MonoBehaviour {
 		}
 
 		print(tMin);
+		camera.transform.LookAt(tMin);
+		closestEnemy = tMin;
 		return tMin;
 
 	}
