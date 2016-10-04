@@ -63,7 +63,7 @@ public class Orbit : MonoBehaviour
                 obj.transform.Rotate(0, Input.GetAxis("RightJoyX") * rotSpeed * Time.deltaTime, 0);
                 break;
             case CameraMode.LockOn:
-                CameraLerp(combat.closestEnemy);
+                //CameraLerp(combat.closestEnemy);
                 obj.transform.position += obj.transform.forward * Input.GetAxis("LeftJoyY") * Time.deltaTime * moveSpeed;
                 obj.transform.position += obj.transform.right * Input.GetAxis("LeftJoyX") * Time.deltaTime * moveSpeed;
                 obj.transform.Rotate(0, Input.GetAxis("RightJoyX") * rotSpeed * Time.deltaTime, 0);
@@ -77,11 +77,11 @@ public class Orbit : MonoBehaviour
 
         }
         Animate();
-        if (Input.GetButtonDown("LB") && camMode!=CameraMode.ThirdPersonStrafe)
+        if (Input.GetButtonDown("L3") && camMode!=CameraMode.ThirdPersonStrafe)
         {
             EnterSprint();
         }
-        if (Input.GetButtonUp("LB"))
+        if (Input.GetButtonUp("L3"))
         {
             ExitSprint();
         }

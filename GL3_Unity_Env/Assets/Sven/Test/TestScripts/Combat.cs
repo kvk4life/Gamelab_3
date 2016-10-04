@@ -10,9 +10,11 @@ public class Combat : MonoBehaviour {
 	public bool lockSwitch;
 
 	public float radius;
+	public float damping;
 
 	public GameObject attackCollision;
 	public GameObject camera;
+	public GameObject lookAtBody;
 	public Transform closestEnemy;
 	public Animator anim;
 
@@ -33,10 +35,14 @@ public class Combat : MonoBehaviour {
 	void Update () {
 
 		FillDelegate ();
+		
+	}
+
+	void LateUpdate (){
+
 		if(Input.GetButtonDown("R3")){
-			lockSwitch =! lockSwitch;
+			lockSwitch = true;
 			LockOn(lockSwitch);
-			GetClosestEnemy(lockedOn);
 		}
 	}
 
@@ -72,6 +78,7 @@ public class Combat : MonoBehaviour {
 	        		lockedOn.Add(hit.transform);
 	        	}
 	        }
+	        GetClosestEnemy(lockedOn);
         }
 	}
 
@@ -88,8 +95,15 @@ public class Combat : MonoBehaviour {
 			}
 		}
 
+		var lookPos = tMin.position - transform.position;
+		lookPos.y = 0;
+
+		var rotation = Quaternion.LookRotation(lookPos);
+
+		transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * damping);
+
 		print(tMin);
-		camera.transform.LookAt(tMin);
+		camera.transform.LookAt(new Vector3 (tMin.position.x, transform.position.y / 2, tMin.position.z));
 		closestEnemy = tMin;
 		return tMin;
 

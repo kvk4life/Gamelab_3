@@ -47,7 +47,6 @@ public class LockOnStrafe : MonoBehaviour
 
         if(Input.GetButtonDown("R3"))
         {
-            combat.GetClosestEnemy(combat.lockedOn);
             orbit.ExitSprint();
             orbit.camMode=CameraMode.LockOn;
             StopAllCoroutines();
