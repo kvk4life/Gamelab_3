@@ -35,15 +35,21 @@ public class Combat : MonoBehaviour {
 	void Update () {
 
 		FillDelegate ();
+
+		if(Input.GetButtonDown("R3")){
+			lockSwitch = true;
+			LockOn(lockSwitch);
+			GetClosestEnemy(lockedOn);
+		}
 		
 	}
 
 	void LateUpdate (){
 
-		if(Input.GetButtonDown("R3")){
-			lockSwitch = true;
-			LockOn(lockSwitch);
+		if(closestEnemy != null){
+			LookAtLockOn();
 		}
+
 	}
 
 	public void FillDelegate (){
@@ -78,7 +84,6 @@ public class Combat : MonoBehaviour {
 	        		lockedOn.Add(hit.transform);
 	        	}
 	        }
-	        GetClosestEnemy(lockedOn);
         }
 	}
 
@@ -95,17 +100,21 @@ public class Combat : MonoBehaviour {
 			}
 		}
 
-		var lookPos = tMin.position - transform.position;
+		print(tMin);
+		camera.transform.LookAt(new Vector3 (tMin.position.x, transform.position.y / 2, tMin.position.z));
+		closestEnemy = tMin;
+		return tMin;
+
+	}
+
+	public void LookAtLockOn () {
+
+		var lookPos = closestEnemy.position - transform.position;
 		lookPos.y = 0;
 
 		var rotation = Quaternion.LookRotation(lookPos);
 
 		transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * damping);
-
-		print(tMin);
-		camera.transform.LookAt(new Vector3 (tMin.position.x, transform.position.y / 2, tMin.position.z));
-		closestEnemy = tMin;
-		return tMin;
 
 	}
 

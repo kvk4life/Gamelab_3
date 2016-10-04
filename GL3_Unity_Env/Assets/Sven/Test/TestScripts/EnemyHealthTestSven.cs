@@ -6,14 +6,13 @@ public class EnemyHealthTestSven : MonoBehaviour {
 
 	public int health;
 
-	public GameObject player;
-
-	Combat combat;
+	public Combat combat;
+	public Orbit orbit;
 
 	void Start () {
 	
-		player = GameObject.Find("Pig Benis01");
 		combat = GameObject.Find("Pig Benis01").GetComponent<Combat>();
+		orbit = GameObject.Find("Camera").GetComponent<Orbit>();
 
 	}
 	
@@ -33,6 +32,8 @@ public class EnemyHealthTestSven : MonoBehaviour {
 
 	public void RemoveIndex (){
 
+		combat.lockSwitch = false;
+		orbit.camMode = CameraMode.ThirdPerson;
 		combat.lockedOn.Remove(transform);
 	}
 }
