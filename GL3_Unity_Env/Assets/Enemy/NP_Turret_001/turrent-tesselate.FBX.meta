@@ -1,0 +1,385 @@
+fileFormatVersion: 2
+guid: f0dbc3a9833b08b4b89abc1acac1cb92
+timeCreated: 1475582765
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: rotation-disc_Part_1
+    100002: rotation-disc_Part_10
+    100004: rotation-disc_Part_2
+    100006: rotation-disc_Part_3
+    100008: rotation-disc_Part_4
+    100010: rotation-disc_Part_5
+    100012: rotation-disc_Part_6
+    100014: rotation-disc_Part_7
+    100016: rotation-disc_Part_8
+    100018: rotation-disc_Part_9
+    100020: //RootNode
+    100022: turrentbase_Part_1
+    100024: turrentbase_Part_10
+    100026: turrentbase_Part_11
+    100028: turrentbase_Part_12
+    100030: turrentbase_Part_13
+    100032: turrentbase_Part_14
+    100034: turrentbase_Part_15
+    100036: turrentbase_Part_16
+    100038: turrentbase_Part_17
+    100040: turrentbase_Part_18
+    100042: turrentbase_Part_19
+    100044: turrentbase_Part_2
+    100046: turrentbase_Part_20
+    100048: turrentbase_Part_21
+    100050: turrentbase_Part_22
+    100052: turrentbase_Part_23
+    100054: turrentbase_Part_24
+    100056: turrentbase_Part_25
+    100058: turrentbase_Part_26
+    100060: turrentbase_Part_27
+    100062: turrentbase_Part_28
+    100064: turrentbase_Part_29
+    100066: turrentbase_Part_3
+    100068: turrentbase_Part_30
+    100070: turrentbase_Part_4
+    100072: turrentbase_Part_5
+    100074: turrentbase_Part_6
+    100076: turrentbase_Part_7
+    100078: turrentbase_Part_8
+    100080: turrentbase_Part_9
+    400000: rotation-disc_Part_1
+    400002: rotation-disc_Part_10
+    400004: rotation-disc_Part_2
+    400006: rotation-disc_Part_3
+    400008: rotation-disc_Part_4
+    400010: rotation-disc_Part_5
+    400012: rotation-disc_Part_6
+    400014: rotation-disc_Part_7
+    400016: rotation-disc_Part_8
+    400018: rotation-disc_Part_9
+    400020: //RootNode
+    400022: turrentbase_Part_1
+    400024: turrentbase_Part_10
+    400026: turrentbase_Part_11
+    400028: turrentbase_Part_12
+    400030: turrentbase_Part_13
+    400032: turrentbase_Part_14
+    400034: turrentbase_Part_15
+    400036: turrentbase_Part_16
+    400038: turrentbase_Part_17
+    400040: turrentbase_Part_18
+    400042: turrentbase_Part_19
+    400044: turrentbase_Part_2
+    400046: turrentbase_Part_20
+    400048: turrentbase_Part_21
+    400050: turrentbase_Part_22
+    400052: turrentbase_Part_23
+    400054: turrentbase_Part_24
+    400056: turrentbase_Part_25
+    400058: turrentbase_Part_26
+    400060: turrentbase_Part_27
+    400062: turrentbase_Part_28
+    400064: turrentbase_Part_29
+    400066: turrentbase_Part_3
+    400068: turrentbase_Part_30
+    400070: turrentbase_Part_4
+    400072: turrentbase_Part_5
+    400074: turrentbase_Part_6
+    400076: turrentbase_Part_7
+    400078: turrentbase_Part_8
+    400080: turrentbase_Part_9
+    2300000: rotation-disc_Part_1
+    2300002: rotation-disc_Part_10
+    2300004: rotation-disc_Part_2
+    2300006: rotation-disc_Part_3
+    2300008: rotation-disc_Part_4
+    2300010: rotation-disc_Part_5
+    2300012: rotation-disc_Part_6
+    2300014: rotation-disc_Part_7
+    2300016: rotation-disc_Part_8
+    2300018: rotation-disc_Part_9
+    2300020: turrentbase_Part_1
+    2300022: turrentbase_Part_10
+    2300024: turrentbase_Part_11
+    2300026: turrentbase_Part_12
+    2300028: turrentbase_Part_13
+    2300030: turrentbase_Part_14
+    2300032: turrentbase_Part_15
+    2300034: turrentbase_Part_16
+    2300036: turrentbase_Part_17
+    2300038: turrentbase_Part_18
+    2300040: turrentbase_Part_19
+    2300042: turrentbase_Part_2
+    2300044: turrentbase_Part_20
+    2300046: turrentbase_Part_21
+    2300048: turrentbase_Part_22
+    2300050: turrentbase_Part_23
+    2300052: turrentbase_Part_24
+    2300054: turrentbase_Part_25
+    2300056: turrentbase_Part_26
+    2300058: turrentbase_Part_27
+    2300060: turrentbase_Part_28
+    2300062: turrentbase_Part_29
+    2300064: turrentbase_Part_3
+    2300066: turrentbase_Part_30
+    2300068: turrentbase_Part_4
+    2300070: turrentbase_Part_5
+    2300072: turrentbase_Part_6
+    2300074: turrentbase_Part_7
+    2300076: turrentbase_Part_8
+    2300078: turrentbase_Part_9
+    3300000: rotation-disc_Part_1
+    3300002: rotation-disc_Part_10
+    3300004: rotation-disc_Part_2
+    3300006: rotation-disc_Part_3
+    3300008: rotation-disc_Part_4
+    3300010: rotation-disc_Part_5
+    3300012: rotation-disc_Part_6
+    3300014: rotation-disc_Part_7
+    3300016: rotation-disc_Part_8
+    3300018: rotation-disc_Part_9
+    3300020: turrentbase_Part_1
+    3300022: turrentbase_Part_10
+    3300024: turrentbase_Part_11
+    3300026: turrentbase_Part_12
+    3300028: turrentbase_Part_13
+    3300030: turrentbase_Part_14
+    3300032: turrentbase_Part_15
+    3300034: turrentbase_Part_16
+    3300036: turrentbase_Part_17
+    3300038: turrentbase_Part_18
+    3300040: turrentbase_Part_19
+    3300042: turrentbase_Part_2
+    3300044: turrentbase_Part_20
+    3300046: turrentbase_Part_21
+    3300048: turrentbase_Part_22
+    3300050: turrentbase_Part_23
+    3300052: turrentbase_Part_24
+    3300054: turrentbase_Part_25
+    3300056: turrentbase_Part_26
+    3300058: turrentbase_Part_27
+    3300060: turrentbase_Part_28
+    3300062: turrentbase_Part_29
+    3300064: turrentbase_Part_3
+    3300066: turrentbase_Part_30
+    3300068: turrentbase_Part_4
+    3300070: turrentbase_Part_5
+    3300072: turrentbase_Part_6
+    3300074: turrentbase_Part_7
+    3300076: turrentbase_Part_8
+    3300078: turrentbase_Part_9
+    4300000: rotation-disc_Part_1
+    4300002: rotation-disc_Part_2
+    4300004: rotation-disc_Part_3
+    4300006: rotation-disc_Part_4
+    4300008: rotation-disc_Part_5
+    4300010: rotation-disc_Part_6
+    4300012: rotation-disc_Part_7
+    4300014: rotation-disc_Part_8
+    4300016: rotation-disc_Part_9
+    4300018: rotation-disc_Part_10
+    4300020: turrentbase_Part_1
+    4300022: turrentbase_Part_2
+    4300024: turrentbase_Part_3
+    4300026: turrentbase_Part_4
+    4300028: turrentbase_Part_5
+    4300030: turrentbase_Part_6
+    4300032: turrentbase_Part_7
+    4300034: turrentbase_Part_8
+    4300036: turrentbase_Part_9
+    4300038: turrentbase_Part_10
+    4300040: turrentbase_Part_11
+    4300042: turrentbase_Part_12
+    4300044: turrentbase_Part_13
+    4300046: turrentbase_Part_14
+    4300048: turrentbase_Part_15
+    4300050: turrentbase_Part_16
+    4300052: turrentbase_Part_17
+    4300054: turrentbase_Part_18
+    4300056: turrentbase_Part_19
+    4300058: turrentbase_Part_20
+    4300060: turrentbase_Part_21
+    4300062: turrentbase_Part_22
+    4300064: turrentbase_Part_23
+    4300066: turrentbase_Part_24
+    4300068: turrentbase_Part_25
+    4300070: turrentbase_Part_26
+    4300072: turrentbase_Part_27
+    4300074: turrentbase_Part_28
+    4300076: turrentbase_Part_29
+    4300078: turrentbase_Part_30
+    7400000: destroy
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: destroy
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 200
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: rotation-disc_Part_1
+        weight: 1
+      - path: rotation-disc_Part_2
+        weight: 1
+      - path: rotation-disc_Part_3
+        weight: 1
+      - path: rotation-disc_Part_4
+        weight: 1
+      - path: rotation-disc_Part_5
+        weight: 1
+      - path: rotation-disc_Part_6
+        weight: 1
+      - path: rotation-disc_Part_7
+        weight: 1
+      - path: rotation-disc_Part_8
+        weight: 1
+      - path: rotation-disc_Part_9
+        weight: 1
+      - path: rotation-disc_Part_10
+        weight: 1
+      - path: turrentbase_Part_1
+        weight: 1
+      - path: turrentbase_Part_2
+        weight: 1
+      - path: turrentbase_Part_3
+        weight: 1
+      - path: turrentbase_Part_4
+        weight: 1
+      - path: turrentbase_Part_5
+        weight: 1
+      - path: turrentbase_Part_6
+        weight: 1
+      - path: turrentbase_Part_7
+        weight: 1
+      - path: turrentbase_Part_8
+        weight: 1
+      - path: turrentbase_Part_9
+        weight: 1
+      - path: turrentbase_Part_10
+        weight: 1
+      - path: turrentbase_Part_11
+        weight: 1
+      - path: turrentbase_Part_12
+        weight: 1
+      - path: turrentbase_Part_13
+        weight: 1
+      - path: turrentbase_Part_14
+        weight: 1
+      - path: turrentbase_Part_15
+        weight: 1
+      - path: turrentbase_Part_16
+        weight: 1
+      - path: turrentbase_Part_17
+        weight: 1
+      - path: turrentbase_Part_18
+        weight: 1
+      - path: turrentbase_Part_19
+        weight: 1
+      - path: turrentbase_Part_20
+        weight: 1
+      - path: turrentbase_Part_21
+        weight: 1
+      - path: turrentbase_Part_22
+        weight: 1
+      - path: turrentbase_Part_23
+        weight: 1
+      - path: turrentbase_Part_24
+        weight: 1
+      - path: turrentbase_Part_25
+        weight: 1
+      - path: turrentbase_Part_26
+        weight: 1
+      - path: turrentbase_Part_27
+        weight: 1
+      - path: turrentbase_Part_28
+        weight: 1
+      - path: turrentbase_Part_29
+        weight: 1
+      - path: turrentbase_Part_30
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
