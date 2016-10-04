@@ -16,14 +16,26 @@ public class Tower : Base {
 	public List<GameObject> allyList = new List<GameObject> ();
 	public GameObject[] pooledProjectiles;
 	public GameObject enemyPlayer;
+	private GameObject curTarget;
+	public Animator myAnim;
+	public AnimationClip myClip;
+	public AnimationEvent myEvent;
+    public float eventTimerPercentage;
 	public float attackRate;
 	private float nextAttack;
+
+	void Start(){
+		myAnim = GetComponent<Animator> ();
+        myClip = myAnim.runtimeAnimatorController.animationClips[3];
+        float clipLength = myClip.length;
+        myEvent.time = clipLength / 100 * eventTimerPercentage;
+        myEvent.functionName = "ActivatePool";
+        myClip.AddEvent(myEvent);
+	}
 
 	public void OnTriggerEnter(Collider col){
 		if (col.GetComponent<Base> () != null) {
 			if (col.GetComponent<Base> ().myTeam != myTeam) {
-				//Het object wat door mij trigger veld heen kwam
-				//is dus een unit van de enemy team
 				targetList.Add (col.gameObject);
 				print ("unit geadd aan target list");
 			}
@@ -126,15 +138,22 @@ public class Tower : Base {
 
 	public override void Attack(GameObject myTarget){
 		if(Time.time > nextAttack){
-			ActivatePool(myTarget);
+			print ("Pop a cap!");
+			myAnim.SetBool ("attack", true);
+            print("is mijn attackBool true? " + myAnim.GetBool("attack"));
+			print (myClip);
+            print("is mijn attackBool nog true? " + myAnim.GetBool("attack"));
+            print("is mijn attackBool nog steeds true? " + myAnim.GetBool("attack"));
+            curTarget = myTarget;
 			nextAttack = Time.time + attackRate;
 		}
 	}
 
-	public void ActivatePool(GameObject myTarget){
+	public void ActivatePool(){
 		for(int i = 0; i < pooledProjectiles.Length; i++){
 			if(pooledProjectiles[i].GetComponent<ProjectileTower>().pooled){
-				pooledProjectiles [i].GetComponent<ProjectileTower>().Unpool (myTarget);
+				pooledProjectiles [i].GetComponent<ProjectileTower>().Unpool (curTarget);
+                myAnim.SetBool("attack", false);
 				break;
 			}
 		}

@@ -6,12 +6,14 @@ public class ProjectileTower : MonoBehaviour {
 	public float projectileSpeed;
 	public GameObject myTarget;
 	public Transform projectileHolder;
+	public Transform parentPos;
 	private Renderer rend;
 	private Collider myCol;
 
 	public void Start(){
 		myCol = GetComponent<Collider> ();
 		rend = GetComponent<Renderer> ();
+		parentPos = transform.parent.transform;
 	}
 
 	public void Update(){
@@ -30,7 +32,7 @@ public class ProjectileTower : MonoBehaviour {
 		myTarget = null;
 		myCol.enabled = false;
 		rend.enabled = false;
-		transform.position = transform.parent.transform.position;
+		transform.position = parentPos.position;
 		pooled = true;
 	}
 
