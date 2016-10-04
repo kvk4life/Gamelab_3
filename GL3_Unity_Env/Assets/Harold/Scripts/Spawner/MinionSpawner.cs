@@ -3,14 +3,14 @@ using System.Collections;
 
 public class MinionSpawner : MonoBehaviour {
 
-	public GameObject[] minionList;
+	public GameObject[] minionList; // last minion is this list MUST be the super minion
 	public Transform[] waypointList;
-	public int team;
-	public float nextWaveTime, timeBeforeFirstWave;
+	public int team; // this will give minions their team number
+	public float nextWaveTime, timeBeforeFirstWave; // time before the first wave and time between each wave
 	private bool gameStart;
-	public int[] maxMinionsList;
-	public int superMinionCounter;
-	public float timeBetweenMinions;
+	public int[] maxMinionsList; // list of how many for each wave maxMinionList[0] = minionList[0]
+	public int superMinionCounter; // per how many waves do you want a super minion
+	public float timeBetweenMinions; // spawntime between each minion
 	private int currentWaveMinions, minionNumber, superMinionCounterReset, leftToSpawn, maxMinions;
 
 	void Start () {
