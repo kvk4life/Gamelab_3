@@ -3,7 +3,8 @@ using System.Collections;
 
 public class MinionSpawner : MonoBehaviour {
 
-	public GameObject[] minionList; // last minion is this list MUST be the super minion
+	public GameObject[] minionList; // Minion list, first to spawn is 0 on the list
+    public GameObject superMinion;
 	public Transform[] waypointList;
 	public int team; // this will give minions their team number
 	public float nextWaveTime, timeBeforeFirstWave; // time before the first wave and time between each wave
@@ -43,9 +44,10 @@ public class MinionSpawner : MonoBehaviour {
 		yield return new WaitForSeconds(time);
 
 		if(currentWaveMinions == maxMinions && superMinionCounter == 0){
-			minionNumber++;
-			MinionSpawn(minionNumber);
-			superMinionCounter = superMinionCounterReset;
+            GameObject temp = Instantiate(superMinion, transform.position, transform.rotation) as GameObject;
+            temp.GetComponent<MinionBehavior>().spawner = gameObject;
+            temp.GetComponent<Stats>().teamNumber = team;
+            superMinionCounter = superMinionCounterReset;
 		}
 			
 		if(currentWaveMinions == maxMinions){
