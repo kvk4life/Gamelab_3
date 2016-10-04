@@ -19,7 +19,7 @@ public class DamageTest : MonoBehaviour {
 
 	void OnCollisionEnter (Collision col){
 
-		if(col.transform.tag == "Enemy" && player.GetComponent<Combat>().mayAttack == false){
+		if(col.transform.tag == "Enemy" || col.transform.tag == "Minion" && player.GetComponent<Combat>().mayAttack == false){
 			col.gameObject.GetComponent<EnemyHealthTestSven>().EnemyHealth(damageTest);
 		}
 	}
