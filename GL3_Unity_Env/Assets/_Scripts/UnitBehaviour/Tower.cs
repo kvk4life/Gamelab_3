@@ -14,7 +14,8 @@ public class Tower : Base {
 	public TowerState previousState;
 	public List<GameObject> targetList = new List<GameObject> ();
 	public List<GameObject> allyList = new List<GameObject> ();
-	public GameObject[] pooledProjectiles;
+    public Transform myProjectileHolder;
+	public GameObject projectilePool;
 	public GameObject enemyPlayer;
 	private GameObject curTarget;
 	public Animator myAnim;
@@ -38,7 +39,6 @@ public class Tower : Base {
 		if (col.GetComponent<Base> () != null) {
 			if (col.GetComponent<Base> ().myTeam != myTeam) {
 				targetList.Add (col.gameObject);
-				print ("unit geadd aan target list");
 			}
 			else {
 				if (col.transform.tag == "Player") {
@@ -47,7 +47,6 @@ public class Tower : Base {
 					ally.GetComponent<TestPlayer> ().insideTurret = true;
 					ally.GetComponent<TestPlayer> ().turretIAmIn = gameObject;
 					allyList.Add (ally);
-					print ("ally geadd");
 				}
 			}
 		}
@@ -65,7 +64,6 @@ public class Tower : Base {
 						break;
 					}
 				}
-				print ("Enemy gaat er uit");
 			}
 			else {
 				for (int e = 0; e < allyList.Count; e++) {
@@ -77,7 +75,6 @@ public class Tower : Base {
 						break;
 					}
 				}
-				print ("Ally gaat er uit");
 			}
 		}
 	}
@@ -139,26 +136,16 @@ public class Tower : Base {
 
 	public override void Attack(GameObject myTarget){
 		if(Time.time > nextAttack){
-			print ("Pop a cap!");
 			myAnim.SetBool ("attack", true);
-            print("is mijn attackBool true? " + myAnim.GetBool("attack"));
-			print (myClip);
-            print("is mijn attackBool nog true? " + myAnim.GetBool("attack"));
-            print("is mijn attackBool nog steeds true? " + myAnim.GetBool("attack"));
             curTarget = myTarget;
 			nextAttack = Time.time + attackRate;
 		}
 	}
 
 	public void ActivatePool(){
-		for(int i = 0; i < pooledProjectiles.Length; i++){
-			if(pooledProjectiles[i].GetComponent<ProjectileTower>().pooled){
-				pooledProjectiles [i].GetComponent<ProjectileTower>().Unpool (curTarget);
-                myAnim.SetBool("attack", false);
-				break;
-			}
-		}
-	}
+        projectilePool.GetComponent<PoolMngProjectile>().ActivatePool(curTarget, myProjectileHolder);
+        myAnim.SetBool("attack", false);
+    }
 
 	public override void RecieveDamage(int recievedDamage){
 		//Dit moet later uitgebreid worden met de damage stats enzo

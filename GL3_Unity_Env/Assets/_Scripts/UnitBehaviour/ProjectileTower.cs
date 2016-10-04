@@ -5,25 +5,23 @@ public class ProjectileTower : MonoBehaviour {
 	public bool pooled;
 	public float projectileSpeed;
 	public GameObject myTarget;
-	public Transform projectileHolder;
-	public Transform parentPos;
 	private Renderer rend;
 	private Collider myCol;
 
 	public void Start(){
 		myCol = GetComponent<Collider> ();
 		rend = GetComponent<Renderer> ();
-		parentPos = transform.parent.transform;
 	}
 
 	public void Update(){
 		Attack ();
 	} 
 
-	public void Unpool(GameObject recievedTarget){
+	public void Unpool(GameObject recievedTarget, Transform projectileHolder){
 		myTarget = recievedTarget;
 		transform.rotation = projectileHolder.rotation;
-		myCol.enabled = true;
+        transform.position = projectileHolder.position;
+        myCol.enabled = true;
 		rend.enabled = true;
 		pooled = false;
 	}
@@ -32,7 +30,7 @@ public class ProjectileTower : MonoBehaviour {
 		myTarget = null;
 		myCol.enabled = false;
 		rend.enabled = false;
-		transform.position = parentPos.position;
+		transform.position = GetComponentInParent<Transform>().position;
 		pooled = true;
 	}
 
@@ -50,7 +48,6 @@ public class ProjectileTower : MonoBehaviour {
 
 	public void OnTriggerEnter(Collider col){
 		if(col.gameObject == myTarget){
-			print ("Target Hit");
 			Repool ();
 		}
 	}
