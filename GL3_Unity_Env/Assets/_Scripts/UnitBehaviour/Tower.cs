@@ -20,13 +20,14 @@ public class Tower : Base {
 	public Animator myAnim;
 	public AnimationClip myClip;
 	public AnimationEvent myEvent;
+    public int myClipInt;
     public float eventTimerPercentage;
 	public float attackRate;
 	private float nextAttack;
 
 	void Start(){
 		myAnim = GetComponent<Animator> ();
-        myClip = myAnim.runtimeAnimatorController.animationClips[3];
+        myClip = myAnim.runtimeAnimatorController.animationClips[myClipInt];
         float clipLength = myClip.length;
         myEvent.time = clipLength / 100 * eventTimerPercentage;
         myEvent.functionName = "ActivatePool";
