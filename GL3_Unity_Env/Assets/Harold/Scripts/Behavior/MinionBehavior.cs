@@ -87,9 +87,7 @@ public class MinionBehavior : MonoBehaviour {
         
     }
 
-    void CheckState() {
-
-      
+    void CheckState() { 
 
         if (minionState == States.FollowWayPoint) {
             FollowWayPoint(); // the minion will follow the waypoints

@@ -29,7 +29,7 @@ public class SpawnJungle : MonoBehaviour {
 	public void SpawnCamp(){
 		for(int i = 0; i <= campArray.Length-1; i++){
 			GameObject temp = Instantiate(campArray[i], spawnPointsArray[i].transform.position, transform.rotation) as GameObject;
-			temp.GetComponent<JungleMinionStats>().minionCampNumber = campNumber;
+			temp.GetComponent<JungleMinionBehavior>().minionCampNumber = campNumber;
 		}
 
 	}
