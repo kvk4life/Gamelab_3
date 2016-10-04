@@ -53,7 +53,7 @@ public class Orbit : MonoBehaviour
                     CameraLerp(cameraLocStrafe);
                 }
                 transform.LookAt(camRotator);
-                camRotator.Rotate(Input.GetAxis("RightJoyY") * rotSpeed * Time.deltaTime, Input.GetAxis("RightJoyX") * rotSpeed * Time.deltaTime, 0);
+                camRotator.Rotate(0, Input.GetAxis("RightJoyX") * rotSpeed * Time.deltaTime, 0);
                 break;
             case CameraMode.ThirdPersonStrafe:
                 CameraLerp(cameraLocStrafe);
