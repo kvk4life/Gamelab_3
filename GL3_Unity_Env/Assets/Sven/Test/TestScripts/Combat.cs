@@ -24,6 +24,7 @@ public class Combat : MonoBehaviour {
 
 	public DelegateWeapons delegateWeapon;
 	public EnemyHealthTestSven healthEnemy;
+	public Orbit orbit;
 
 	void Start () {
 
@@ -125,4 +126,9 @@ public class Combat : MonoBehaviour {
 		print("Recharged");
 		mayAttack = true;
 	}
+
+    void OnCollisionEnter()
+    {
+    	orbit.mayJump=true;
+    }
 }

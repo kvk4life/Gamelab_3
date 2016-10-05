@@ -12,6 +12,7 @@ public class Tower : Base {
 	}
 	public TowerState myState;
 	public TowerState previousState;
+	private Stats statsClass;
 	public List<GameObject> targetList = new List<GameObject> ();
 	public List<GameObject> allyList = new List<GameObject> ();
     public Transform myProjectileHolder;
@@ -25,8 +26,10 @@ public class Tower : Base {
     public float eventTimerPercentage;
 	public float attackRate;
 	private float nextAttack;
+	public string playerTag;
 
 	void Start(){
+		statsClass = GetComponent<Stats>();
 		myAnim = GetComponent<Animator> ();
         myClip = myAnim.runtimeAnimatorController.animationClips[myClipInt];
         float clipLength = myClip.length;
@@ -36,25 +39,22 @@ public class Tower : Base {
 	}
 
 	public void OnTriggerEnter(Collider col){
-		if (col.GetComponent<Base> () != null) {
-			if (col.GetComponent<Base> ().myTeam != myTeam) {
+		if (col.GetComponent<Stats> () != null) {
+			if (col.GetComponent<Stats> ().teamNumber != statsClass.teamNumber) {
 				targetList.Add (col.gameObject);
 			}
-			else {
-				if (col.transform.tag == "Player") {
-					//de methods van "TestPlayer" zullen later wss andere namen krijgen
-					GameObject ally = col.gameObject;
-					ally.GetComponent<TestPlayer> ().insideTurret = true;
-					ally.GetComponent<TestPlayer> ().turretIAmIn = gameObject;
-					allyList.Add (ally);
-				}
+			else if (col.transform.tag == playerTag) {
+				GameObject ally = col.gameObject;
+				ally.GetComponent<Stats> ().insideTurret = true;
+				ally.GetComponent<Stats> ().turretIAmIn = gameObject;
+				allyList.Add (ally);
 			}
 		}
 	}
 
 	public void OnTriggerExit(Collider col){
-		if (col.GetComponent<Base> () != null) {
-			if (col.GetComponent<Base> ().myTeam != myTeam) {
+		if (col.GetComponent<Stats> () != null) {
+			if (col.GetComponent<Stats> ().teamNumber != statsClass.teamNumber) {
 				if(enemyPlayer != null && col.gameObject == enemyPlayer){
 					enemyPlayer = null;
 				}
@@ -69,8 +69,8 @@ public class Tower : Base {
 				for (int e = 0; e < allyList.Count; e++) {
 					if (col.gameObject == allyList [e]) {
 						GameObject ally = col.gameObject;
-						ally.GetComponent<TestPlayer> ().insideTurret = false;
-						ally.GetComponent<TestPlayer> ().turretIAmIn = null;
+						ally.GetComponent<Stats> ().insideTurret = false;
+						ally.GetComponent<Stats> ().turretIAmIn = null;
 						allyList.Remove (ally);
 						break;
 					}
@@ -110,7 +110,7 @@ public class Tower : Base {
 
 	public override void TargetSelect(){
 		if(myState == TowerState.ProtectPlayer){
-			if (enemyPlayer != null && !enemyPlayer.GetComponent<TestPlayer> ().dead) {
+			if (enemyPlayer != null && !enemyPlayer.GetComponent<Stats> ().dead) {
 				Attack (enemyPlayer);
 			}
 			else {

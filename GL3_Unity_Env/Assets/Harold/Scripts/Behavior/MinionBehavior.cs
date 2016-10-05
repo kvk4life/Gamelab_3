@@ -65,7 +65,7 @@ public class MinionBehavior : MonoBehaviour {
 
         //checking if the minion is dead or not
 
-        if (statsClass.currentHealth <= 0) {
+        if (statsClass.currentHealth < 1) {
             Destroy(gameObject);
         }
 

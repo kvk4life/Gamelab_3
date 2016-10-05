@@ -30,6 +30,7 @@ public class Orbit : MonoBehaviour
     public bool lerpBack;
     public float jumpForce;
     public Combat combat;
+    public bool mayJump;
     // Use this for initialization
     void Start()
     {
@@ -85,9 +86,10 @@ public class Orbit : MonoBehaviour
         {
             ExitSprint();
         }
-        if(Input.GetButtonDown("A") && camMode!=CameraMode.FirstPerson)
+        if(Input.GetButtonDown("A") && camMode!=CameraMode.FirstPerson && mayJump==true)
         {
             obj.GetComponent<Rigidbody>().velocity=new Vector3(0,jumpForce,0);
+            mayJump=false;
         }
 
 
@@ -102,6 +104,11 @@ public class Orbit : MonoBehaviour
             sprint = true;
         }
 
+    }
+
+    void OnCollisionEnter()
+    {
+    	mayJump=true;
     }
 
     public void ExitSprint()

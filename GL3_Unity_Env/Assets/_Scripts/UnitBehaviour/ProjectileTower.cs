@@ -4,6 +4,7 @@ using System.Collections;
 public class ProjectileTower : MonoBehaviour {
 	public bool pooled;
 	public float projectileSpeed;
+	public int myDamage;
 	public GameObject myTarget;
 	private Renderer rend;
 	private Collider myCol;
@@ -49,6 +50,8 @@ public class ProjectileTower : MonoBehaviour {
 	public void OnTriggerEnter(Collider col){
 		if(col.gameObject == myTarget){
 			Repool ();
+			//Verander dit later naar de Stats Script
+			col.transform.gameObject.GetComponent<EnemyHealthTestSven>().EnemyHealth(myDamage);
 		}
 	}
 }

@@ -6,17 +6,26 @@ public class Stats : MonoBehaviour {
     public int currentHealth, startHealth, damage, teamNumber;
     private int maxHealth;
 
-
-	// Use this for initialization
-	void Start () {
+    public bool insideTurret;
+    public bool attackedByPlayer;
+    public bool dead;
+    public GameObject playerAttackedBy;
+    public GameObject turretIAmIn;
+    
+    void Start () {
         maxHealth = startHealth;
         currentHealth = startHealth;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    }
+
+    public void Update(){
+        CryByTurret();
+    }
+
+    public void CryByTurret(){
+          if(insideTurret && attackedByPlayer){
+            turretIAmIn.GetComponent<Tower> ().ProtectPlayer (playerAttackedBy);
+        }
+    }
 
     public void HealthReset(){
         currentHealth = maxHealth;
