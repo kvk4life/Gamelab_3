@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HudBar : MonoBehaviour {
+public class MinionStats : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -12,4 +12,8 @@ public class HudBar : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    public void IncreaseStats(int incraseAmount) {
+
+    }
 }
