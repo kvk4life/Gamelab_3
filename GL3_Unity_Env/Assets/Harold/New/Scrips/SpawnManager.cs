@@ -4,30 +4,27 @@ using System.Collections.Generic;
 
 public class SpawnManager : MonoBehaviour {
 
-    public GameObject[] spawnPointArray, minionArray; // Place all the spawnpoint of the level here. Place wich minions need to be spawned
-    public string[] spawnPointTagArray; // All the tags of the spawnpoint. is needed to see wich spawnpoints need to be activated.
-    public int[] spawnAmount; // how many of each enemy needs to be spawned
-    public int currentSpawnAmount, increaseProcentPerWave, increaseStatsPerWave; //with how much % do you want to incease the stats and the amonut of enemies that need to be spawned
+    public int increaseProcentPerWave, increaseStatsPerWave, startingWave; //with how much % do you want to incease the stats and the amonut of enemies that need to be spawned, the armount enemies currently spawned, the wave you start at
     public float timeBetweenWaves, timeBetweenMinions; // time between each wave after a wave is finished. spawn time between the minions
-    private int maxSpawnAmount, waveCount;
+    private int maxSpawnAmount;
+    [HideInInspector]
+    public int waveCount, currentSpawnAmount;
 
-    [SerializeField]
+    public List<GameObject> spawnPointArray = new List<GameObject>(); // Place all the spawnpoint of the level here. Place wich minions need to be spawned
+    public List<string> spawnPointTagArray = new List<string>(); // All the tags of the spawnpoint. is needed to see wich spawnpoints need to be activated.
+    public List<int> spawnAmount = new List<int>(); // how many of each enemy needs to be spawned
+    public List<GameObject> minionArray = new List<GameObject>();
     private List<GameObject> activeSpawnList = new List<GameObject>();
-    [SerializeField]
     private List<GameObject> offSpawnList = new List<GameObject>();
-    [SerializeField]
     private List<int> saveSpawnAmount = new List<int>();
+    private List<int> amountForEachSpawner = new List<int>();
 
     void Start() {
-        waveCount = 0;
+        waveCount = startingWave;
         SetAmountLength();
         SaveSpawnAmount();
         AddOffList(); // adds the waypoints to a non active list
         CheckForActivation(0); // Checks wich enemies needs to be activated
-    }
-
-    void Update() {
-
     }
 
     public void CheckCurrentWave() {
@@ -53,7 +50,7 @@ public class SpawnManager : MonoBehaviour {
     }
 
     void AddOffList() {
-        for (int i = 0; i < spawnPointArray.Length; i++) {
+        for (int i = 0; i < spawnPointArray.Count; i++) {
             offSpawnList.Add(spawnPointArray[i]);
         }
     }
@@ -61,15 +58,16 @@ public class SpawnManager : MonoBehaviour {
     void CheckWaveStats() {
         waveCount++;
         ResetSpawnAmount();
-        for (int i = 0; i <= spawnAmount.Length-1; i++) {
-            float calcu = 100 + (increaseProcentPerWave * waveCount) / 100;
-            print(calcu);
+        for (int i = 0; i <= spawnAmount.Count - 1; i++) {
+            float Calcu = increaseProcentPerWave * waveCount;
+            Calcu = Calcu / 100;
+            Calcu += 1;
             float temp = (float)spawnAmount[i];
-            temp = temp * calcu;
+            temp = temp * Calcu;
             spawnAmount[i] = (int)temp;
         }
 
-        for (int i = 0; i < minionArray.Length; i++) {
+        for (int i = 0; i < minionArray.Count; i++) {
             minionArray[i].GetComponent<MinionStats>().IncreaseStats(100 + (increaseStatsPerWave * waveCount));
         }
 
@@ -78,48 +76,62 @@ public class SpawnManager : MonoBehaviour {
     }
 
     void SetAmountLength() {
-        for(int i = 0; i <= spawnAmount.Length-1; i++) {
+        for (int i = 0; i <= spawnAmount.Count - 1; i++) {
             saveSpawnAmount.Add(0);
+            amountForEachSpawner.Add(0);
         }
     }
 
     void ResetSpawnAmount() {
-        for(int i = 0; i <= spawnAmount.Length-1; i++) {
+        for (int i = 0; i <= spawnAmount.Count - 1; i++) {
             spawnAmount[i] = saveSpawnAmount[i];
         }
     }
 
     void SaveSpawnAmount() {
-        for (int i = 0; i < spawnAmount.Length; i++) {
+        for (int i = 0; i < spawnAmount.Count; i++) {
             saveSpawnAmount[i] = spawnAmount[i];
         }
     }
 
     void NewWave() {
-        for (int i = 0; i < spawnAmount.Length; i++) {
+        for (int i = 0; i < spawnAmount.Count; i++) {
             maxSpawnAmount += spawnAmount[i];
+        }
+
+        for (int ii = 0; ii < spawnAmount.Count; ii++) {
+            //float count = activeSpawnList.Count;
+            //print(count);
+           // float temp = (float)spawnAmount[ii];
+          //  print(temp);
+           // temp = temp / count;
+            float temp = spawnAmount[ii] / activeSpawnList.Count;
+            amountForEachSpawner[ii] = (int)temp;
+            print(temp);
+            if (temp < 1) {
+                temp = 1;
+            }
+            amountForEachSpawner[ii] = (int)temp;
         }
 
         for (int i = 0; i < activeSpawnList.Count; i++) {
             Spawner tempClass = activeSpawnList[i].GetComponent<Spawner>();
 
-            for (int ii = 0; ii < spawnAmount.Length; ii++) {
-                if (spawnAmount[ii] > 0) {
-                    float temp = spawnAmount[ii] / activeSpawnList.Count;
-                    print(temp);
-                    if(temp <= 0) {
-                        //temp = 1;
-                    }
-                   // tempClass.spawnAmount.Add(temp);
-                    //spawnAmount[ii] -= temp;
-                }
-
-                
+            for (int ii = 0; ii <= spawnAmount.Count-1; ii++) {
+                tempClass.spawnAmount.Add(amountForEachSpawner[ii]);
+                spawnAmount[ii] -= amountForEachSpawner[ii];
             }
         }
 
-        for(int i = 0; i < activeSpawnList.Count; i++) {
-           // activeSpawnList[i].GetComponent<Spawner>().StartCoroutine(activeSpawnList[i].GetComponent<Spawner>().Spawning(timeBetweenMinions));
+        for (int i = 0; i < spawnAmount.Count; i++) {
+            maxSpawnAmount -= spawnAmount[i];
+        }
+
+        currentSpawnAmount = maxSpawnAmount;
+        print(currentSpawnAmount);
+
+        for (int i = 0; i < activeSpawnList.Count; i++) {
+            // activeSpawnList[i].GetComponent<Spawner>().StartCoroutine(activeSpawnList[i].GetComponent<Spawner>().Spawning(timeBetweenMinions));
         }
     }
 }
