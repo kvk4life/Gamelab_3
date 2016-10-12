@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public enum CameraMode
@@ -106,10 +106,7 @@ public class Orbit : MonoBehaviour
 
     }
 
-    void OnCollisionEnter()
-    {
-    	mayJump=true;
-    }
+
 
     public void ExitSprint()
     {
