@@ -17,7 +17,6 @@ public class Combat : MonoBehaviour {
 	public GameObject lookAtBody;
 	public Transform closestEnemy;
 
-	public Animation animation;
 	public Animator anim;
 
 	public LayerMask mask;
@@ -36,10 +35,6 @@ public class Combat : MonoBehaviour {
 	}
 	
 	void Update () {
-
-		if(animation.clip.length == 0.0f){
-			attackCollision.GetComponent<Collider>().enabled = true;
-		}
 
 		FillDelegate ();
 
