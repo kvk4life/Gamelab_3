@@ -19,7 +19,7 @@ public class SpawnManager : MonoBehaviour {
     private List<int> saveSpawnAmount = new List<int>();
 
     void Start() {
-        waveCount = -1;
+        waveCount = 0;
         SetAmountLength();
         SaveSpawnAmount();
         AddOffList(); // adds the waypoints to a non active list
@@ -61,12 +61,16 @@ public class SpawnManager : MonoBehaviour {
     void CheckWaveStats() {
         waveCount++;
         ResetSpawnAmount();
-        for (int i = 0; i < spawnAmount.Length; i++) {
-            spawnAmount[i] = spawnAmount[i] / 100 * (100 + (increaseProcentPerWave * waveCount));
+        for (int i = 0; i <= spawnAmount.Length-1; i++) {
+            float calcu = 100 + (increaseProcentPerWave * waveCount) / 100;
+            print(calcu);
+            float temp = (float)spawnAmount[i];
+            temp = temp * calcu;
+            spawnAmount[i] = (int)temp;
         }
 
         for (int i = 0; i < minionArray.Length; i++) {
-            minionArray[i].GetComponent<MinionStats>().IncreaseStats(100 + increaseStatsPerWave * waveCount);
+            minionArray[i].GetComponent<MinionStats>().IncreaseStats(100 + (increaseStatsPerWave * waveCount));
         }
 
         SaveSpawnAmount();
@@ -80,7 +84,7 @@ public class SpawnManager : MonoBehaviour {
     }
 
     void ResetSpawnAmount() {
-        for(int i = 0; i <= spawnAmount.Length; i++) {
+        for(int i = 0; i <= spawnAmount.Length-1; i++) {
             spawnAmount[i] = saveSpawnAmount[i];
         }
     }
@@ -101,13 +105,13 @@ public class SpawnManager : MonoBehaviour {
 
             for (int ii = 0; ii < spawnAmount.Length; ii++) {
                 if (spawnAmount[ii] > 0) {
-                    int tempInt = spawnAmount[ii] / activeSpawnList.Count;
-                    print(tempInt);
-                    if(tempInt <= 0) {
-                        tempInt = 1;
+                    float temp = spawnAmount[ii] / activeSpawnList.Count;
+                    print(temp);
+                    if(temp <= 0) {
+                        //temp = 1;
                     }
-                    tempClass.spawnAmount.Add(tempInt);
-                    spawnAmount[ii] -= tempInt;
+                   // tempClass.spawnAmount.Add(temp);
+                    //spawnAmount[ii] -= temp;
                 }
 
                 
