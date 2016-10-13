@@ -6,9 +6,9 @@ public class SpawnManager : MonoBehaviour {
 
     public int increaseProcentPerWave, increaseStatsPerWave, startingWave; //with how much % do you want to incease the stats and the amonut of enemies that need to be spawned, the armount enemies currently spawned, the wave you start at
     public float timeBetweenWaves, timeBetweenMinions; // time between each wave after a wave is finished. spawn time between the minions
-    private int maxSpawnAmount;
+    private int maxSpawnAmount, currentSpawnAmount;
     [HideInInspector]
-    public int waveCount, currentSpawnAmount;
+    public int waveCount;
 
     public List<GameObject> spawnPointArray = new List<GameObject>(); // Place all the spawnpoint of the level here. Place wich minions need to be spawned
     public List<string> spawnPointTagArray = new List<string>(); // All the tags of the spawnpoint. is needed to see wich spawnpoints need to be activated.
@@ -24,11 +24,14 @@ public class SpawnManager : MonoBehaviour {
         SetAmountLength();
         SaveSpawnAmount();
         AddOffList(); // adds the waypoints to a non active list
-        CheckForActivation(0); // Checks wich enemies needs to be activated
+        CheckForActivation(0); // Checks wich spawnpoints needs to be activated
+        CheckCurrentWave(); // check the enemies alive for the current wave to see if a new wave needs to start
     }
 
     public void CheckCurrentWave() {
-        if (currentSpawnAmount == 0) {
+        currentSpawnAmount--;
+        if (currentSpawnAmount <= 0) {
+            print("newwave");
             StartCoroutine(StartNewWave(timeBetweenWaves));
         }
     }
@@ -46,7 +49,6 @@ public class SpawnManager : MonoBehaviour {
                 offSpawnList.Remove(offSpawnList[i]);
             }
         }
-        CheckCurrentWave();
     }
 
     void AddOffList() {
@@ -56,9 +58,8 @@ public class SpawnManager : MonoBehaviour {
     }
 
     void CheckWaveStats() {
-        waveCount++;
-        ResetSpawnAmount();
-        for (int i = 0; i <= spawnAmount.Count - 1; i++) {
+        ResetSpawnAmount(); //reset the saved amount for the enemies to be spawned
+        for (int i = 0; i <= spawnAmount.Count - 1; i++) { // incrases the wave amount depending on the currentwave
             float Calcu = increaseProcentPerWave * waveCount;
             Calcu = Calcu / 100;
             Calcu += 1;
@@ -71,8 +72,8 @@ public class SpawnManager : MonoBehaviour {
             minionArray[i].GetComponent<MinionStats>().IncreaseStats(100 + (increaseStatsPerWave * waveCount));
         }
 
-        SaveSpawnAmount();
-        NewWave();
+        SaveSpawnAmount(); // saves the enemie amount that needs to be respawned so it can be reseted later
+        NewWave(); // starts the new wave
     }
 
     void SetAmountLength() {
@@ -95,16 +96,8 @@ public class SpawnManager : MonoBehaviour {
     }
 
     void NewWave() {
-        for (int i = 0; i < spawnAmount.Count; i++) {
-            maxSpawnAmount += spawnAmount[i];
-        }
 
-        for (int ii = 0; ii < spawnAmount.Count; ii++) {
-            //float count = activeSpawnList.Count;
-            //print(count);
-           // float temp = (float)spawnAmount[ii];
-          //  print(temp);
-           // temp = temp / count;
+        for (int ii = 0; ii < spawnAmount.Count; ii++) { // distributes the needed to be spawned enmies equally over the spawnpoints and saves it in a list.
             float temp = spawnAmount[ii] / activeSpawnList.Count;
             amountForEachSpawner[ii] = (int)temp;
             print(temp);
@@ -114,24 +107,24 @@ public class SpawnManager : MonoBehaviour {
             amountForEachSpawner[ii] = (int)temp;
         }
 
-        for (int i = 0; i < activeSpawnList.Count; i++) {
+        for (int i = 0; i < amountForEachSpawner.Count; i++) { // because of rounding some counts  might turn out different, so this is set to the amount of enemies to be spawned.
+            maxSpawnAmount += (amountForEachSpawner[i] * activeSpawnList.Count);
+        }
+
+        for (int i = 0; i < activeSpawnList.Count; i++) { // gives the class to the spawners so it can be accessed later.
             Spawner tempClass = activeSpawnList[i].GetComponent<Spawner>();
 
-            for (int ii = 0; ii <= spawnAmount.Count-1; ii++) {
+            for (int ii = 0; ii <= spawnAmount.Count-1; ii++) { // adds the amount that need to be spawned to the lists.
                 tempClass.spawnAmount.Add(amountForEachSpawner[ii]);
-                spawnAmount[ii] -= amountForEachSpawner[ii];
             }
         }
 
-        for (int i = 0; i < spawnAmount.Count; i++) {
-            maxSpawnAmount -= spawnAmount[i];
-        }
-
         currentSpawnAmount = maxSpawnAmount;
-        print(currentSpawnAmount);
+        maxSpawnAmount = 0;
 
-        for (int i = 0; i < activeSpawnList.Count; i++) {
-            // activeSpawnList[i].GetComponent<Spawner>().StartCoroutine(activeSpawnList[i].GetComponent<Spawner>().Spawning(timeBetweenMinions));
+        for (int i = 0; i < activeSpawnList.Count; i++) { //start the spawn Coroutines.
+            activeSpawnList[i].GetComponent<Spawner>().StartCoroutine(activeSpawnList[i].GetComponent<Spawner>().Spawning(timeBetweenMinions));
         }
+        waveCount++; // adds the wave count.
     }
 }
