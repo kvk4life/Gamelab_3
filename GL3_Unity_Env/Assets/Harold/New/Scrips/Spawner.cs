@@ -6,29 +6,28 @@ public class Spawner : MonoBehaviour {
 
     public GameObject[] minionObjects;
     public SpawnManager spawnManager;
-    public int test;
 
     public List<int> spawnAmount = new List<int>();
 
-
-    // Use this for initialization
-    void Start () {
-        //test = 20;
-      //  WhileTest();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-    void WhileTest() {
-      //  while(test > 0) {
-
-       // }
-    }
-
-    public IEnumerator Spawning(float timer) {
+    public IEnumerator Spawning(float timer) { //spawns the enemies
         yield return new WaitForSeconds(timer);
+        if(spawnAmount[0] > 0) {
+            spawnManager.CheckCurrentWave();
+            spawnAmount[0]--;
+            print("spawned");
+            StopCoroutine("Spawning");
+            StartCoroutine(Spawning(timer));
+        }
+        else {
+            if (0 != spawnAmount.Count-1) {
+                spawnAmount.Remove(spawnAmount[0]);
+                StopCoroutine("Spawning");
+                StartCoroutine(Spawning(timer));
+            }
+            else {
+                print("done");
+                StopCoroutine("Spawning");
+            }
+        }
     }
 }
