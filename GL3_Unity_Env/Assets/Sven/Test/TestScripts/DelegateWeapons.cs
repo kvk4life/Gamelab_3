@@ -7,7 +7,7 @@ public class DelegateWeapons : MonoBehaviour {
 	public delegate void LeftHandedLight (int damage, float cooldown);
 	public delegate void RightHandedHeavy (int damage, float cooldown);
 	public delegate void LeftHandedHeavy (int damage, float cooldown);
-	public delegate void ChargeAttack (int damage);
+	public delegate void ChargeAttack (int damage, float cooldown);
 
 	public RightHandedLight rhLight;
 	public LeftHandedLight lhLight;
@@ -15,9 +15,12 @@ public class DelegateWeapons : MonoBehaviour {
 	public LeftHandedHeavy lhHeavy;
 	public ChargeAttack charge;
 
-	public int damageRHL, damageRHH, damageLHL, damageLHH;
+	public int damageRHL, damageRHH, damageLHL, damageLHH, chargeH;
 
-	public float cooldownRHL, cooldownRHH, cooldownLHL, cooldownLHH;
+	public float cooldownRHL, cooldownRHH, cooldownLHL, cooldownLHH, cooldownCharge;
+
+	public float countTimer;
+	public float maxTimer;
 
 	void Start () {
 	
@@ -30,6 +33,8 @@ public class DelegateWeapons : MonoBehaviour {
 	}
 
 	public void TriggerDetect (){
+
+		bool mayCharge;
 
 		float getInputTriggers;
 		bool getInputCharge;
@@ -60,8 +65,23 @@ public class DelegateWeapons : MonoBehaviour {
 			}
 		}
 
-		if(getInputCharge == true){
-			print("LOL");
+		if(getInputCharge == true && mayCharge == true){
+			if(charge != null){
+				print("LOL1");
+				ChargeTimer();
+			}
+		}
+	}
+
+	public void ChargeTimer (){
+
+		countTimer += 1.0f * Time.deltaTime;
+
+		if(countTimer > maxTimer){
+			print("LOL2");
+			mayCharge = false;
+			charge (chargeH, cooldownCharge);
+			countTimer = 0;
 		}
 	}
 }

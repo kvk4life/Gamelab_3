@@ -60,10 +60,12 @@ public class Combat : MonoBehaviour {
 		delegateWeapon.lhLight = null;
 		delegateWeapon.rhHeavy = null;
 		delegateWeapon.lhHeavy = null;
+		delegateWeapon.charge = null;
 		delegateWeapon.rhLight = Attack;
 		delegateWeapon.lhLight = Attack;
 		delegateWeapon.rhHeavy = Attack;
 		delegateWeapon.lhHeavy = Attack;
+		delegateWeapon.charge = Attack;
 
 	}
 
