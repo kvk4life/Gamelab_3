@@ -22,6 +22,8 @@ public class DelegateWeapons : MonoBehaviour {
 	public float countTimer;
 	public float maxTimer;
 
+	public bool mayCharge;
+
 	void Start () {
 	
 	}
@@ -33,9 +35,7 @@ public class DelegateWeapons : MonoBehaviour {
 	}
 
 	public void TriggerDetect (){
-
-		bool mayCharge;
-
+		
 		float getInputTriggers;
 		bool getInputCharge;
 
