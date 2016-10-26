@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//Sven Evertse ©
+
 public class DelegateWeapons : MonoBehaviour {
 
 	public delegate void RightHandedLight (int damage, float cooldown);

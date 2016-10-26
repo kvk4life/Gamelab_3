@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+//Sven Evertse ©
+
 public class Combat : MonoBehaviour {
 
 	public int damage;
