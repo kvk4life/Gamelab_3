@@ -72,7 +72,7 @@ public class SpawnManager : MonoBehaviour {
             minionArray[i].GetComponent<MinionStats>().IncreaseStats(100 + (increaseStatsPerWave * waveCount));
         }
 
-        SaveSpawnAmount(); // saves the enemie amount that needs to be respawned so it can be reseted later
+        SaveSpawnAmount(); // saves the enemie amount that needs to be respawned so it can be reseted if needed
         NewWave(); // starts the new wave
     }
 
@@ -123,7 +123,8 @@ public class SpawnManager : MonoBehaviour {
         maxSpawnAmount = 0;
 
         for (int i = 0; i < activeSpawnList.Count; i++) { //start the spawn Coroutines.
-            activeSpawnList[i].GetComponent<Spawner>().StartCoroutine(activeSpawnList[i].GetComponent<Spawner>().Spawning(timeBetweenMinions));
+            activeSpawnList[i].GetComponent<Spawner>().counter = 0;
+           activeSpawnList[i].GetComponent<Spawner>().StartCoroutine(activeSpawnList[i].GetComponent<Spawner>().Spawning(timeBetweenMinions));
         }
         waveCount++; // adds the wave count.
     }
