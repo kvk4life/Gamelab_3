@@ -13,10 +13,6 @@ public class WeaponStorage : MonoBehaviour {
 	}
 	
 	void Update () {
-	
-		if(Input.GetButtonDown("Jump")){
-			GetWeapons ();
-		}
 
 	}
 
