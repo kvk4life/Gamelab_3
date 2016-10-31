@@ -83,12 +83,14 @@ public class WeaponPickup : MonoBehaviour {
 			case 0:
 
 				currentWeapon = weapons[0];
+				currentWeapon.SetActive(true);
 
 			break;
 
 			case 1:
 
 				currentWeapon = weapons[1];
+				currentWeapon.SetActive(true);
 
 			break;
 		}
