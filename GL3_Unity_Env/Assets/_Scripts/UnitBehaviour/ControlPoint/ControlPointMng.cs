@@ -9,7 +9,7 @@ public class ControlPointMng : MonoBehaviour {
 
     public void Start() {
         theControlPoint = controlPoint.GetComponent<ControlPoint>();
-        UnpoolControlPoint();
+        controlPoint.GetComponent<ControlPoint>().Enabler(false);
     }
 
     public void UnpoolControlPoint() {

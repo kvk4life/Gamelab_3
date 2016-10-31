@@ -13,16 +13,12 @@ public class ControlPoint : MonoBehaviour {
     public float eventTimerPercentage;
     public string eventFunctionName;
     public GameObject myCrystal;
-    private Collider crystalCol;
-    private Renderer crystalRend;
 
-    void Start() {
+    void Awake() {
         startHealth = curHealth;
-        ListUpdater();
         myAnim = GetComponent<Animator>();
         myClip = myAnim.runtimeAnimatorController.animationClips[myClipInt];
-        float clipLength = myClip.length;
-        myEvent.time = clipLength / 100 * eventTimerPercentage;
+        myEvent.time = myClip.length / 100 * eventTimerPercentage;
         myEvent.functionName = eventFunctionName;
         myClip.AddEvent(myEvent);
     }
@@ -33,29 +29,24 @@ public class ControlPoint : MonoBehaviour {
         }
     }
 
-    public void ListUpdater() {
-        if (myCrystal != null) {
-            crystalCol = myCrystal.GetComponent<Collider>();
-            crystalRend = myCrystal.GetComponent<Renderer>();
-        }
-    }
-
     public void HealthChecker(int recievedDamage) {
-        curHealth -= recievedDamage;
-        if (curHealth < 1) {
-            curHealth = 0;
-            Death();
+        if (!pooled) {
+            curHealth -= recievedDamage;
+            if (curHealth < 1)
+            {
+                curHealth = 0;
+                Death();
+            }
         }
     }
 
     public void Death() {
-        myAnim.SetBool("Destroy", true);
+        myAnim.SetBool("destroy", true);
     }
 
     public void Enabler(bool trueOrFalse) {
-        if (crystalCol != null) {
-            crystalCol.enabled = trueOrFalse;
-            crystalRend.enabled = trueOrFalse;
+        if (myCrystal != null) {
+            myCrystal.SetActive(trueOrFalse);
         }
     }
 
@@ -64,7 +55,7 @@ public class ControlPoint : MonoBehaviour {
         transform.position = controlPointPos;
         curHealth = startHealth;
         if (myAnim != null) {
-            myAnim.SetBool("Destroy", false);
+            myAnim.SetBool("destroy", false);
         }  
         Enabler(true);
     }

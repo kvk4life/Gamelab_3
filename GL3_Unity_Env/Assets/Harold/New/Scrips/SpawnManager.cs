@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class SpawnManager : MonoBehaviour {
 
+    public GameObject RoundMng;
+
     public int increaseProcentPerWave, increaseStatsPerWave, startingWave; //with how much % do you want to incease the stats and the amonut of enemies that need to be spawned, the armount enemies currently spawned, the wave you start at
     public float timeBetweenWaves, timeBetweenMinions; // time between each wave after a wave is finished. spawn time between the minions
     private int maxSpawnAmount, currentSpawnAmount;
@@ -127,5 +129,6 @@ public class SpawnManager : MonoBehaviour {
            activeSpawnList[i].GetComponent<Spawner>().StartCoroutine(activeSpawnList[i].GetComponent<Spawner>().Spawning(timeBetweenMinions));
         }
         waveCount++; // adds the wave count.
+        RoundMng.GetComponent<RoundMng>().CalculateRound(); // Tells the RoundMng to calculate the current round
     }
 }
