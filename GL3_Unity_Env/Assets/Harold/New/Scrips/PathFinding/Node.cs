@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Node : IHeapItem<Node> { 
+public class Node : IHeapItem<Node> {
 
-    public bool walkeble;
+    public bool walkable;
     public Vector3 worldPosition;
     public int gridX;
     public int gridY;
@@ -13,14 +13,14 @@ public class Node : IHeapItem<Node> {
     public Node parent;
     int heapIndex;
 
-    public Node(bool _walkeble, Vector3 _worldPos, int _gridX, int _gridY) {
-        walkeble = _walkeble;
+    public Node(bool _walkable, Vector3 _worldPos, int _gridX, int _gridY) {
+        walkable = _walkable;
         worldPosition = _worldPos;
         gridX = _gridX;
         gridY = _gridY;
     }
 
-    public int FCost {
+    public int fCost {
         get {
             return gCost + hCost;
         }
@@ -36,10 +36,11 @@ public class Node : IHeapItem<Node> {
     }
 
     public int CompareTo(Node nodeToCompare) {
-        int compare = FCost.CompareTo(nodeToCompare.FCost);
-        if(compare == 0) {
+        int compare = fCost.CompareTo(nodeToCompare.fCost);
+        if (compare == 0) {
             compare = hCost.CompareTo(nodeToCompare.hCost);
         }
         return -compare;
     }
 }
+
