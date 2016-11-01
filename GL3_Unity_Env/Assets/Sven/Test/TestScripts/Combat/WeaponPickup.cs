@@ -61,15 +61,17 @@ public class WeaponPickup : MonoBehaviour {
 		}
 	}
 
-	void WeaponSwitch () {
+	public void WeaponSwitch () {
 
-		if(Input.GetButtonDown("DpadLeft")){
+		if(Input.GetAxis("DpadHor") < 0){
+			print(0);
 
 			Switcher(0);
 
 		}
 
-		if(Input.GetButtonDown("DpadRight")){
+		if(Input.GetAxis("DpadHor") > 0){
+			print(1);
 
 			Switcher(1);
 
