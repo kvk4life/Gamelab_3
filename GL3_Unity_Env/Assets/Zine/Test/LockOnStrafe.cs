@@ -18,13 +18,13 @@ public class LockOnStrafe : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("RB"))
+        /*if (Input.GetButtonDown("RB"))
         {
             orbit.ExitSprint();
             orbit.camMode=CameraMode.ThirdPersonStrafe;
             StopAllCoroutines();
             StartCoroutine(LockOn());
-        }
+        }*/
         if(Input.GetButtonUp("RB"))
         {
             orbit.camMode = CameraMode.ThirdPerson;
@@ -32,7 +32,7 @@ public class LockOnStrafe : MonoBehaviour
             StartCoroutine(LockOff());
         }
 
-        if(Input.GetAxis("Triggers")<0)
+/*        if(Input.GetAxis("Triggers")<0)
         {
             orbit.ExitSprint();
             orbit.camMode=CameraMode.FirstPerson;
@@ -43,7 +43,7 @@ public class LockOnStrafe : MonoBehaviour
                 triggerPressed=true;
             }
 
-        }
+        }*/
 
         if(Input.GetButtonDown("R3"))
         {

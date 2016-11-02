@@ -33,6 +33,9 @@ public class PointMng : MonoBehaviour {
 
     public void AddPoints(int addPoints) {
         int multiplyedPoints = addPoints * multiplyer;
+
+        ComboChain();
+
         curPoints += addPoints;
         UpdateHUD();
     }
@@ -42,7 +45,6 @@ public class PointMng : MonoBehaviour {
         int comboChecker = comboDivider - comboCount;
         if (comboCount == comboDivider) {
             comboDivider += comboCount;
-            print(comboDivider);
         }
         if (comboChecker == 0 && multiplyer < maxMultiplyer) {
             multiplyer *= multiplyerIncreaser;
