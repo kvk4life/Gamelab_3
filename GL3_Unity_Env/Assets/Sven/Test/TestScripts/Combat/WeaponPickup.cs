@@ -21,8 +21,6 @@ public class WeaponPickup : MonoBehaviour {
 		
 		weaponStorage = GetComponent<WeaponStorage>();
 
-		Switcher(0);
-
 	}
 	
 	void Update () {
@@ -38,24 +36,24 @@ public class WeaponPickup : MonoBehaviour {
 			if(Physics.Raycast(transform.position, transform.forward, out hit, distance)){
 				if(hit.transform.tag == weaponTag){
 					weaponStorage.GetWeapons();
-					StoreWeapon(hit.transform.gameObject);
+					StoreWeapon(hit.transform.gameObject, 1);
 					Destroy(hit.transform.gameObject);
 				}
 			}
 		}
 	}
 
-	public void StoreWeapon (GameObject storeWeapon) {
+	public void StoreWeapon (GameObject storeWeapon, int nullChecker) {
 
 		weaponStorage.wantedWeapon = storeWeapon.name;
 
-		if(weapons[1] == null){
-			weapons[1] = weaponStorage.curWeapon;
+		if(weapons[nullChecker] == null){
+			weapons[nullChecker] = weaponStorage.spawn;
 		}
 		else{
 			for(int i = 0; i < weapons.Length; i ++){
 				if(currentWeapon.name == weapons[i].name){
-					weapons[i] = weaponStorage.curWeapon;
+					weapons[i] = weaponStorage.spawn;
 				}
 			}
 		}
@@ -78,7 +76,7 @@ public class WeaponPickup : MonoBehaviour {
 		}
 	}
 
-	void Switcher (int switcher) {
+	public void Switcher (int switcher) {
 
 		switch (switcher){
 

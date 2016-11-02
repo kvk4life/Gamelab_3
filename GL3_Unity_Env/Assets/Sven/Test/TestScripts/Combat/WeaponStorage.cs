@@ -5,6 +5,7 @@ public class WeaponStorage : MonoBehaviour {
 
 	public GameObject [] weaponStorage;
 	public GameObject curWeapon;
+	public GameObject spawn;
 
 	public Transform weaponSpawn;
 
@@ -13,6 +14,8 @@ public class WeaponStorage : MonoBehaviour {
 	void Start () {
 	
 		GetWeapons();
+		GetComponent<WeaponPickup>().StoreWeapon(spawn, 0);
+		GetComponent<WeaponPickup>().Switcher(0);
 
 	}
 	
@@ -25,7 +28,7 @@ public class WeaponStorage : MonoBehaviour {
 		for(int i = 0; i < weaponStorage.Length; i ++){
 			if(wantedWeapon == weaponStorage[i].name){
 				curWeapon = Resources.Load(weaponStorage[i].name) as GameObject;
-				GameObject spawn = Instantiate(curWeapon, weaponSpawn.position, weaponSpawn.rotation) as GameObject;
+				spawn = Instantiate(curWeapon, weaponSpawn.position, weaponSpawn.rotation) as GameObject;
 				spawn.transform.SetParent(weaponSpawn);
 			}
 		}
