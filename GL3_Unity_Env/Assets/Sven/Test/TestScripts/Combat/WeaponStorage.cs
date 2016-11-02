@@ -14,7 +14,7 @@ public class WeaponStorage : MonoBehaviour {
 	void Start () {
 	
 		GetWeapons();
-		GetComponent<WeaponPickup>().StoreWeapon(spawn, 0);
+		GetComponent<WeaponPickup>().StoreWeapon(0);
 		GetComponent<WeaponPickup>().Switcher(0);
 
 	}

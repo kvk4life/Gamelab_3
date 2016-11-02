@@ -15,6 +15,8 @@ public class WeaponPickup : MonoBehaviour {
 
 	public string weaponTag;
 
+	int switchCount;
+
 	WeaponStorage weaponStorage;
 
 	void Start () {
@@ -34,44 +36,49 @@ public class WeaponPickup : MonoBehaviour {
 
 		if(Input.GetButtonDown("X")){
 			if(Physics.Raycast(transform.position, transform.forward, out hit, distance)){
+				weaponStorage.wantedWeapon = hit.transform.name;
 				if(hit.transform.tag == weaponTag){
 					weaponStorage.GetWeapons();
-					StoreWeapon(hit.transform.gameObject, 1);
+					StoreWeapon(1);
 					Destroy(hit.transform.gameObject);
 				}
 			}
 		}
 	}
 
-	public void StoreWeapon (GameObject storeWeapon, int nullChecker) {
-
-		weaponStorage.wantedWeapon = storeWeapon.name;
+	public void StoreWeapon (int nullChecker) {
 
 		if(weapons[nullChecker] == null){
 			weapons[nullChecker] = weaponStorage.spawn;
 		}
 		else{
 			for(int i = 0; i < weapons.Length; i ++){
+				if(switchCount == i){
+					Destroy(currentWeapon);
+				}
 				if(currentWeapon.name == weapons[i].name){
 					weapons[i] = weaponStorage.spawn;
 				}
 			}
 		}
+
+		Switcher(switchCount);
+		
 	}
 
 	public void WeaponSwitch () {
 
 		if(Input.GetAxis("DpadHor") < 0){
-			print(0);
 
-			Switcher(0);
+			switchCount = 0;
+			Switcher(switchCount);
 
 		}
 
 		if(Input.GetAxis("DpadHor") > 0){
-			print(1);
 
-			Switcher(1);
+			switchCount = 1;
+			Switcher(switchCount);
 
 		}
 	}
@@ -82,15 +89,29 @@ public class WeaponPickup : MonoBehaviour {
 
 			case 0:
 
-				currentWeapon = weapons[0];
-				currentWeapon.SetActive(true);
+				if(weapons[switcher] != null){
+
+					currentWeapon = weapons[switcher];
+					currentWeapon.SetActive(true);
+
+					if(weapons[1]  != null){
+						weapons[1].SetActive(false);
+					}
+				}
 
 			break;
 
 			case 1:
 
-				currentWeapon = weapons[1];
-				currentWeapon.SetActive(true);
+				if(weapons[switcher] != null){
+
+					currentWeapon = weapons[switcher];
+					currentWeapon.SetActive(true);
+
+					if(weapons[0]  != null){
+						weapons[0].SetActive(false);
+					}
+				}
 
 			break;
 		}
