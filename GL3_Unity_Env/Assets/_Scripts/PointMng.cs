@@ -13,6 +13,7 @@ public class PointMng : MonoBehaviour {
     public int startComboDivider;
     public float chainTimer;
     public Text displayedPoints;
+    public Text comboDisplay;//dit wordt later waarschijnlijk een image
     private Coroutine comboCoroutine;
 
     public void Start() {
@@ -22,22 +23,32 @@ public class PointMng : MonoBehaviour {
 
     public void Update() {
         if (Input.GetButtonDown("Jump")) {
-            ComboChain();
+            AddPoints(1);
         }
     }
 
-    public void UpdateHUD() {
-        string myPoints = string.Format("{0}", curPoints); ;
-        displayedPoints.text = myPoints;
+    public void UpdateHUD(string whichHUD) {
+        switch (whichHUD) {
+            case "AddPoints":
+                string myPoints = string.Format("{0}", curPoints);
+                displayedPoints.text = myPoints;
+                break;
+            case "ComboChain":
+                //verander hier die combomultiplier
+                string myCombo = "X" + (string.Format("{0}", multiplyer));
+                comboDisplay.text = myCombo;
+                break;
+            case "EmptyChain":
+                comboDisplay.text = null;
+                break;
+        }
     }
 
     public void AddPoints(int addPoints) {
         int multiplyedPoints = addPoints * multiplyer;
-
         ComboChain();
-
-        curPoints += addPoints;
-        UpdateHUD();
+        curPoints += multiplyedPoints;
+        UpdateHUD("AddPoints");
     }
 
     public void ComboChain() {
@@ -48,6 +59,7 @@ public class PointMng : MonoBehaviour {
         }
         if (comboChecker == 0 && multiplyer < maxMultiplyer) {
             multiplyer *= multiplyerIncreaser;
+            UpdateHUD("ComboChain");
             print(multiplyer);
         }
         if (comboCoroutine != null) {
@@ -58,9 +70,20 @@ public class PointMng : MonoBehaviour {
 
     public IEnumerator ChainCountdown() {
         yield return new WaitForSeconds(chainTimer);
+        EndComboChain();
+    }
+
+    public void EndComboChain() {
         comboCount = 0;
         comboDivider = startComboDivider;
         multiplyer = startMultiplyer;
-        print("Chain has ended");
+        UpdateHUD("EmptyChain");
+    }
+
+    public void ForcedComboShutdown() {
+        if (comboCoroutine != null) {
+            StopCoroutine(comboCoroutine);
+            EndComboChain();
+        }
     }
 }
