@@ -24,6 +24,6 @@ public class ControlPointMng : MonoBehaviour {
     }
 
     public void BonusThePlayers() {
-
+        print("Player gets the Bonus!");
     }
 }

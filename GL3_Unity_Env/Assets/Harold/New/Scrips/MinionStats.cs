@@ -23,6 +23,6 @@ public class MinionStats : MonoBehaviour {
 	}
 
     public void IncreaseStats(int incraseAmount) {
-        print(incraseAmount);
+        print("Increase amount = " + incraseAmount);
     }
 }

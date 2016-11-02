@@ -33,7 +33,6 @@ public class SpawnManager : MonoBehaviour {
     public void CheckCurrentWave() {
         currentSpawnAmount--;
         if (currentSpawnAmount <= 0) {
-            print("newwave");
             StartCoroutine(StartNewWave(timeBetweenWaves));
         }
     }
@@ -102,7 +101,6 @@ public class SpawnManager : MonoBehaviour {
         for (int ii = 0; ii < spawnAmount.Count; ii++) { // distributes the needed to be spawned enmies equally over the spawnpoints and saves it in a list.
             float temp = spawnAmount[ii] / activeSpawnList.Count;
             amountForEachSpawner[ii] = (int)temp;
-            print(temp);
             if (temp < 1) {
                 temp = 1;
             }

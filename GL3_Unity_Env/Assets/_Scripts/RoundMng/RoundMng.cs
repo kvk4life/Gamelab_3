@@ -6,16 +6,18 @@ public class RoundMng : MonoBehaviour {
     public float curWaveCount;
     public float waveCountDivider;
     public float startCountdown;
+    public float newRoundCd;
     public GameObject controlPointMng;
+    public ControlPointMng cpMng;
 
     public void Start() {
-        curRound++;
-        StartCoroutine("CountdownToStart");
+        cpMng = controlPointMng.GetComponent<ControlPointMng>();
+        StartCoroutine(CountdownNewRound(startCountdown));
     }
 
-    public IEnumerator CountdownToStart() {
-        yield return new WaitForSeconds(startCountdown);
-        controlPointMng.GetComponent<ControlPointMng>().UnpoolControlPoint();
+    public IEnumerator CountdownNewRound(float countdownSeconds) {
+        yield return new WaitForSeconds(countdownSeconds);
+        cpMng.UnpoolControlPoint();
     }
 
     public void CalculateRound() {
@@ -25,11 +27,11 @@ public class RoundMng : MonoBehaviour {
             curWaveCount = 0;
             curRound++;
             NextRoundMng();
-            print("Ik zit in ronde " + curRound);
         }
     }
 
     public void NextRoundMng() {
-
+        cpMng.ControlPointSucces();
+        StartCoroutine(CountdownNewRound(newRoundCd));
     }
 }
