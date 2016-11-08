@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//Sven Evertse ©
+
 public class WeaponStorage : MonoBehaviour {
 
 	public GameObject [] weaponStorage;
