@@ -12,29 +12,32 @@ public class PathRequestManager : MonoBehaviour {
     PathFinding pathfinding;
 
     bool isProcessingPath;
+    bool amIFlyable;
 
     void Awake() {
         instance = this;
         pathfinding = GetComponent<PathFinding>();
     }
 
-    public static void RequestPath(Vector3 pathStart, Vector3 pathEnd, Action<Vector3[], bool> callback) {
+    public static void RequestPath(Vector3 pathStart, Vector3 pathEnd, Action<Vector3[], bool> callback, bool flyable) {
         PathRequest newRequest = new PathRequest(pathStart, pathEnd, callback);
-        print(instance);
-        instance.pathRequestQueue.Enqueue(newRequest);
-        instance.TryProcessNext();
+        if (instance != null) {
+            instance.amIFlyable = flyable;
+            instance.pathRequestQueue.Enqueue(newRequest);
+            instance.TryProcessNext();
+        }
     }
 
     void TryProcessNext() {
         if (!isProcessingPath && pathRequestQueue.Count > 0) {
             currentPathRequest = pathRequestQueue.Dequeue();
             isProcessingPath = true;
-            pathfinding.StartFindPath(currentPathRequest.pathStart, currentPathRequest.pathEnd);
+            pathfinding.StartFindPath(currentPathRequest.pathStart, currentPathRequest.pathEnd, amIFlyable);
         }
     }
 
-    public void FinishedProcessingPath(Vector3[] path, bool success) {
-        currentPathRequest.callback(path, success);
+    public void FinishedProcessingPath(Vector3[] path, bool succes) {
+        currentPathRequest.callback(path, succes);
         isProcessingPath = false;
         TryProcessNext();
     }
@@ -49,7 +52,6 @@ public class PathRequestManager : MonoBehaviour {
             pathEnd = _end;
             callback = _callback;
         }
-
     }
 }
 

@@ -2,25 +2,27 @@
 using System.Collections;
 
 public class Node : IHeapItem<Node> {
-
-    public bool walkable;
-    public Vector3 worldPosition;
+    public float gCost;
+    public float hCost;
     public int gridX;
     public int gridY;
-
-    public int gCost;
-    public int hCost;
+    public int gridZ;
+    public Vector3 worldPos;
+    public bool walkable;
+    public bool flyable;
     public Node parent;
-    int heapIndex;
+    private int heapIndex;
 
-    public Node(bool _walkable, Vector3 _worldPos, int _gridX, int _gridY) {
-        walkable = _walkable;
-        worldPosition = _worldPos;
-        gridX = _gridX;
-        gridY = _gridY;
+    public Node(int x, int y, int z, Vector3 world, bool mayWalk, bool mayFly) {
+        gridX = x;
+        gridY = y;
+        gridZ = z;
+        worldPos = world;
+        walkable = mayWalk;
+        flyable = mayFly;
     }
 
-    public int fCost {
+    public float fCost {
         get {
             return gCost + hCost;
         }
@@ -43,4 +45,3 @@ public class Node : IHeapItem<Node> {
         return -compare;
     }
 }
-

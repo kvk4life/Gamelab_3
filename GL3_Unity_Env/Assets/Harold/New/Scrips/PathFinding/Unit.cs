@@ -3,20 +3,19 @@ using System.Collections;
 
 public class Unit : MonoBehaviour {
 
-
     public Transform target;
     public float speed;
+    public bool flyable;
     Vector3[] path;
     int targetIndex;
 
     void Start() {
-        PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+       PathRequestManager.RequestPath(transform.position, target.position, OnPathFound, flyable);
     }
 
-    public void OnPathFound(Vector3[] newPath, bool pathSuccessful) {
-        if (pathSuccessful) {
+    public void OnPathFound(Vector3[] newPath, bool pathSuccesful) {
+        if (pathSuccesful) {
             path = newPath;
-            targetIndex = 0;
             StopCoroutine("FollowPath");
             StartCoroutine("FollowPath");
         }
@@ -32,27 +31,8 @@ public class Unit : MonoBehaviour {
                 }
                 currentWaypoint = path[targetIndex];
             }
-
-            transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed);
             yield return null;
-
-        }
-    }
-
-    public void OnDrawGizmos() {
-        if (path != null) {
-            for (int i = targetIndex; i < path.Length; i++) {
-                Gizmos.color = Color.black;
-                Gizmos.DrawCube(path[i], Vector3.one);
-
-                if (i == targetIndex) {
-                    Gizmos.DrawLine(transform.position, path[i]);
-                }
-                else {
-                    Gizmos.DrawLine(path[i - 1], path[i]);
-                }
-            }
         }
     }
 }
-
