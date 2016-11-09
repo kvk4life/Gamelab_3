@@ -1,23 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CustomButton : MonoBehaviour {
     public enum ButtonType{
         StartButton,
-        OptionButton,
-        SkilltreeButton,
-        HighscoreButton,
+        SwitchHUDButton,
         ExitGameButton
     }
     public ButtonType myButtonType;
     [HideInInspector]
+    public GameObject hUDMng;
+    public GameObject hUDToSwap;
+    [HideInInspector]
     public HUDController hUDControl;
     public Image activeMarker;
     public HUDController.ButtonDelegate buttonDel;
+    public bool firstTimeAwoken;
 
-    public void Start() {
-        DecideTheDel();
+    public void Awake() {
+        if (!firstTimeAwoken) {
+            DecideTheDel();
+            firstTimeAwoken = true;
+        }
     }
 
     public void DecideTheDel() {
@@ -25,17 +31,11 @@ public class CustomButton : MonoBehaviour {
             case ButtonType.StartButton:
                 buttonDel = ButtonStart;
                 break;
-            case ButtonType.OptionButton:
-                buttonDel = ButtonOption;
-                break;
-            case ButtonType.SkilltreeButton:
-                buttonDel = ButtonSkilltree;
-                break;
-            case ButtonType.HighscoreButton:
-                buttonDel = ButtonHighscore;
+            case ButtonType.SwitchHUDButton:
+                buttonDel = ButtonSwapHUD;
                 break;
             case ButtonType.ExitGameButton:
-                buttonDel = ButtonExit;
+                buttonDel = ButtonExitGame;
                 break;
         }
     }
@@ -58,23 +58,18 @@ public class CustomButton : MonoBehaviour {
         hUDControl.buttonDel = buttonDel;
     }
 
-    public void ButtonOption() {
+    public void ButtonSwapHUD() {
+        hUDMng.GetComponent<HUDMng>().SwapHUD(hUDToSwap);
         print("I'm the option button!");
     }
 
-    public void ButtonHighscore() {
-        print("I'm the Highscores button!");
-    }
-
     public void ButtonStart() {
+        SceneManager.LoadScene(1);
         print("I'm the Start button!");
     }
 
-    public void ButtonExit() {
+    public void ButtonExitGame() {
+        Application.Quit();
         print("I'm the Exit Game Button!");
-    }
-
-    public void ButtonSkilltree() {
-        print("I'm the Skilltree button!");
     }
 }
