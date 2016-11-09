@@ -5,11 +5,40 @@ using UnityEngine.UI;
 public class CustomButton : MonoBehaviour {
     public enum ButtonType{
         StartButton,
-        OptionButton
+        OptionButton,
+        SkilltreeButton,
+        HighscoreButton,
+        ExitGameButton
     }
     public ButtonType myButtonType;
-    public Image activeMarker;
+    [HideInInspector]
     public HUDController hUDControl;
+    public Image activeMarker;
+    public HUDController.ButtonDelegate buttonDel;
+
+    public void Start() {
+        DecideTheDel();
+    }
+
+    public void DecideTheDel() {
+        switch (myButtonType) {
+            case ButtonType.StartButton:
+                buttonDel = ButtonStart;
+                break;
+            case ButtonType.OptionButton:
+                buttonDel = ButtonOption;
+                break;
+            case ButtonType.SkilltreeButton:
+                buttonDel = ButtonSkilltree;
+                break;
+            case ButtonType.HighscoreButton:
+                buttonDel = ButtonHighscore;
+                break;
+            case ButtonType.ExitGameButton:
+                buttonDel = ButtonExit;
+                break;
+        }
+    }
 
     public virtual void Unselect() {
         activeMarker.GetComponent<CanvasGroup>().alpha = 0;
@@ -26,10 +55,26 @@ public class CustomButton : MonoBehaviour {
     }
 
     public virtual void FillDelegate() {
-        hUDControl.buttonDel = MyButtonAction;
+        hUDControl.buttonDel = buttonDel;
     }
 
-    public virtual void MyButtonAction() {
+    public void ButtonOption() {
+        print("I'm the option button!");
+    }
 
+    public void ButtonHighscore() {
+        print("I'm the Highscores button!");
+    }
+
+    public void ButtonStart() {
+        print("I'm the Start button!");
+    }
+
+    public void ButtonExit() {
+        print("I'm the Exit Game Button!");
+    }
+
+    public void ButtonSkilltree() {
+        print("I'm the Skilltree button!");
     }
 }
