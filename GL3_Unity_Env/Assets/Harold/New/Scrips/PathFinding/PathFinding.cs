@@ -44,7 +44,7 @@ public class PathFinding : MonoBehaviour {
                     break;
                 }
                 foreach (Node neighbour in grid.GetNeighbours(currentNode)) {
-                    if (!checkFlyableStart || closedSet.Contains(neighbour)) {
+                    if (!checkFlyableStart || closedSet.Contains(neighbour) || !neighbour.walkable) {
                         continue;
                     }
                     float newMovementCostToNeighbour = currentNode.gCost + GetDistance(currentNode, neighbour);
