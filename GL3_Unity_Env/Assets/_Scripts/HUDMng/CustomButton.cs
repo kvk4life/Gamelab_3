@@ -17,13 +17,9 @@ public class CustomButton : MonoBehaviour {
     public HUDController hUDControl;
     public Image activeMarker;
     public HUDController.ButtonDelegate buttonDel;
-    public bool firstTimeAwoken;
 
-    public void Awake() {
-        if (!firstTimeAwoken) {
-            DecideTheDel();
-            firstTimeAwoken = true;
-        }
+    public void Start() {
+        DecideTheDel();
     }
 
     public void DecideTheDel() {
@@ -40,21 +36,22 @@ public class CustomButton : MonoBehaviour {
         }
     }
 
-    public virtual void Unselect() {
+    public void Unselect() {
         activeMarker.GetComponent<CanvasGroup>().alpha = 0;
         EmptyDelegate();
     }
 
-    public virtual void Selected() {
+    public void Selected() {
         activeMarker.GetComponent<CanvasGroup>().alpha = 1;
         FillDelegate();
     }
 
-    public virtual void EmptyDelegate() {
+    public void EmptyDelegate() {
         hUDControl.buttonDel = null;
     }
 
-    public virtual void FillDelegate() {
+    public void FillDelegate() {
+        print(buttonDel.Method.Name);
         hUDControl.buttonDel = buttonDel;
     }
 

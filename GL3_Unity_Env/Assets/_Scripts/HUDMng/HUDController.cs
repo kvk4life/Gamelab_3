@@ -8,16 +8,22 @@ public class HUDController : MonoBehaviour {
     public GameObject HUDMng;
     public GameObject[] buttonArray;
     public int selectedButton;
-    public bool firstTimeAwoken;
+
+    public void Start() {
+        for (int i = 0; i < buttonArray.Length; i++) {
+            CustomButton customButton = buttonArray[i].GetComponent<CustomButton>();
+            customButton.hUDControl = this;
+            customButton.hUDMng = HUDMng;
+            customButton.EmptyDelegate();
+        }
+        InitializeMyButtons();
+    }
 
     public void Awake() {
-       if (!firstTimeAwoken) {
-            foreach (GameObject buttonsInArray in buttonArray) {
-                buttonsInArray.GetComponent<CustomButton>().hUDControl = this;
-                buttonsInArray.GetComponent<CustomButton>().hUDMng = HUDMng;
-            }
-            firstTimeAwoken = true;
-        }
+        InitializeMyButtons();
+    }
+
+    public void InitializeMyButtons() {
         buttonArray[selectedButton].GetComponent<CustomButton>().Selected();
     }
 
@@ -47,7 +53,7 @@ public class HUDController : MonoBehaviour {
 
     public void ActivateSelectedButton() {
         if (Input.GetButtonDown("Jump")) {
-            print(selectedButton);
+            print(buttonDel.Method.Name);
             buttonDel();
         }
     }
