@@ -12,6 +12,7 @@ public class WeaponPickup : MonoBehaviour {
 	public RaycastHit hit;
 
 	public float distance;
+	public float gitGudBoxCount;
 
 	public string weaponTag;
 
@@ -116,4 +117,17 @@ public class WeaponPickup : MonoBehaviour {
 			break;
 		}
 	}
+
+	public void ActivateGitGud () {
+
+		if(Input.GetButtonDown("X")){
+			if(Physics.Raycast(transform.position, transform.forward, out hit, distance)){
+				if(hit.transform.tag == "GitGudBox"){
+					
+				}
+			}
+		}
+
+	}
+
 }
