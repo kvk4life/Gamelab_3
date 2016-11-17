@@ -16,18 +16,13 @@ public class HUDController : MonoBehaviour {
             customButton.hUDControl = this;
             customButton.hUDMng = HUDMng;
             if (i == selectedButton) {
-                customButton.DecideTheDel();
-                customButton.Selected();
-            }
-            else {
-                customButton.EmptyDelegate();
+                SwapSelectedButton();
             }
         }
     }
 
     public void Awake() {
-        if (afterStart)
-        {
+        if (afterStart) {
             SwapSelectedButton();
         }
         else {
@@ -65,7 +60,6 @@ public class HUDController : MonoBehaviour {
 
     public void ActivateSelectedButton() {
         if (Input.GetButtonDown("Jump")) {
-            print(buttonDel.Method.Name);
             buttonDel();
         }
     }

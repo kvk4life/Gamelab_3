@@ -17,12 +17,12 @@ public class CustomButton : MonoBehaviour {
     public HUDController hUDControl;
     public Image activeMarker;
     public HUDController.ButtonDelegate buttonDel;
-    private bool alreadyDeicedTheDel;
+    private bool alreadyDecidedTheDel;
 
     public void Awake() {
-        if (!alreadyDeicedTheDel) {
+        if (!alreadyDecidedTheDel) {
             DecideTheDel();
-            alreadyDeicedTheDel = true;
+            alreadyDecidedTheDel = true;
         }
     }
 
@@ -55,12 +55,6 @@ public class CustomButton : MonoBehaviour {
     }
 
     public void FillDelegate() {
-        if (buttonDel == null) {
-            print(gameObject.name);
-        }
-        else {
-            print(buttonDel.Method.Name);
-        }
         hUDControl.buttonDel = buttonDel;
     }
 
