@@ -5,16 +5,19 @@ using System.Collections.Generic;
 public class HUDController : MonoBehaviour {
     public delegate void ButtonDelegate();
     public ButtonDelegate buttonDel;
-    public GameObject HUDMng;
+    public GameObject hUDMng;
     public GameObject[] buttonArray;
     public int selectedButton;
     public bool afterStart;
+    private float swapButtonRate;
+    private float nextSwapButton;
 
     public void Start() {
+        swapButtonRate = hUDMng.GetComponent<HUDMng>().swapButtonRate;
         for (int i = 0; i < buttonArray.Length; i++) {
             CustomButton customButton = buttonArray[i].GetComponent<CustomButton>();
             customButton.hUDControl = this;
-            customButton.hUDMng = HUDMng;
+            customButton.hUDMng = hUDMng;
             if (i == selectedButton) {
                 SwapSelectedButton();
             }
@@ -40,26 +43,28 @@ public class HUDController : MonoBehaviour {
     }
 
     public void SwitchButton() {
-        if (Input.GetButtonDown("Horizontal")) {
+        bool leftJoyYBool = Input.GetAxis("LeftJoyY") != 0;
+        if (leftJoyYBool && Time.time > nextSwapButton) {
             buttonArray[selectedButton].GetComponent<CustomButton>().Unselect();
-            if (Input.GetAxis("Horizontal") > 0) {
-                selectedButton++;
-                if (selectedButton > buttonArray.Length-1) {
-                    selectedButton = 0;
+            if (Input.GetAxis("LeftJoyY") > 0) {
+                selectedButton--;
+                if (selectedButton < 0) {
+                    selectedButton = buttonArray.Length - 1;
                 }
             }
             else {
-                selectedButton--;
-                if (selectedButton < 0) {
-                    selectedButton = buttonArray.Length-1;
+                selectedButton++;
+                if (selectedButton > buttonArray.Length - 1) {
+                    selectedButton = 0;
                 }
             }
             SwapSelectedButton();
+            nextSwapButton = Time.time + swapButtonRate;
         }
     }
 
     public void ActivateSelectedButton() {
-        if (Input.GetButtonDown("Jump")) {
+        if (Input.GetButtonDown("A")) {
             buttonDel();
         }
     }

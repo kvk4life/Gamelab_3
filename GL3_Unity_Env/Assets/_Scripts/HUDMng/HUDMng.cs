@@ -4,6 +4,7 @@ using System.Collections;
 public class HUDMng : MonoBehaviour {
     public GameObject[] hUDArray;
     private bool correctHUD;
+    public float swapButtonRate;
 
     public void SwapHUD(GameObject hUDToSwap) {
         for (int i = 0; i < hUDArray.Length; i++) {
