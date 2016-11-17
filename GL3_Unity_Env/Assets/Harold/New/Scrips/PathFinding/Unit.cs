@@ -10,6 +10,7 @@ public class Unit : MonoBehaviour {
     int targetIndex;
 
     void Start() {
+        target = GameObject.FindGameObjectWithTag("Champion").transform;
        PathRequestManager.RequestPath(transform.position, target.position, OnPathFound, flyable);
     }
 
@@ -31,7 +32,7 @@ public class Unit : MonoBehaviour {
                 }
                 currentWaypoint = path[targetIndex];
             }
-            transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed);
+            transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
             yield return null;
         }
     }
