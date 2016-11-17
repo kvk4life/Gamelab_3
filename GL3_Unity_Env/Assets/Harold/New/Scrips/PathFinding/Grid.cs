@@ -79,7 +79,7 @@ public class Grid : MonoBehaviour {
     }
 
     public void OnDrawGizmos() {
-        Gizmos.DrawWireCube(transform.position, new Vector3(worldSize.x, 1, worldSize.y));
+        Gizmos.DrawWireCube(transform.position, new Vector3(worldSize.x, worldSize.z, worldSize.y));
         if (grid != null && displayGridGizmos) {
             foreach (Node n in grid) {
                 Gizmos.color = (n.walkable) ? Color.blue : Color.red;
