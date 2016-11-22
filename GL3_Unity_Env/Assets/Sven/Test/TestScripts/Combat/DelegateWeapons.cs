@@ -23,7 +23,9 @@ public class DelegateWeapons : MonoBehaviour {
 
 	public float countTimer;
 	public float maxTimer;
-	
+
+	public bool mayCharge;
+
 	void Start () {
 	
 	}
@@ -47,17 +49,17 @@ public class DelegateWeapons : MonoBehaviour {
 				rhHeavy (damageRHH, cooldownRHH);
 			}
 		}
-		/*else if(getInputTriggers > 0){
+		else if(getInputTriggers > 0){
 			if(lhHeavy != null){
 				lhHeavy (damageLHH, cooldownLHH);
 			}
-		}*/
+		}
 
-		if(Input.GetButtonDown("LB")){
+		/*if(Input.GetButtonDown("LB")){
 			if(lhLight != null){
 				lhLight (damageLHL, cooldownLHL);
 			}
-		}
+		}*/
 
 		if(Input.GetButtonDown("RB")){
 			if(rhLight != null){
@@ -65,7 +67,7 @@ public class DelegateWeapons : MonoBehaviour {
 			}
 		}
 
-		if(getInputCharge == true){
+		if(getInputCharge == true && mayCharge == true){
 			if(charge != null){
 				print("LOL1");
 				ChargeTimer();
@@ -79,6 +81,7 @@ public class DelegateWeapons : MonoBehaviour {
 
 		if(countTimer > maxTimer){
 			print("LOL2");
+			mayCharge = false;
 			charge (chargeH, cooldownCharge);
 			countTimer = 0;
 		}
