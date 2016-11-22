@@ -28,7 +28,7 @@ public class GitGudBox : MonoBehaviour {
 	IEnumerator CheckWeapon (float cooldown) {
 		
 		SetWeapon(true);
-		print(randomWeapon);
+		print(weapons[randomWeapon].name);
 		yield return new WaitForSeconds(cooldown);
 		SetWeapon(false);
 
