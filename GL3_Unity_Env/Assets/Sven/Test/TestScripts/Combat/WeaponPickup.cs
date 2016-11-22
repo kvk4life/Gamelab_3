@@ -20,6 +20,8 @@ public class WeaponPickup : MonoBehaviour {
 
 	WeaponStorage weaponStorage;
 
+	public GitGudBox ggBox;
+
 	void Start () {
 		
 		weaponStorage = GetComponent<WeaponStorage>();
@@ -30,6 +32,7 @@ public class WeaponPickup : MonoBehaviour {
 	
 		WeaponSwitch ();
 		PickUp ();
+		ActivateGitGud ();
 
 	}
 
@@ -123,11 +126,10 @@ public class WeaponPickup : MonoBehaviour {
 		if(Input.GetButtonDown("X")){
 			if(Physics.Raycast(transform.position, transform.forward, out hit, distance)){
 				if(hit.transform.tag == "GitGudBox"){
-					
+					ggBox = hit.transform.gameObject.GetComponent<GitGudBox>();
+					ggBox.StartCoroutine("CheckWeapon", gitGudBoxCount);
 				}
 			}
 		}
-
 	}
-
 }
