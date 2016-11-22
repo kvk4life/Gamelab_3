@@ -11,7 +11,7 @@ public class Unit : MonoBehaviour {
 
     void Start() {
         target = GameObject.FindGameObjectWithTag("Champion").transform;
-       PathRequestManager.RequestPath(transform.position, target.position, OnPathFound, flyable);
+        PathRequestManager.RequestPath(transform.position, target.position, OnPathFound, flyable);
     }
 
     public void OnPathFound(Vector3[] newPath, bool pathSuccesful) {
@@ -22,7 +22,7 @@ public class Unit : MonoBehaviour {
         }
     }
 
-    IEnumerator FollowPath() {
+    public IEnumerator FollowPath() {
         Vector3 currentWaypoint = path[0];
         while (true) {
             if (transform.position == currentWaypoint) {

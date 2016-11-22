@@ -5,10 +5,11 @@ public class MinionStats : MonoBehaviour {
 
     private float timer;
     public SpawnManager spawnManager;
+    public float deathTime;
 
 	// Use this for initialization
 	void Start () {
-        timer = 5;
+        timer = deathTime;
 	}
 	
 	// Update is called once per frame
