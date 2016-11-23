@@ -6,7 +6,7 @@ public class MinionBehavior : MonoBehaviour {
 
     private GameObject player;
     private Unit unitClass;
-    public float distance;
+    public float distance, timeBetweenAttacks;
     private bool reCheck, controllPoint;
 
     public List<GameObject> controllList = new List<GameObject>();
@@ -25,11 +25,12 @@ public class MinionBehavior : MonoBehaviour {
         float dist = Vector3.Distance(player.transform.position, transform.position);
 
         if(dist <= distance) {
-            //attack player methode
+            StartCoroutine(Attack());
             reCheck = true;
             unitClass.StopCoroutine(unitClass.FollowPath());
         }
         else {
+            StopCoroutine(Attack());
             if (reCheck) {
                 if (controllPoint) {
                     int temp = Random.Range(0, controllList.Count);
@@ -39,10 +40,16 @@ public class MinionBehavior : MonoBehaviour {
                     unitClass.target = player.transform;
                 }
 
-                unitClass.StartCoroutine(unitClass.FollowPath());
+                PathRequestManager.RequestPath(transform.position, unitClass.target.position, unitClass.OnPathFound, unitClass.flyable);
                 reCheck = false;
             }
         }
 
+    }
+
+    IEnumerator Attack() {
+        //damage method for player
+        yield return new WaitForSeconds(timeBetweenAttacks);
+        StartCoroutine(Attack());
     }
 }
