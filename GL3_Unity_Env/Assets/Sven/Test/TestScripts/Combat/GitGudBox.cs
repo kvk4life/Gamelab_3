@@ -8,6 +8,8 @@ public class GitGudBox : MonoBehaviour {
 	public int randomWeapon;
 	public int finalWeapon;
 
+	public Transform ggBoxPos;
+
 	void Start () {
 	
 	}
@@ -26,11 +28,19 @@ public class GitGudBox : MonoBehaviour {
 
 
 	IEnumerator CheckWeapon (float cooldown) {
+
+		SpawnWeapon ();
 		
 		SetWeapon(true);
 		print(weapons[randomWeapon].name);
 		yield return new WaitForSeconds(cooldown);
 		SetWeapon(false);
+
+	}
+
+	public void SpawnWeapon (){
+
+		Instantiate (weapons[randomWeapon], ggBoxPos.position, transform.rotation);
 
 	}
 }
