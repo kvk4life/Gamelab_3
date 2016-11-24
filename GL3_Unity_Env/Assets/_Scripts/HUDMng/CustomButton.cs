@@ -60,16 +60,13 @@ public class CustomButton : MonoBehaviour {
 
     public void ButtonSwapHUD() {
         hUDMng.GetComponent<HUDMng>().SwapHUD(hUDToSwap);
-        print("I'm the option button!");
     }
 
     public void ButtonStart() {
         SceneManager.LoadScene(1);
-        print("I'm the Start button!");
     }
 
     public void ButtonExitGame() {
         Application.Quit();
-        print("I'm the Exit Game Button!");
     }
 }
