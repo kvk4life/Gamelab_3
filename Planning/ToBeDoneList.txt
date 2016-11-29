@@ -1,0 +1,15 @@
+Anthony: Demon rigging, level builden.
+Kevin: Guns.
+Roos: Invocation, light armour et, achievements.
+Carlo: Tempel, medium armour set?,
+Michiel: Player chacter animatie, Destrucible?.
+
+Mack: Databasing, bigB behavoir.
+Sven: map destruction, weapon manager.
+Zine: level system.
+harold: pathdinfind rework, behavior, Hud, Sound, databasing.
+
+
+
+
+

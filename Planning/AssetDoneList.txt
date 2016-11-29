@@ -1,0 +1,12 @@
+kilian: inhibiter, heavy armour set, speren, turret, zwaard.
+Michiel: BigB klaar.
+Kevin: 4 Greatswords, 2 daggers, light armour set, gun.
+Carlo: 4 axes, markt kraamje, kraamje, huisje, git gud box, grond asset, barbels, stuk vlees.
+Antonie: 3 zwaarden, 2 speren, staf, 2 huizen.
+Roos: skill tree, inv, main menu, pause menu, UI (Hud), start menu, werp mes, werp pijl. 
+
+Mack: combo counter, custom buttons, turret, controll point, round manager, main menu, gold manager.
+Sven: Combat, git gud box, combat, deligates controller, weapon pick up, weapon storage.
+Harold: Spawn manager, spawn object.
+Zine: Char controller, talenttree, baseline spellcasting, chest, currency, character pannel, 
+edit script for item creater.
