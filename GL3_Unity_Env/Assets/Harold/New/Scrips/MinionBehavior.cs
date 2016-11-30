@@ -7,10 +7,10 @@ public class MinionBehavior : MonoBehaviour {
     private GameObject player;
     private Unit unitClass;
     private MinionStats stats;
+    private float dist;
     public float distance, timeBetweenAttacks;
     private bool reCheck, controllPoint, attack;
-
-    public List<GameObject> controllList = new List<GameObject>();
+    public GameObject controllObject;
 
 
 	void Start () {
@@ -24,9 +24,14 @@ public class MinionBehavior : MonoBehaviour {
 	}
 
     void CheckDistance() { // checks for the distance beteen the player and the enemy
-        float dist = Vector3.Distance(player.transform.position, transform.position);
+        if (!controllPoint) {
+            dist = Vector3.Distance(player.transform.position, transform.position);
+        }
+        else {
+            dist = Vector3.Distance(controllObject.transform.position, transform.position);
+        }
 
-        if(dist <= distance) {
+        if (dist <= distance) {
             if (!attack) {
                 StartCoroutine(Attack());
                 reCheck = true;
@@ -39,8 +44,7 @@ public class MinionBehavior : MonoBehaviour {
             StopCoroutine(Attack());
             if (reCheck) {
                 if (controllPoint) {
-                    int temp = Random.Range(0, controllList.Count);
-                    unitClass.target = controllList[temp].transform;
+                    unitClass.target = controllObject.transform;
                 }
                 else {
                     unitClass.target = player.transform;
