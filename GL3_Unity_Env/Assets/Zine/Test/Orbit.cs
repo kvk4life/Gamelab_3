@@ -40,12 +40,13 @@ public class Orbit : MonoBehaviour
 
     void Update()
     {
-        switch(camMode)
+        switch (camMode)
         {
+
             case CameraMode.ThirdPerson:
                 obj.transform.position += obj.transform.forward * Input.GetAxis("LeftJoyY") * Time.deltaTime *  moveSpeed;
                 obj.transform.Rotate(new Vector3(0, Input.GetAxis("LeftJoyX") * rotSpeed * Time.deltaTime, 0));
-                if (transform.parent != camRotator) ;
+                if (transform.parent != camRotator) 
                 {
                     transform.SetParent(camRotator);
                 }
@@ -54,7 +55,14 @@ public class Orbit : MonoBehaviour
                     CameraLerp(cameraLocStrafe);
                 }
                 transform.LookAt(camRotator);
-                camRotator.Rotate(0, Input.GetAxis("RightJoyX") * rotSpeed * Time.deltaTime, 0);
+                if(Input.GetAxis("LeftJoyY")==0 && Input.GetAxis("LeftJoyX")==0)
+                {
+                    camRotator.Rotate(0, Input.GetAxis("RightJoyX") * rotSpeed * Time.deltaTime, 0);
+                }
+                else
+                {
+                    CameraLerp(cameraLocStrafe);
+                }
                 break;
             case CameraMode.ThirdPersonStrafe:
                 CameraLerp(cameraLocStrafe);
