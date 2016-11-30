@@ -25,7 +25,7 @@ public class PBAnim : MonoBehaviour {
 	public bool unLoopIdle;
 
 
-	void Start ()
+	public void Start ()
 	{
 		anim = GetComponent<Animator>();
 		currentLayerWeight = anim.GetLayerWeight (1);
@@ -57,14 +57,13 @@ public class PBAnim : MonoBehaviour {
 
 	}
 
-	void EnableBarbell()
+	public void EnableBarbell()
 	{
-//		barBellEnable = !barBellEnable;
 		Barbell.SetActive (false);
 		unLoopIdle = false;
 	}
 
-	void DisableBarbell()
+	public void DisableBarbell()
 	{
 		if (!unLoopIdle) 
 		{
@@ -75,7 +74,7 @@ public class PBAnim : MonoBehaviour {
 
 	#region Run Unequip Animatie
 	//Ren animatie zonder wapen. S4PPURRRRRRLOOOOOOOOOT NIGGGAAAAAAAAAAAA!!!!!!!!!!!!!!!!! got im himmel!
-	void RunNoWeaponFix()
+	public void RunNoWeaponFix()
 	{
 		if (anim.GetBool ("Run") && !gotWeapon)
 		{
@@ -99,7 +98,7 @@ public class PBAnim : MonoBehaviour {
 	#endregion
 
 	#region Attacku!
-	void attack()
+	public void attack()
 	{
 		if (anim.GetBool ("Attack") && anim.GetBool ("*RunUnEq")) 
 		{
@@ -112,7 +111,7 @@ public class PBAnim : MonoBehaviour {
 		}
 
 		//Random Alternate Attack animations for Attacking unequipped. (RunOnce om code maar 1x te lezen terwijl Attack aanstaat)
-		if (anim.GetBool ("Attack") && runOnce == false && !anim.GetCurrentAnimatorStateInfo(0).IsName("Attack01"))
+		if (anim.GetBool ("Attack") && !runOnce && !anim.GetCurrentAnimatorStateInfo(0).IsName("Attack01"))
 		{
 			a1 = Random.Range (0, 4);
 			if (a1 < 2) {
@@ -122,7 +121,7 @@ public class PBAnim : MonoBehaviour {
 			}
 			runOnce = anim.GetBool ("Attack");
 		} 
-		else if (runOnce == true && !anim.GetBool ("Attack"))
+		else if (runOnce && !anim.GetBool ("Attack"))
 		{
 			runOnce = anim.GetBool ("Attack");
 		}
@@ -130,7 +129,7 @@ public class PBAnim : MonoBehaviour {
 	#endregion
 
 	#region PickUPUU!!
-	void pickUpWeapon()
+	public void pickUpWeapon()
 	{
 		if (anim.GetBool ("PickUp")) 
 		{
@@ -147,7 +146,7 @@ public class PBAnim : MonoBehaviour {
 	#endregion
 
 	#region Throw
-	void Throw ()
+	public void Throw ()
 	{
 		if (anim.GetBool ("Throw")) 
 		{
@@ -158,7 +157,7 @@ public class PBAnim : MonoBehaviour {
 
 	#region GetHitNoWeapon Animation
 	//Animatie Layer 2. zonder wapen in handen
-	void GetHitNoWeapon ()
+	public void GetHitNoWeapon ()
 	{
 		if (anim.GetCurrentAnimatorStateInfo (0).IsName ("Get Hit") && !gotWeapon) 
 		{
@@ -173,7 +172,7 @@ public class PBAnim : MonoBehaviour {
 	}
 	#endregion
 
-	void Update () 
+	public void Update () 
 	{
 		RunNoWeaponFix ();
 		GetHitNoWeapon ();
