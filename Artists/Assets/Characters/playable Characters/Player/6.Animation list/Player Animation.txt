@@ -1,0 +1,5 @@
+Player Animation frames
+
+t-pose = 0.
+
+Dumb as Fuck = 15 / 226
