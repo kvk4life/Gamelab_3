@@ -5,16 +5,14 @@ public class MinionStats : MonoBehaviour {
 
     private float timer;
     public SpawnManager spawnManager;
-    public float deathTime;
+    public float deathTime, health, damage;
 
-	// Use this for initialization
 	void Start () {
         timer = deathTime;
 	}
 	
-	// Update is called once per frame
 	void Update () {
-	    if(timer >= 0) {
+	    if(timer >= 0) {// remove later if you can kill enemies yourself
             timer -= Time.deltaTime;
         }
         else {
@@ -23,7 +21,20 @@ public class MinionStats : MonoBehaviour {
         }
 	}
 
-    public void IncreaseStats(int incraseAmount) {
-        print("Increase amount = " + incraseAmount);
+    public void IncreaseStats(int incraseAmount) {//increases stats of the enemies
+        health = health / 100 * incraseAmount;
+        damage = damage / 100 * incraseAmount;
+    }
+
+    public void Damage(float damage) {//deals damage to the enemies
+        health -= damage;
+        CheckDeath();
+    }
+
+    void CheckDeath() {//check if health is 0 to kill destroy the object and retrect a number from the enemy counter
+        if(health <= 0) {
+            spawnManager.CheckCurrentWave();
+            Destroy(gameObject);
+        }
     }
 }

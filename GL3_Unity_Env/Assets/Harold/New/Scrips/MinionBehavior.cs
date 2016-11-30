@@ -23,12 +23,11 @@ public class MinionBehavior : MonoBehaviour {
         CheckDistance();
 	}
 
-    void CheckDistance() {
+    void CheckDistance() { // checks for the distance beteen the player and the enemy
         float dist = Vector3.Distance(player.transform.position, transform.position);
 
         if(dist <= distance) {
             if (!attack) {
-                print("start attack");
                 StartCoroutine(Attack());
                 reCheck = true;
                 unitClass.StopCoroutine(unitClass.FollowPath());
@@ -47,7 +46,7 @@ public class MinionBehavior : MonoBehaviour {
                     unitClass.target = player.transform;
                 }
 
-                PathRequestManager.RequestPath(transform.position, unitClass.target.position, unitClass.OnPathFound, unitClass.flyable);
+               // PathRequestManager.RequestPath(transform.position, unitClass.target.position, unitClass.OnPathFound, unitClass.flyable);
                 reCheck = false;
             }
         }
