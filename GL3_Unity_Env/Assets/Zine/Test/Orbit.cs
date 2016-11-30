@@ -31,6 +31,7 @@ public class Orbit : MonoBehaviour
     public float jumpForce;
     public Combat combat;
     public bool mayJump;
+	public bool keyboard;
     // Use this for initialization
     void Start()
     {
@@ -40,65 +41,69 @@ public class Orbit : MonoBehaviour
 
     void Update()
     {
-        switch (camMode)
-        {
+		if (!keyboard) {
+			switch (camMode) {
 
-            case CameraMode.ThirdPerson:
-                obj.transform.position += obj.transform.forward * Input.GetAxis("LeftJoyY") * Time.deltaTime *  moveSpeed;
-                obj.transform.Rotate(new Vector3(0, Input.GetAxis("LeftJoyX") * rotSpeed * Time.deltaTime, 0));
-                if (transform.parent != camRotator) 
-                {
-                    transform.SetParent(camRotator);
-                }
-                if(lerpBack==true)
-                {
-                    CameraLerp(cameraLocStrafe);
-                }
-                transform.LookAt(camRotator);
-                if(Input.GetAxis("LeftJoyY")==0 && Input.GetAxis("LeftJoyX")==0)
-                {
-                    camRotator.Rotate(0, Input.GetAxis("RightJoyX") * rotSpeed * Time.deltaTime, 0);
-                }
-                else
-                {
-                    CameraLerp(cameraLocStrafe);
-                }
-                break;
-            case CameraMode.ThirdPersonStrafe:
-                CameraLerp(cameraLocStrafe);
-                transform.LookAt(camRotator);
-                obj.transform.position += obj.transform.forward * Input.GetAxis("LeftJoyY") * Time.deltaTime * moveSpeed;
-                obj.transform.position += obj.transform.right * Input.GetAxis("LeftJoyX") * Time.deltaTime * moveSpeed;
-                obj.transform.Rotate(0, Input.GetAxis("RightJoyX") * rotSpeed * Time.deltaTime, 0);
-                break;
-            case CameraMode.LockOn:
-                //CameraLerp(combat.closestEnemy);
-                obj.transform.position += obj.transform.forward * Input.GetAxis("LeftJoyY") * Time.deltaTime * moveSpeed;
-                obj.transform.position += obj.transform.right * Input.GetAxis("LeftJoyX") * Time.deltaTime * moveSpeed;
-                obj.transform.Rotate(0, Input.GetAxis("RightJoyX") * rotSpeed * Time.deltaTime, 0);
-                break;
-            case CameraMode.FirstPerson:
-                CameraLerp(cameraLocHead);
-                obj.transform.position += obj.transform.forward * Input.GetAxis("LeftJoyY") * Time.deltaTime * moveSpeed;
-                obj.transform.Rotate(new Vector3(0, Input.GetAxis("LeftJoyX") * rotSpeed * Time.deltaTime, 0));
-                transform.Rotate(-Input.GetAxis("RightJoyY") * rotSpeed * Time.deltaTime, 0, 0);
-                break;
+			case CameraMode.ThirdPerson:
+				obj.transform.position += obj.transform.forward * Input.GetAxis ("LeftJoyY") * Time.deltaTime * moveSpeed;
+				obj.transform.Rotate (new Vector3 (0, Input.GetAxis ("LeftJoyX") * rotSpeed * Time.deltaTime, 0));
+				if (transform.parent != camRotator) {
+					transform.SetParent (camRotator);
+				}
+				if (lerpBack == true) {
+					CameraLerp (cameraLocStrafe);
+				}
+				transform.LookAt (camRotator);
+				if (Input.GetAxis ("LeftJoyY") == 0 && Input.GetAxis ("LeftJoyX") == 0) {
+					camRotator.Rotate (0, Input.GetAxis ("RightJoyX") * rotSpeed * Time.deltaTime, 0);
+				} else {
+					CameraLerp (cameraLocStrafe);
+				}
+				break;
+			case CameraMode.ThirdPersonStrafe:
+				CameraLerp (cameraLocStrafe);
+				transform.LookAt (camRotator);
+				obj.transform.position += obj.transform.forward * Input.GetAxis ("LeftJoyY") * Time.deltaTime * moveSpeed;
+				obj.transform.position += obj.transform.right * Input.GetAxis ("LeftJoyX") * Time.deltaTime * moveSpeed;
+				obj.transform.Rotate (0, Input.GetAxis ("RightJoyX") * rotSpeed * Time.deltaTime, 0);
+				break;
+			case CameraMode.LockOn:
+				//CameraLerp(combat.closestEnemy);
+				obj.transform.position += obj.transform.forward * Input.GetAxis ("LeftJoyY") * Time.deltaTime * moveSpeed;
+				obj.transform.position += obj.transform.right * Input.GetAxis ("LeftJoyX") * Time.deltaTime * moveSpeed;
+				obj.transform.Rotate (0, Input.GetAxis ("RightJoyX") * rotSpeed * Time.deltaTime, 0);
+				break;
+			case CameraMode.FirstPerson:
+				CameraLerp (cameraLocHead);
+				obj.transform.position += obj.transform.forward * Input.GetAxis ("LeftJoyY") * Time.deltaTime * moveSpeed;
+				obj.transform.Rotate (new Vector3 (0, Input.GetAxis ("LeftJoyX") * rotSpeed * Time.deltaTime, 0));
+				transform.Rotate (-Input.GetAxis ("RightJoyY") * rotSpeed * Time.deltaTime, 0, 0);
+				break;
 
-        }
-        Animate();
-        if (Input.GetButtonDown("L3") && camMode!=CameraMode.ThirdPersonStrafe)
-        {
-            EnterSprint();
-        }
-        if (Input.GetButtonUp("L3"))
-        {
-            ExitSprint();
-        }
-        if(Input.GetButtonDown("A") && camMode!=CameraMode.FirstPerson && mayJump==true)
-        {
-            obj.GetComponent<Rigidbody>().velocity=new Vector3(0,jumpForce,0);
-            mayJump=false;
-        }
+			}
+			Animate ();
+			if (Input.GetButtonDown ("L3") && camMode != CameraMode.ThirdPersonStrafe) {
+				EnterSprint ();
+			}
+			if (Input.GetButtonUp ("L3")) {
+				ExitSprint ();
+			}
+			if (Input.GetButtonDown ("A") && camMode != CameraMode.FirstPerson && mayJump == true) {
+				obj.GetComponent<Rigidbody> ().velocity = new Vector3 (0, jumpForce, 0);
+				mayJump = false;
+			}
+		} 
+		else 
+		{
+			obj.transform.position += obj.transform.forward * Input.GetAxis ("Vertical") * Time.deltaTime * moveSpeed;
+			obj.transform.Rotate (new Vector3 (0, Input.GetAxis ("Horizontal") * rotSpeed * Time.deltaTime, 0));
+			if (Input.GetButtonDown ("Jump") && camMode != CameraMode.FirstPerson && mayJump == true) {
+				obj.GetComponent<Rigidbody> ().velocity = new Vector3 (0, jumpForce, 0);
+				mayJump = false;
+			}
+			Animate ();
+		}
+
 
 
     }
