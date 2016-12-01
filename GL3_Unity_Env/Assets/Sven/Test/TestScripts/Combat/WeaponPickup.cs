@@ -24,7 +24,6 @@ public class WeaponPickup : MonoBehaviour {
 
 	void Start () {
 		
-		weaponStorage = GetComponent<WeaponStorage>();
 
 	}
 	
@@ -51,6 +50,8 @@ public class WeaponPickup : MonoBehaviour {
 	}
 
 	public void StoreWeapon (int nullChecker) {
+
+		weaponStorage = GetComponent<WeaponStorage>();
 
 		if(weapons[nullChecker] == null){
 			weapons[nullChecker] = weaponStorage.spawn;
