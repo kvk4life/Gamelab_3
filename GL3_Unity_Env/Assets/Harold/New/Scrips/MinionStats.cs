@@ -2,39 +2,41 @@
 using System.Collections;
 
 public class MinionStats : MonoBehaviour {
-
-    private float timer;
     public SpawnManager spawnManager;
-    public float deathTime, health, damage;
+    public float health, heavyDamageChance, maxHeavyDamageChance;
+    public PBAragdollController rdControl;
 
 	void Start () {
-        timer = deathTime;
+        rdControl = GetComponent<PBAragdollController>();
 	}
 	
 	void Update () {
-	    if(timer >= 0) {// remove later if you can kill enemies yourself
-            timer -= Time.deltaTime;
-        }
-        else {
-            spawnManager.CheckCurrentWave();
-            Destroy(gameObject);
-        }
+        
 	}
 
     public void IncreaseStats(int incraseAmount) {//increases stats of the enemies
         health = health / 100 * incraseAmount;
-        damage = damage / 100 * incraseAmount;
     }
 
     public void Damage(float damage) {//deals damage to the enemies
         health -= damage;
-        CheckDeath();
+        CheckHeavyDamage();
+        if (health < 1) {
+            Death();
+        }
     }
 
-    void CheckDeath() {//check if health is 0 to kill destroy the object and retrect a number from the enemy counter
-        if(health <= 0) {
-            spawnManager.CheckCurrentWave();
-            Destroy(gameObject);
+    void CheckHeavyDamage() {
+        float heavyDamageRandom = Random.Range(0, maxHeavyDamageChance);
+        if (heavyDamageRandom < heavyDamageChance)
+        {
+            rdControl.HeavyDamage();
         }
+    }
+
+    void Death() {//check if health is 0 to kill destroy the object and retrect a number from the enemy counter
+        spawnManager.CheckCurrentWave();
+        GetComponent<MinionBehavior>().EndLife();
+        rdControl.KillRagdoll();
     }
 }

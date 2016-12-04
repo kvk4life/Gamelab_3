@@ -43,8 +43,7 @@ public class PBAragdollController : MonoBehaviour {
 	}
 
     void Update() {
-        if (Input.GetButtonDown("Jump")) {
-            print("Doet jump het nou?");
+        if (Input.GetButtonDown("Jump")) { 
             HeavyDamage();
         }
     }
@@ -55,7 +54,7 @@ public class PBAragdollController : MonoBehaviour {
 		bones = gameObject.GetComponentsInChildren<Rigidbody>(); 
 	}
 
-	public void killRagdoll () 
+	public void KillRagdoll () 
 	{
         ring01.transform.parent = spine02.transform;
         ring02.transform.parent = spine02.transform;
