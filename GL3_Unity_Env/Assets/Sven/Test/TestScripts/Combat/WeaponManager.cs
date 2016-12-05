@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 abstract public class WeaponManager {
@@ -10,5 +10,7 @@ abstract public class WeaponManager {
 	public void Update () {
 	
 	}
+
+	
 
 }
