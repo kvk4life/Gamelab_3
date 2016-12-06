@@ -16,6 +16,7 @@ public class MinionBehavior : MonoBehaviour {
 
     void Start () {
         player = GameObject.FindGameObjectWithTag("Champion");
+        controllObject = GameObject.FindGameObjectWithTag("ControllPoint");
         unitClass = GetComponent<Unit>();
         stats = GetComponent<MinionStats>();
         StartCoroutine(ThinkAboutNextAction());
