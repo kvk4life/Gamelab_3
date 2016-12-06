@@ -8,7 +8,10 @@ public class RoundMng : MonoBehaviour {
     public float startCountdown;
     public float newRoundCd;
     public GameObject controlPointMng;
+    [HideInInspector]
+    public SpawnManager spawnMng;
     public ControlPointMng cpMng;
+    public bool waitingForNextRound;
 
     public void Start() {
         cpMng = controlPointMng.GetComponent<ControlPointMng>();
@@ -17,6 +20,9 @@ public class RoundMng : MonoBehaviour {
 
     public IEnumerator CountdownNewRound(float countdownSeconds) {
         yield return new WaitForSeconds(countdownSeconds);
+        curRound++;
+        waitingForNextRound = false;
+        spawnMng.CheckConditionsNewWave();
         cpMng.UnpoolControlPoint();
     }
 
@@ -25,7 +31,7 @@ public class RoundMng : MonoBehaviour {
         float roundCount = curWaveCount / waveCountDivider;
         if (roundCount == 1) {
             curWaveCount = 0;
-            curRound++;
+            waitingForNextRound = true;
             NextRoundMng();
         }
     }
