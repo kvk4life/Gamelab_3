@@ -1,16 +1,22 @@
 using UnityEngine;
 using System.Collections;
 
-abstract public class WeaponManager {
+public class WeaponManager : MonoBehaviour {
 
-	public void Start () {
+	void Start () {
+	
+	} 
+	
+	void Update () {
 	
 	}
-	
-	public void Update () {
-	
+
+	public void Fire () {
+
 	}
 
-	
+	public void Reload () {
+
+	}	
 
 }
