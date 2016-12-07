@@ -23,7 +23,7 @@ public class WeaponPickup : MonoBehaviour {
 	public GitGudBox ggBox;
 
 	void Start () {
-		
+	
 
 	}
 	
@@ -98,6 +98,7 @@ public class WeaponPickup : MonoBehaviour {
 
 					currentWeapon = weapons[switcher];
 					currentWeapon.SetActive(true);
+					weapons[switcher].GetComponent<WeaponManager>().SwitchStats();
 
 					if(weapons[1]  != null){
 						weapons[1].SetActive(false);
@@ -112,6 +113,7 @@ public class WeaponPickup : MonoBehaviour {
 
 					currentWeapon = weapons[switcher];
 					currentWeapon.SetActive(true);
+					weapons[switcher].GetComponent<WeaponManager>().SwitchStats();
 
 					if(weapons[0]  != null){
 						weapons[0].SetActive(false);

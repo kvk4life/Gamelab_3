@@ -3,7 +3,7 @@ using System.Collections;
 
 public class DamageTest : MonoBehaviour {
 
-	float damageTest;
+	public float damageTest;
 
 	GameObject player;
 
