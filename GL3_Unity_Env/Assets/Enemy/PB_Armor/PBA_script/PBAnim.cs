@@ -95,9 +95,23 @@ public class PBAnim : MonoBehaviour {
 			anim.SetLayerWeight (1, currentLayerWeight);
 		}
 	}
-	#endregion
+    #endregion
 
-	#region Attacku!
+    #region Attacku!
+    public void Attack() {
+        anim.SetBool("*AttBool", true);
+        anim.SetBool("Run", false);
+        a1 = Random.Range(0, 4);
+        if (a1 < 2)
+        {
+            anim.SetFloat("BlendAttack", 0.0f);
+        }
+        else
+        {
+            anim.SetFloat("BlendAttack", 1.0f);
+        }
+    }
+
 	public void attack()
 	{
 		if (anim.GetBool ("Attack") && anim.GetBool ("*RunUnEq")) 

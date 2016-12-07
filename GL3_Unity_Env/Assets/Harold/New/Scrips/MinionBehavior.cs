@@ -12,6 +12,7 @@ public class MinionBehavior : MonoBehaviour {
     private bool reCheck, controllPoint, attack;
     public GameObject controllObject;
     private Vector3 myTarget;
+    private Coroutine curCoroutine;
 
 
     void Start () {
@@ -19,7 +20,7 @@ public class MinionBehavior : MonoBehaviour {
         controllObject = GameObject.FindGameObjectWithTag("ControllPoint");
         unitClass = GetComponent<Unit>();
         stats = GetComponent<MinionStats>();
-        StartCoroutine(ThinkAboutNextAction());
+        curCoroutine = StartCoroutine(ThinkAboutNextAction());
     }
 	
 	void Update () {
@@ -27,13 +28,13 @@ public class MinionBehavior : MonoBehaviour {
 	}
 
     public void EndLife() {
-        StopCoroutine(ThinkAboutNextAction());
+        StopCoroutine(curCoroutine);
     }
 
     IEnumerator ThinkAboutNextAction() {
         DecideTarget();
         yield return new WaitForSeconds(thinkingSpd);
-        StartCoroutine(ThinkAboutNextAction());
+        curCoroutine = StartCoroutine(ThinkAboutNextAction());
     }
 
     void DecideTarget() {
@@ -45,8 +46,11 @@ public class MinionBehavior : MonoBehaviour {
         if (controllPoint) {
             DecideTarget();
         }
+        else {
+            myTarget = player.transform.position;
+        }
         dist = Vector3.Distance(myTarget, transform.position);
-        /*
+        /* verwijder de code in deze comment wanneer er gecheckt is dat de terniairy statement net zo goed werkte
         if (!controllPoint) {
             dist = Vector3.Distance(player.transform.position, transform.position);
         }
@@ -81,7 +85,8 @@ public class MinionBehavior : MonoBehaviour {
     }
 
     IEnumerator Attack() {
-        //damage method for player
+        //speel de attack animatie af
+
         print("hit");
         yield return new WaitForSeconds(timeBetweenAttacks);
         StartCoroutine(Attack());
