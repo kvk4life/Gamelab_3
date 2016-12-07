@@ -10,12 +10,15 @@ public class MinionBehavior : MonoBehaviour {
     private float dist;
     public float distance, timeBetweenAttacks, myTargetChance, thinkingSpd;
     private bool reCheck, controllPoint, attack;
+    [HideInInspector]
     public GameObject controllObject;
     private Vector3 myTarget;
     private Coroutine curCoroutine;
+    private PBAnim pBAnim;
 
 
     void Start () {
+        pBAnim = GetComponent<PBAnim>();
         player = GameObject.FindGameObjectWithTag("Champion");
         controllObject = GameObject.FindGameObjectWithTag("ControllPoint");
         unitClass = GetComponent<Unit>();
@@ -24,7 +27,10 @@ public class MinionBehavior : MonoBehaviour {
     }
 	
 	void Update () {
-        CheckDistance();
+        if (Input.GetButtonDown("Jump")) {
+            StartCoroutine(Attack());
+        }
+        //CheckDistance();
 	}
 
     public void EndLife() {
@@ -86,8 +92,8 @@ public class MinionBehavior : MonoBehaviour {
 
     IEnumerator Attack() {
         //speel de attack animatie af
-
-        print("hit");
+        pBAnim.Attack();
+        print("Attacks");
         yield return new WaitForSeconds(timeBetweenAttacks);
         StartCoroutine(Attack());
     }

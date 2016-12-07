@@ -99,7 +99,7 @@ public class PBAnim : MonoBehaviour {
 
     #region Attacku!
     public void Attack() {
-        anim.SetBool("*AttBool", true);
+        anim.SetTrigger("Attack");
         anim.SetBool("Run", false);
         a1 = Random.Range(0, 4);
         if (a1 < 2)
@@ -111,35 +111,6 @@ public class PBAnim : MonoBehaviour {
             anim.SetFloat("BlendAttack", 1.0f);
         }
     }
-
-	public void attack()
-	{
-		if (anim.GetBool ("Attack") && anim.GetBool ("*RunUnEq")) 
-		{
-			anim.SetBool ("*AttBool", true);
-			anim.SetBool ("Run", false);
-		}
-		else
-		{
-			anim.SetBool ("*AttBool", false);	
-		}
-
-		//Random Alternate Attack animations for Attacking unequipped. (RunOnce om code maar 1x te lezen terwijl Attack aanstaat)
-		if (anim.GetBool ("Attack") && !runOnce && !anim.GetCurrentAnimatorStateInfo(0).IsName("Attack01"))
-		{
-			a1 = Random.Range (0, 4);
-			if (a1 < 2) {
-				anim.SetFloat ("BlendAttack", 0.0f);
-			} else {
-				anim.SetFloat ("BlendAttack", 1.0f);
-			}
-			runOnce = anim.GetBool ("Attack");
-		} 
-		else if (runOnce && !anim.GetBool ("Attack"))
-		{
-			runOnce = anim.GetBool ("Attack");
-		}
-	}
 	#endregion
 
 	#region PickUPUU!!
@@ -190,7 +161,7 @@ public class PBAnim : MonoBehaviour {
 	{
 		RunNoWeaponFix ();
 		GetHitNoWeapon ();
-		attack ();
+	//	attack ();
 
 		pickUpWeapon ();
 	//	Throw ();
