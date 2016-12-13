@@ -55,7 +55,7 @@ public class MinionBehavior : MonoBehaviour {
             if (!attack) {
                 attackCoroutine = (StartCoroutine(Attack()));
                 reCheck = true;
-                unitClass.StopCoroutine(unitClass.FollowPath());
+                //unitClass.StopCoroutine(unitClass.FollowPath());
                 attack = true;
             }
         }
