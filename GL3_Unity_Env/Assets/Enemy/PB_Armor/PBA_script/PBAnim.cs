@@ -73,7 +73,6 @@ public class PBAnim : MonoBehaviour {
 	}
 
 	#region Run Unequip Animatie
-	//Ren animatie zonder wapen. S4PPURRRRRRLOOOOOOOOOT NIGGGAAAAAAAAAAAA!!!!!!!!!!!!!!!!! got im himmel!
 	public void RunNoWeaponFix()
 	{
 		if (anim.GetBool ("Run") && !gotWeapon)
@@ -161,7 +160,6 @@ public class PBAnim : MonoBehaviour {
 	{
 		RunNoWeaponFix ();
 		GetHitNoWeapon ();
-	//	attack ();
 
 		pickUpWeapon ();
 	//	Throw ();

@@ -7,66 +7,53 @@ public class MinionBehavior : MonoBehaviour {
     private GameObject player;
     private Unit unitClass;
     private MinionStats stats;
-    private float dist;
     public float distance, timeBetweenAttacks, myTargetChance, thinkingSpd;
-    private bool reCheck, controllPoint, attack;
+    private bool reCheck, attack;
     [HideInInspector]
     public GameObject controllObject;
     private Vector3 myTarget;
     private Coroutine curCoroutine;
     private PBAnim pBAnim;
+    private ControlPoint controlPoint;
+    private Coroutine attackCoroutine;
 
 
     void Start () {
         pBAnim = GetComponent<PBAnim>();
         player = GameObject.FindGameObjectWithTag("Champion");
         controllObject = GameObject.FindGameObjectWithTag("ControllPoint");
+        controlPoint = controllObject.GetComponent<ControlPoint>();
         unitClass = GetComponent<Unit>();
         stats = GetComponent<MinionStats>();
         curCoroutine = StartCoroutine(ThinkAboutNextAction());
     }
 	
-	void Update () {
-        if (Input.GetButtonDown("Jump")) {
-            StartCoroutine(Attack());
-        }
-        //CheckDistance();
-	}
-
     public void EndLife() {
         StopCoroutine(curCoroutine);
     }
 
     IEnumerator ThinkAboutNextAction() {
-        DecideTarget();
+        CheckDistance();
         yield return new WaitForSeconds(thinkingSpd);
         curCoroutine = StartCoroutine(ThinkAboutNextAction());
     }
 
     void DecideTarget() {
-        float decideTarget = Random.Range(0, 100);
-        myTarget = (decideTarget < myTargetChance) ? player.transform.position : controllObject.transform.position;
-    }
-
-    void CheckDistance() { // checks for the distance beteen the player and the enemy
-        if (controllPoint) {
-            DecideTarget();
+        if (controlPoint.myCrystal.activeSelf) {
+            float decideTarget = Random.Range(0, 100);
+            myTarget = (decideTarget < myTargetChance) ? player.transform.position : controllObject.transform.position;
         }
         else {
             myTarget = player.transform.position;
         }
-        dist = Vector3.Distance(myTarget, transform.position);
-        /* verwijder de code in deze comment wanneer er gecheckt is dat de terniairy statement net zo goed werkte
-        if (!controllPoint) {
-            dist = Vector3.Distance(player.transform.position, transform.position);
-        }
-        else {
-            dist = Vector3.Distance(controllObject.transform.position, transform.position);
-        }
-        */
+    }
+
+    void CheckDistance() { // checks for the distance beteen the player and the enemy
+        DecideTarget();
+        float dist = Vector3.Distance(myTarget, transform.position);
         if (dist <= distance) {
             if (!attack) {
-                StartCoroutine(Attack());
+                attackCoroutine = (StartCoroutine(Attack()));
                 reCheck = true;
                 unitClass.StopCoroutine(unitClass.FollowPath());
                 attack = true;
@@ -74,9 +61,11 @@ public class MinionBehavior : MonoBehaviour {
         }
         else {
             attack = false; ;
-            StopCoroutine(Attack());
+            if (attackCoroutine != null) { 
+                StopCoroutine(attackCoroutine);
+            };
             if (reCheck) {
-                if (controllPoint) {
+                if (controlPoint.myCrystal.activeSelf) {
                     unitClass.target = controllObject.transform;
                 }
                 else {
@@ -93,8 +82,7 @@ public class MinionBehavior : MonoBehaviour {
     IEnumerator Attack() {
         //speel de attack animatie af
         pBAnim.Attack();
-        print("Attacks");
         yield return new WaitForSeconds(timeBetweenAttacks);
-        StartCoroutine(Attack());
+        attackCoroutine = (StartCoroutine(Attack()));
     }
 }
