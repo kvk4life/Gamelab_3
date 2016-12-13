@@ -9,11 +9,11 @@ public class HudBars : MonoBehaviour {
 
 
     void Start () {
-        imageBar = GetComponent<Image>();
+        imageBar = GetComponent<Image>();// place the class on the image you want to be the bar and it will asign itself.
     }
 	
-	void Update () {
-        if (Input.GetButtonDown("Jump")) {
+	void Update () {// remove later, no update needed
+        if (Input.GetButtonDown("Jump")) {//remove later, was for testing.
             StartCoroutine(ChangeBar(500, 0));
         }
 
@@ -22,9 +22,14 @@ public class HudBars : MonoBehaviour {
         }
 	}
 
-    public IEnumerator ChangeBar(float maxHealth, float currentHealth) {
+    public void StartBar(float maxAmount, float CurrentAmount) {//when you want to activate the bar changer start it by giving a value of the max amount (max health, max mana ect.) and the currentAmount ( current health, current mana ect.)
+        StopCoroutine(ChangeBar(0, 0));
+        StartCoroutine(ChangeBar(maxAmount, CurrentAmount));
+    }
+
+    public IEnumerator ChangeBar(float maxAmount, float currentAmount) {
         float currentFill = imageBar.fillAmount;
-        float newFill = 1 / maxHealth * currentHealth;
+        float newFill = 1 / maxAmount * currentAmount;
 
         newFill = Mathf.Round(newFill * 100F) / 100F;
 
@@ -35,8 +40,6 @@ public class HudBars : MonoBehaviour {
             currentFill += 0.1F * fillSpeed * Time.deltaTime;
         }
 
-        //Mathf.Round(currentFill * 100);
-        //currentFill =/ 100
         currentFill = Mathf.Round(currentFill * 100F) / 100F;
         imageBar.fillAmount = currentFill;
 
@@ -46,7 +49,7 @@ public class HudBars : MonoBehaviour {
             StopCoroutine(ChangeBar(0,0));
         }
         else {
-            StartCoroutine(ChangeBar(maxHealth, currentHealth));
+            StartCoroutine(ChangeBar(maxAmount, currentAmount));
         }
     }
 }
