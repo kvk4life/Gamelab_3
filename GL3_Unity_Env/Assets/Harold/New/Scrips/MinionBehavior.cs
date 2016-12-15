@@ -8,17 +8,20 @@ public class MinionBehavior : MonoBehaviour {
     private Unit unitClass;
     private MinionStats stats;
     public float distance, timeBetweenAttacks, myTargetChance, thinkingSpd;
+    private float decideTarget;
     private bool reCheck, attack;
     [HideInInspector]
     public GameObject controllObject;
-    private Vector3 myTarget;
+    private Transform myTarget;
     private Coroutine curCoroutine;
     private PBAnim pBAnim;
     private ControlPoint controlPoint;
     private Coroutine attackCoroutine;
+    private Unit myUnit;
 
 
     void Start () {
+        myUnit = GetComponent<Unit>();
         pBAnim = GetComponent<PBAnim>();
         player = GameObject.FindGameObjectWithTag("Champion");
         controllObject = GameObject.FindGameObjectWithTag("ControllPoint");
@@ -40,22 +43,25 @@ public class MinionBehavior : MonoBehaviour {
 
     void DecideTarget() {
         if (controlPoint.myCrystal.activeSelf) {
-            float decideTarget = Random.Range(0, 100);
-            myTarget = (decideTarget < myTargetChance) ? player.transform.position : controllObject.transform.position;
+            if (decideTarget == 0) {
+                decideTarget = Random.Range(1, 101);
+            }
+            myTarget = (decideTarget < myTargetChance) ? player.transform : controllObject.transform;
         }
         else {
-            myTarget = player.transform.position;
+            myTarget = player.transform;
         }
+        myUnit.target = myTarget;
     }
 
     void CheckDistance() { // checks for the distance beteen the player and the enemy
         DecideTarget();
-        float dist = Vector3.Distance(myTarget, transform.position);
+        float dist = Vector3.Distance(myTarget.position, transform.position);
         if (dist <= distance) {
             if (!attack) {
                 attackCoroutine = (StartCoroutine(Attack()));
                 reCheck = true;
-                //unitClass.StopCoroutine(unitClass.FollowPath());
+                myUnit.StopPathCoroutine();
                 attack = true;
             }
         }
@@ -71,8 +77,7 @@ public class MinionBehavior : MonoBehaviour {
                 else {
                     unitClass.target = player.transform;
                 }
-
-               // PathRequestManager.RequestPath(transform.position, unitClass.target.position, unitClass.OnPathFound, unitClass.flyable);
+                myUnit.StartPathCoroutine();
                 reCheck = false;
             }
         }

@@ -12,17 +12,13 @@ public class Unit : MonoBehaviour {
 
 	public float cooldownPath;
 	public float repeatRate;
-	
+
+    public Coroutine pathRoutine;
 
 	void Start () {
 
-		//target = GameObject.Find("Player(Clone)").GetComponent<Transform>();
-		target = GameObject.Find("Pig Benis01").GetComponent<Transform>();
-
 		InvokeRepeating("StartNewPathProcess", 0, repeatRate);
-
-		//PathRequestManager.RequestPath (transform.position, target.position, OnPathFound);
-		
+        		
 	}
 
 
@@ -34,12 +30,24 @@ public class Unit : MonoBehaviour {
 	}
 
 	public void OnPathFound (Vector3[] newPath, bool pathSuccesful){
+
 		if (pathSuccesful == true){
 			path = newPath;
-			StopCoroutine("FollowPath");
-			StartCoroutine("FollowPath");
-		}
+            StopPathCoroutine();
+            StartPathCoroutine();
+        }
+
 	}
+
+    public void StopPathCoroutine() {
+        if (pathRoutine != null) {
+            StopCoroutine(pathRoutine);
+        }
+    }
+
+    public void StartPathCoroutine() {
+        pathRoutine = StartCoroutine("FollowPath");
+    }
 
 	IEnumerator FollowPath (){
 
@@ -55,9 +63,11 @@ public class Unit : MonoBehaviour {
 			transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
 			yield return null;
 		}
+
 	}
 
 	public void OnDrawGizmos() {
+
 		if (path != null) {
 			for (int i = targetIndex; i < path.Length; i ++) {
 				Gizmos.color = Color.black;
@@ -71,5 +81,6 @@ public class Unit : MonoBehaviour {
 				}
 			}
 		}
+
 	}
 }
