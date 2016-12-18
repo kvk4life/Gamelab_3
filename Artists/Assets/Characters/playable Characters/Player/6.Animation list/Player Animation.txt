@@ -3,3 +3,50 @@ Player Animation frames
 t-pose = 0.
 
 Dumb as Fuck = 15 / 226
+
+Idle01 = 250 / 300 Loop
+
+walk = 350 / 375
+walkBack = 385 / 410
+
+strafeR = 415 / 430
+strafeL = 430 / 445
+
+walk rotate = 450 / 462 Loop
+
+run = 310 / 340 Loop
+
+JumpNoAxis = 465 / 488
+
+JumpStart = 495 / 502
+JumpAir = 502 / 512
+JumpLand = 512 / 525
+
+Roll = 530 / 607
+
+GetHit = 615 / 639
+
+GetUpBack = 650 / 684
+GetUpFront = 695 / 725
+
+PickUp = 730 / 755
+ShopInteraction = 765 / 785 Loop
+eat/potion = 795 / 860
+
+Gun Grab = 865 / 887
+Gun Shoot = 894 / 904
+Gun Throw = 904 / 920
+
+945 / 1013 = Throw
+
+Sword Equip = 1013 / 1078
+SWord Idle = 1078 / 1085 (+Idle01)
+
+sWLight Attack01 = 1103 / 1033
+sWLight Attack = 1133 / 1170
+SwHeavy Att = 1182 / 1216
+SWChargeAtt = 1216 / 1260
+
+SW unequip = 1280 / 1350
+
+ 
