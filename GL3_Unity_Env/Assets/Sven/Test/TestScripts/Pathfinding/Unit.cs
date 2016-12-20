@@ -6,13 +6,12 @@ public class Unit : MonoBehaviour {
 	public Transform target;
 	public float speed;
 	Vector3[] path;
-	int targetIndex;
+    private Vector3 currentWaypoint;
+    int targetIndex;
 	public float cooldownPath;
 	public float repeatRate;
 
 	void Start () {
-
-		target = GameObject.Find("Turret").GetComponent<Transform>();
 
 		InvokeRepeating("StartNewPathProcess", 0, repeatRate);
 
@@ -31,16 +30,25 @@ public class Unit : MonoBehaviour {
 
 		if (pathSuccesful == true){
 			path = newPath;
-			StopCoroutine("FollowPath");
-			StartCoroutine("FollowPath");
-		}
+            StopPathCoroutine();
+            StartPathCoroutine();
+        }
 	}
+
+    public void StopPathCoroutine() {
+        StopCoroutine("FollowPath");
+    }
+
+    public void StartPathCoroutine() {
+        StartCoroutine("FollowPath");
+    }
 
 	IEnumerator FollowPath (){
 
-		Vector3 currentWaypoint = path[0];
-
-		while (true){
+        if (path.Length > 0) {
+            currentWaypoint = path[0];
+        }
+        while (true){
 			if(transform.position == currentWaypoint){
 				targetIndex ++;
 				if(targetIndex >= path.Length){
@@ -48,6 +56,8 @@ public class Unit : MonoBehaviour {
 				}
 				currentWaypoint = path[targetIndex];
 			}
+            
+            transform.LookAt(currentWaypoint);
 			transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
 			yield return null;
 		}
