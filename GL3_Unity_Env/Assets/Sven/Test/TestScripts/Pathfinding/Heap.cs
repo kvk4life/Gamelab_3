@@ -89,6 +89,7 @@ public class Heap<T> where T : IHeapItem<T>{
 	}
 
 	void Swap (T itemA, T itemB) {
+		
 		items[itemA.HeapIndex] = itemB;
 		items[itemB.HeapIndex] = itemA;
 		int itemAIndex = itemA.HeapIndex;

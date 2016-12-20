@@ -11,6 +11,7 @@ public class PathRequestManager : MonoBehaviour {
 	static PathRequestManager instance;
 
 	Pathfinding pathfinding;
+	public static Grid grid;
 
 	bool isProcessingPath;
 
@@ -18,13 +19,15 @@ public class PathRequestManager : MonoBehaviour {
 
 		instance = this;
 		pathfinding = GetComponent<Pathfinding>();
+		grid = GetComponent<Grid>();
 	}
 
 	public static void RequestPath(Vector3 pathStart, Vector3 pathEnd, Action<Vector3[], bool> callBack){
 
 		PathRequest newRequest = new PathRequest(pathStart, pathEnd, callBack);
 		instance.pathRequestQueue.Enqueue(newRequest);
-		instance.TryProcessNext();
+		instance.TryProcessNext ();
+		grid.CreateGrid ();
 
 	}
 

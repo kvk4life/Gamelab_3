@@ -5,22 +5,20 @@ public class Unit : MonoBehaviour {
 
 	public Transform target;
 	public float speed;
-
-	public Vector3[] path;
-	Vector3 currentWaypoint;
-	int targetIndex = 0;
-
+	Vector3[] path;
+	int targetIndex;
 	public float cooldownPath;
 	public float repeatRate;
 
-    public Coroutine pathRoutine;
-
 	void Start () {
 
-		InvokeRepeating("StartNewPathProcess", 0, repeatRate);
-        		
-	}
+		target = GameObject.Find("Turret").GetComponent<Transform>();
 
+		InvokeRepeating("StartNewPathProcess", 0, repeatRate);
+
+		//PathRequestManager.RequestPath (transform.position, target.position, OnPathFound);
+		
+	}
 
 	void StartNewPathProcess (){
 
@@ -33,23 +31,14 @@ public class Unit : MonoBehaviour {
 
 		if (pathSuccesful == true){
 			path = newPath;
-            StopPathCoroutine();
-            StartPathCoroutine();
-        }
-
+			StopCoroutine("FollowPath");
+			StartCoroutine("FollowPath");
+		}
 	}
 
-    public void StopPathCoroutine() {
-        if (pathRoutine != null) {
-            StopCoroutine(pathRoutine);
-        }
-    }
-
-    public void StartPathCoroutine() {
-        pathRoutine = StartCoroutine("FollowPath");
-    }
-
 	IEnumerator FollowPath (){
+
+		Vector3 currentWaypoint = path[0];
 
 		while (true){
 			if(transform.position == currentWaypoint){
@@ -59,15 +48,12 @@ public class Unit : MonoBehaviour {
 				}
 				currentWaypoint = path[targetIndex];
 			}
-			transform.LookAt(currentWaypoint);
 			transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
 			yield return null;
 		}
-
 	}
 
 	public void OnDrawGizmos() {
-
 		if (path != null) {
 			for (int i = targetIndex; i < path.Length; i ++) {
 				Gizmos.color = Color.black;
@@ -81,6 +67,5 @@ public class Unit : MonoBehaviour {
 				}
 			}
 		}
-
 	}
 }

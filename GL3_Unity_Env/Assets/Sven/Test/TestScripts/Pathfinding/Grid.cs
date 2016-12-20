@@ -38,7 +38,7 @@ public class Grid : MonoBehaviour {
 	}
 
 	
-	void CreateGrid() {
+	public void CreateGrid() {
 
 		grid = new Node[gridSizeX,gridSizeY];
         Vector3 worldBottomLeft = transform.position - Vector3.right * worldSize.x/2 - Vector3.forward * worldSize.y/2;
@@ -92,10 +92,10 @@ public class Grid : MonoBehaviour {
 
 		Gizmos.DrawWireCube(transform.position, new Vector3(worldSize.x, 1, worldSize.y));
 
-		if(grid != null) {
+		if(grid != null && showPath == true){
 			foreach (Node n in grid){
 				if(n.walkable){
-					Gizmos.color = Color.blue;
+					Gizmos.color = Color.white;
 				}
 				else{
 					Gizmos.color = Color.red;
