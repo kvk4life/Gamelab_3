@@ -49,4 +49,10 @@ SWChargeAtt = 1216 / 1260
 
 SW unequip = 1280 / 1350
 
- 
+GRSW Idle01 = 1383 / 1421
+GRSW Charge start = 1430 / 1438
+GRSW Charge Loop = 1438 / 1464
+GRSW Charge Attack = 1467 / 1510
+GRSW Ch Attack Loop = 1511 / 1539
+GRSW Ch End = 1541 / 1596
+
