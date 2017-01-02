@@ -5,8 +5,11 @@ public class PBAnim : MonoBehaviour {
 	#region public vars
 	public Animator anim;
 	public bool gotWeapon = false;
-
-	public GameObject Barbell;
+    public GameObject barbellBone;
+	public GameObject barbell;
+    public Transform pickUpHand;
+    public Transform barbellTransitionPoint;
+    private Coroutine barbellCoroutine;
 	#endregion
 
 	private int a1;
@@ -14,15 +17,19 @@ public class PBAnim : MonoBehaviour {
 	private float currentLayerWeight;
 	private float currentLayerWeight2;
 
-	public AnimationClip clipThrow;		//Throw01_PBA
-	public AnimationClip clipPickUp;	//Idle_weapom03_PBA
-	private int clipIDThrow;
-	private int clipIDTPickUp;
+	public AnimationClip clipThrow;		    //Throw01_PBA
+	public AnimationClip clipIdleWeapon;	//Idle_weapom03_PBA
+    public AnimationClip clipPickUp;        //pickUp weapon01_PBA
+	/*private int clipIDThrow;
+    private int clipIDIdleWeapon;
+    private int clipIDPickUp; */
 	public  AnimationEvent eventThrow;
 	public AnimationEvent eventPickUp;
+    public AnimationEvent eventIdleWeapon;
 
 	public bool barBellEnable;
 	public bool unLoopIdle;
+    public bool followHand;
 
 
 	public void Start ()
@@ -30,36 +37,46 @@ public class PBAnim : MonoBehaviour {
 		anim = GetComponent<Animator>();
 		currentLayerWeight = anim.GetLayerWeight (1);
 		currentLayerWeight2 = anim.GetLayerWeight (2);
-		Barbell = transform.Find ("PB weapon").gameObject;
-
-		for (int i = 0; i < anim.runtimeAnimatorController.animationClips.Length; i++)
-		{
-			if (anim.runtimeAnimatorController.animationClips [i] == clipPickUp) 
-			{
-				clipIDTPickUp = i;
-			}
-			if (anim.runtimeAnimatorController.animationClips [i] == clipThrow) 
-			{
-				clipIDThrow = i;
-			}
-		}
-		float clipLenght1 = clipThrow.length;
-
-		eventThrow.time = clipLenght1 / 100f * 50.1f;
-		eventThrow.functionName = "EnableBarbell";
-		clipThrow.AddEvent (eventThrow);
-
-		float clipLenght2 = clipPickUp.length;
-
-		eventPickUp.time = clipLenght2 / 100f * 27.1f;
-		eventPickUp.functionName = "DisableBarbell";
-		clipPickUp.AddEvent (eventPickUp);
-
+        SetTheEvents();
 	}
+    void SetTheEvents() {
+        float clipLenght1 = clipThrow.length;
+        eventThrow.time = clipLenght1 / 100f * 50.1f;
+        eventThrow.functionName = "EnableBarbell";
+        clipThrow.AddEvent(eventThrow);
+
+        float clipLenght2 = clipIdleWeapon.length;
+        eventIdleWeapon.time = clipLenght2 / 100f * 27.1f;
+        eventIdleWeapon.functionName = "DisableBarbell";
+        clipIdleWeapon.AddEvent(eventIdleWeapon);
+
+        float clipLenght3 = clipPickUp.length;
+        eventPickUp.time = clipLenght3 / 100f * 53.9f;
+        eventPickUp.functionName = "FollowHandEvent";
+        clipPickUp.AddEvent(eventPickUp);
+    }
+
+    /*void SearchClipID() {
+        for (int i = 0; i < anim.runtimeAnimatorController.animationClips.Length; i++)
+        {
+            if (anim.runtimeAnimatorController.animationClips[i] == clipIdleWeapon)
+            {
+                clipIDIdleWeapon = i;
+            }
+            if (anim.runtimeAnimatorController.animationClips[i] == clipThrow)
+            {
+                clipIDThrow = i;
+            }
+            if (anim.runtimeAnimatorController.animationClips[i] == clipPickUp)
+            {
+                clipIDPickUp = i;
+            }
+        }
+    }*/
 
 	public void EnableBarbell()
 	{
-		Barbell.SetActive (false);
+        barbell.SetActive (false);
 		unLoopIdle = false;
 	}
 
@@ -67,7 +84,8 @@ public class PBAnim : MonoBehaviour {
 	{
 		if (!unLoopIdle) 
 		{
-			Barbell.SetActive (true);
+            followHand = false;
+            barbell.GetComponent<BarbellCtrl>().ObtainBarbell(barbellBone);
 			unLoopIdle = true;
 		} 
 	}
@@ -112,30 +130,50 @@ public class PBAnim : MonoBehaviour {
     }
 	#endregion
 
-	#region PickUPUU!!
-	public void pickUpWeapon()
-	{
-		if (anim.GetBool ("PickUp")) 
-		{
-			gotWeapon = true;
-			anim.SetBool ("Run", false);
-			anim.SetBool ("*HasWeapon", true);
-		}
-		if (anim.GetBool ("Throw")) 
-		{
-			gotWeapon = false;
-			anim.SetBool ("*HasWeapon", false);
-		}
-	}
-	#endregion
+	#region PickUp
+	public void PickUpWeapon() {
+        anim.SetTrigger("PickUp");
+        gotWeapon = true;
+        anim.SetBool("Run", false);
+        anim.SetBool("*HasWeapon", true);
+    }
 
-	#region Throw
-	public void Throw ()
+    public void FollowHandEvent() {
+        followHand = true;
+    }
+
+    void ConnectBarbellToHand() {
+        if (followHand) {
+            barbell.transform.position = new Vector3(barbell.transform.position.x, pickUpHand.position.y, pickUpHand.position.z);
+            //if (barbellCoroutine == null) {
+                //float rotationDuration = clipPickUp.length - eventPickUp.time;
+                //float anglesToRotate = Quaternion.Angle(barbell.transform.rotation, barbellTransitionPoint.rotation);
+              //  barbellCoroutine = StartCoroutine(RotateBarbell(Vector3.up * anglesToRotate, rotationDuration));
+            //}
+        }
+    }
+
+    IEnumerator RotateBarbell(Vector3 byAngles, float inTime) {
+        Transform barbellTrans = barbell.transform;
+        var fromAngle = barbellTrans.rotation;
+        var toAngle = Quaternion.Euler(barbellTrans.eulerAngles + byAngles);
+        for (float t = 0f; t < 1f; t += Time.deltaTime / inTime) {
+            barbellTrans.rotation = Quaternion.Lerp(fromAngle, toAngle, t);
+            print("Barbell is rotating");
+            yield return null;
+        }
+    }
+    #endregion
+
+    #region Throw
+    public void Throw ()
 	{
 		if (anim.GetBool ("Throw")) 
 		{
-			anim.SetBool ("Run", false);
-		}
+            gotWeapon = false;
+            anim.SetBool ("Run", false);
+            anim.SetBool("*HasWeapon", false);
+        }
 	}
 	#endregion
 
@@ -145,7 +183,7 @@ public class PBAnim : MonoBehaviour {
 	{
 		if (anim.GetCurrentAnimatorStateInfo (0).IsName ("Get Hit") && !gotWeapon) 
 		{
-			Barbell.SetActive (false);
+			barbell.SetActive (false);
 			anim.SetLayerWeight (2, 1);
 		} 
 		else 
@@ -160,10 +198,12 @@ public class PBAnim : MonoBehaviour {
 	{
 		RunNoWeaponFix ();
 		GetHitNoWeapon ();
-
-		pickUpWeapon ();
+        ConnectBarbellToHand();
+        if (Input.GetButtonDown("Jump")) {
+            PickUpWeapon();
+        }
+	//	PickUpWeapon ();
 	//	Throw ();
-
 	//	WeaponOff ();
 	}
 }

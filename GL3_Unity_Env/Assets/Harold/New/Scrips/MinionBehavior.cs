@@ -13,6 +13,7 @@ public class MinionBehavior : MonoBehaviour {
     [HideInInspector]
     public GameObject controllObject;
     private Transform myTarget;
+    private bool barbellTargeted;
     private Coroutine curCoroutine;
     private PBAnim pBAnim;
     private ControlPoint controlPoint;
@@ -41,15 +42,17 @@ public class MinionBehavior : MonoBehaviour {
         curCoroutine = StartCoroutine(ThinkAboutNextAction());
     }
 
+    public void BarbellTarget(GameObject barbell) {
+        myTarget = barbell.transform;
+        barbellTargeted = true;
+    }
+
     void DecideTarget() {
-        if (controlPoint.myCrystal.activeSelf) {
+        if (controlPoint.myCrystal.activeSelf && player.activeSelf) {
             if (decideTarget == 0) {
                 decideTarget = Random.Range(1, 101);
             }
             myTarget = (decideTarget < myTargetChance) ? player.transform : controllObject.transform;
-        }
-        else {
-            myTarget = player.transform;
         }
         myUnit.target = myTarget;
     }
@@ -58,6 +61,9 @@ public class MinionBehavior : MonoBehaviour {
         DecideTarget();
         float dist = Vector3.Distance(myTarget.position, transform.position);
         if (dist <= distance) {
+            if (barbellTargeted) {
+
+            }
             if (!attack) {
                 attackCoroutine = (StartCoroutine(Attack()));
                 reCheck = true;

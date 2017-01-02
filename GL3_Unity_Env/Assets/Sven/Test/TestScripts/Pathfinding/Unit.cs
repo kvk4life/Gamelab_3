@@ -21,7 +21,6 @@ public class Unit : MonoBehaviour {
 
 	void StartNewPathProcess (){
 
-		print("InvokeRepeating");
 		PathRequestManager.RequestPath (transform.position, target.position, OnPathFound);
 
 	}
