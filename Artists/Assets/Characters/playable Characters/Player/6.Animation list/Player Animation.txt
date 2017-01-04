@@ -1,5 +1,5 @@
 Player Animation frames
-
+--------------------------------------------------
 t-pose = 0.
 
 Dumb as Fuck = 15 / 226
@@ -19,18 +19,18 @@ run = 310 / 340 Loop
 JumpNoAxis = 465 / 488
 
 JumpStart = 495 / 502
-JumpAir = 502 / 512
+JumpAir(L) = 502 / 512
 JumpLand = 512 / 525
 
 Roll = 530 / 607
-
+---------------------------------------------------------
 GetHit = 615 / 639
 
 GetUpBack = 650 / 684
 GetUpFront = 695 / 725
 
 PickUp = 730 / 755
-ShopInteraction = 765 / 785 Loop
+ShopInteraction = 765 / 785 Loop *
 eat/potion = 795 / 860
 
 Gun Grab = 865 / 887
@@ -38,7 +38,7 @@ Gun Shoot = 894 / 904
 Gun Throw = 904 / 920
 
 945 / 1013 = Throw
-
+------------------------------------------------------
 Sword Equip = 1013 / 1078
 SWord Idle = 1078 / 1085 (+Idle01)
 
@@ -48,11 +48,38 @@ SwHeavy Att = 1182 / 1216
 SWChargeAtt = 1216 / 1260
 
 SW unequip = 1280 / 1350
-
+------------------------------------------------------
 GRSW Idle01 = 1383 / 1421
 GRSW Charge start = 1430 / 1438
 GRSW Charge Loop = 1438 / 1464
 GRSW Charge Attack = 1467 / 1510
 GRSW Ch Attack Loop = 1511 / 1539
 GRSW Ch End = 1541 / 1596
+GRSW Attack01 = 1600 / 1673
+GRSW Attack02 = 1673 / 1729
+
+GRSW HeavyAtt01 = 1735 / 1793
+GRSW RollAtt01 = 1800 / 1842
+GRSW Ketsen = 1851 / 1877
+----------------------------------------------------
+
+FistW Equip = 1900 / 1910
+
+FistW Idle01 = 1910 / 1922
+
+FistW Attack01 = 1922 / 1940
+FistW Attack02 = 1940 / 1958
+FistW HeavyAtt01 = 1958 / 1985
+FistW HeavyAtt02 = 1985 / 2023
+
+Fist ketsen = 2011 / 2023
+
+Fist Charge (start) = 2023 / 2040
+Fist Charge (loop) = 2040 / 2045
+
+Fist Attack = 2045 / 2110
+       *(loop 2066 / 2075)
+
+
+
 

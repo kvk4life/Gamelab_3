@@ -1,0 +1,33 @@
+Whilemove (Layer2) uit:
+attackJump 
+attackRoll
+Charge Attack
+Charge
+shop interaction
+# geef tag: FuckL2
+-----------------------------
+Layer:Lhand
+getstuff
+UseItem
+Gun 
+Throw
+
+------------------
+
+move:
+Strafe:
+-bool Strafe moet aanstaan
+-strafe Links = parameter StrafeDirection = 0f
+-strafe Rechts = parameter StrafeDirection = 1f
+
+draaien als je stil staat. MoveRot:
+MoveSpeed moet op 1f staat(Idle)
+en float StrafeDirection moet groter dan 0 zijn om de animatie te spelen.
+
+------------------------------
+
+Knock Down-
+
+*Detecteren of ragdoll op buik of rug ligt. voor bepalen welke get up animatie 
+*blend tussen Animator en ragdoll maken.. ragdoll -transition - Get Up
+-transform.position vd bones(ragdoll active) = transform position van bones in GetUp animatie. 
