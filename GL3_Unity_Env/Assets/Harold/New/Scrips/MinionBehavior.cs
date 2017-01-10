@@ -28,6 +28,7 @@ public class MinionBehavior : MonoBehaviour {
         controllObject = GameObject.FindGameObjectWithTag("ControllPoint");
         controlPoint = controllObject.GetComponent<ControlPoint>();
         unitClass = GetComponent<Unit>();
+        DecideTarget();
         stats = GetComponent<MinionStats>();
         curCoroutine = StartCoroutine(ThinkAboutNextAction());
     }
@@ -48,11 +49,16 @@ public class MinionBehavior : MonoBehaviour {
     }
 
     void DecideTarget() {
-        if (controlPoint.myCrystal.activeSelf && player.activeSelf) {
-            if (decideTarget == 0) {
+        if (controlPoint.myCrystal.activeSelf && player.activeSelf)
+        {
+            if (decideTarget == 0)
+            {
                 decideTarget = Random.Range(1, 101);
             }
             myTarget = (decideTarget < myTargetChance) ? player.transform : controllObject.transform;
+        }
+        else {
+            myTarget = player.transform;
         }
         myUnit.target = myTarget;
     }
