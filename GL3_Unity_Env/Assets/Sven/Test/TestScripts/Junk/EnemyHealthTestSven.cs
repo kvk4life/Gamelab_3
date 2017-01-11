@@ -19,10 +19,10 @@ public class EnemyHealthTestSven : MonoBehaviour {
 
 		maxHealth = health;
 	
-		combat = GameObject.Find("Pig Benis01").GetComponent<Combat>();
+		combat = GameObject.Find("AdolfFunctionaliteiten").GetComponent<Combat>();
 		orbit = GameObject.Find("Camera").GetComponent<Orbit>();
 
-		pointManager = GameObject.Find("Pig Benis01").GetComponent<PointMng>();
+		pointManager = GameObject.Find("AdolfFunctionaliteiten").GetComponent<PointMng>();
 
 	}
 	

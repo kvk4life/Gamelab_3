@@ -10,7 +10,7 @@ public class WeaponManager : MonoBehaviour {
 
 	void Start () {
 
-		delegateWeapons = GameObject.Find("Pig Benis01").GetComponent<DelegateWeapons>();
+		delegateWeapons = GameObject.Find("AdolfFunctionaliteiten").GetComponent<DelegateWeapons>();
 		SwitchStats ();
 		
 	
