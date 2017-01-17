@@ -9,6 +9,7 @@ public class GoldMng : MonoBehaviour {
     public Text displayedGold;
     public CanvasGroup maxGoldTxt;
     public CanvasGroup brokeTxt;
+    public GameObject pressX;
     public float goldTimer;
     public bool testAdd;
 
@@ -55,6 +56,14 @@ public class GoldMng : MonoBehaviour {
             }
             UpdateHUD();
         }
+    }
+
+    public void NotEnoughGold() {
+        StartCoroutine(NoMoney());
+    }
+
+    public void PressToInteract(bool activeInteract) {
+        pressX.SetActive(activeInteract);
     }
 
     public IEnumerator MaxedOutWarning() {
