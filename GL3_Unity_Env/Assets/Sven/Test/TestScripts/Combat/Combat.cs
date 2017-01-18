@@ -72,12 +72,23 @@ public class Combat : MonoBehaviour {
 	}
 
 
-	public void Attack (int damage, float cooldown) {
+	public void Attack (int damage, float cooldown, int checkAnim) {
 		
 		if(mayAttack == true){
 			StartCoroutine(CoolDown(cooldown));
-			anim.SetTrigger("Attack01");
 			attackCollision.GetComponent<DamageTest>().GetDamage(damage);
+			print(checkAnim);
+
+			if(checkAnim == 1){
+				anim.SetBool("Att L", true);
+				anim.SetBool("Att L", false);
+			}
+
+
+			if(checkAnim == 2){
+				anim.SetBool("Att H", true);
+				anim.SetBool("Att H", false);
+			}
 		}
 	}
 

@@ -3,13 +3,13 @@ using System.Collections;
 
 public class DamageTest : MonoBehaviour {
 
-	public float damageTest;
+	public int damageTest;
 
-	GameObject player;
+	public GameObject player;
 
 	void Start () {
 
-		player = GameObject.Find("AdolfFunctionaliteiten");
+		player = GameObject.Find("Adolf");
 	
 	}
 	
@@ -20,7 +20,7 @@ public class DamageTest : MonoBehaviour {
 	void OnCollisionEnter (Collision col){
 
 		if(col.transform.tag == "Enemy" || col.transform.tag == "Minion" && player.GetComponent<Combat>().mayAttack == false){
-			col.gameObject.GetComponent<MinionStats>().Damage(damageTest);
+			col.gameObject.GetComponent<EnemyHealthTestSven>().EnemyHealth(damageTest);
 		}
 	}
 

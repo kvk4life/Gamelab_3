@@ -5,11 +5,11 @@ using System.Collections;
 
 public class DelegateWeapons : MonoBehaviour {
 
-	public delegate void RightHandedLight (int damage, float cooldown);
-	public delegate void LeftHandedLight (int damage, float cooldown);
-	public delegate void RightHandedHeavy (int damage, float cooldown);
-	public delegate void LeftHandedHeavy (int damage, float cooldown);
-	public delegate void ChargeAttack (int damage, float cooldown);
+	public delegate void RightHandedLight (int damage, float cooldown, int checkAnim);
+	public delegate void LeftHandedLight (int damage, float cooldown, int checkAnim);
+	public delegate void RightHandedHeavy (int damage, float cooldown, int checkAnim);
+	public delegate void LeftHandedHeavy (int damage, float cooldown, int checkAnim);
+	public delegate void ChargeAttack (int damage, float cooldown, int checkAnim);
 
 	public RightHandedLight rhLight;
 	public LeftHandedLight lhLight;
@@ -44,7 +44,7 @@ public class DelegateWeapons : MonoBehaviour {
 
 		if(getInputTriggers < 0){
 			if(rhHeavy != null){
-				rhHeavy (damageRHH, cooldownRHH);
+				rhHeavy (damageRHH, cooldownRHH, 3);
 			}
 		}
 		/*else if(getInputTriggers > 0){
@@ -55,13 +55,13 @@ public class DelegateWeapons : MonoBehaviour {
 
 		if(Input.GetButtonDown("LB")){
 			if(lhLight != null){
-				lhLight (damageLHL, cooldownLHL);
+				lhLight (damageLHL, cooldownLHL, 1);
 			}
 		}
 
 		if(Input.GetButtonDown("RB")){
 			if(rhLight != null){
-				rhLight (damageRHL, cooldownRHL);
+				rhLight (damageRHL, cooldownRHL, 2);
 			}
 		}
 
@@ -79,7 +79,7 @@ public class DelegateWeapons : MonoBehaviour {
 
 		if(countTimer > maxTimer){
 			print("LOL2");
-			charge (chargeH, cooldownCharge);
+			charge (chargeH, cooldownCharge, 3);
 			countTimer = 0;
 		}
 	}
