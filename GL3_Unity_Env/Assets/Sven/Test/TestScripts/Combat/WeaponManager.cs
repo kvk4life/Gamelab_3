@@ -10,13 +10,15 @@ public class WeaponManager : MonoBehaviour {
 
 	void Start () {
 
-		delegateWeapons = GameObject.Find("AdolfFunctionaliteiten").GetComponent<DelegateWeapons>();
+		delegateWeapons = GameObject.Find("Adolf").GetComponent<DelegateWeapons>();
 		SwitchStats ();
 		
 	
 	} 
 	
 	void Update () {
+	
+		
 	
 	}
 

@@ -9,7 +9,7 @@ public class DamageTest : MonoBehaviour {
 
 	void Start () {
 
-		player = GameObject.Find("Pig Benis01");
+		player = GameObject.Find("AdolfFunctionaliteiten");
 	
 	}
 	

@@ -20,7 +20,7 @@ public class KnockDown : MonoBehaviour{
     public bool setKinematic;
 
     MainRagdollController ragdikkScript;
-    Animator anim;
+    public Animator anim;
 
     private Transform rayStart;
     private Ray ray;
