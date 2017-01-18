@@ -36,10 +36,10 @@ public class PointMng : MonoBehaviour {
             case "ComboChain":
                 //verander hier die combomultiplier
                 string myCombo = "X" + (string.Format("{0}", multiplyer));
-                comboDisplay.text = myCombo;
+              //  comboDisplay.text = myCombo;
                 break;
             case "EmptyChain":
-                comboDisplay.text = null;
+               // comboDisplay.text = null;
                 break;
         }
     }

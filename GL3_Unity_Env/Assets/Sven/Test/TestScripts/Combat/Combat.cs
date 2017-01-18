@@ -77,17 +77,14 @@ public class Combat : MonoBehaviour {
 		if(mayAttack == true){
 			StartCoroutine(CoolDown(cooldown));
 			attackCollision.GetComponent<DamageTest>().GetDamage(damage);
-			print(checkAnim);
 
-			if(checkAnim == 1){
-				anim.SetBool("Att L", true);
-				anim.SetBool("Att L", false);
+			if(checkAnim == 2){
+				anim.SetTrigger("Att L 0");
 			}
 
 
-			if(checkAnim == 2){
-				anim.SetBool("Att H", true);
-				anim.SetBool("Att H", false);
+			if(checkAnim == 1){
+				anim.SetTrigger("Att H 0");
 			}
 		}
 	}

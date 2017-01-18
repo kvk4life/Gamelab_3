@@ -3,8 +3,10 @@ using System.Collections;
 
 public class WeaponManager : MonoBehaviour {
 
-	public int weaponDamage;
-	public int weaponCooldown;
+	public int weaponDamageH;
+	public int weaponCooldownH;
+	public int weaponDamageL;
+	public int weaponCooldownL;
 
 	public DelegateWeapons delegateWeapons;
 
@@ -24,8 +26,10 @@ public class WeaponManager : MonoBehaviour {
 
 	public void SwitchStats () {
 
-		delegateWeapons.damageRHL = weaponDamage;
-		delegateWeapons.cooldownRHL = weaponCooldown;
+		delegateWeapons.damageRHL = weaponDamageH;
+		delegateWeapons.cooldownRHL = weaponCooldownH;
+		delegateWeapons.damageLHL = weaponDamageL;
+		delegateWeapons.cooldownLHL = weaponCooldownL;
 
 	}
 }

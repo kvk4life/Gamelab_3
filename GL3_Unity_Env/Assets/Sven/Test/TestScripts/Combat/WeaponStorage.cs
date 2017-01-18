@@ -15,7 +15,6 @@ public class WeaponStorage : MonoBehaviour {
 
 	void Start () {
 	
-		GetComponent<WeaponPickup>().Switcher(0);
 		GetWeapons();
 		GetComponent<WeaponPickup>().StoreWeapon(0);
 		GetComponent<WeaponPickup>().Switcher(0);
@@ -27,6 +26,7 @@ public class WeaponStorage : MonoBehaviour {
 	}
 
 	public void GetWeapons (){
+
 
 		for(int i = 0; i < weaponStorage.Length; i ++){
 			if(wantedWeapon == weaponStorage[i].name){

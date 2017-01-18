@@ -8,6 +8,7 @@ public class WeaponPickup : MonoBehaviour {
 	public GameObject [] weapons;
 	public GameObject currentWeapon;
 	public GameObject camera;
+	public GameObject player;
 
 	public RaycastHit hit;
 
@@ -24,6 +25,7 @@ public class WeaponPickup : MonoBehaviour {
 
 	void Start () {
 	
+		player.GetComponent<Combat>().attackCollision = weapons[0];
 
 	}
 	
@@ -99,6 +101,8 @@ public class WeaponPickup : MonoBehaviour {
 					currentWeapon = weapons[switcher];
 					currentWeapon.SetActive(true);
 					weapons[switcher].GetComponent<WeaponManager>().SwitchStats();
+					player.GetComponent<Combat>().attackCollision = weapons[switcher];
+
 
 					if(weapons[1]  != null){
 						weapons[1].SetActive(false);
@@ -114,6 +118,7 @@ public class WeaponPickup : MonoBehaviour {
 					currentWeapon = weapons[switcher];
 					currentWeapon.SetActive(true);
 					weapons[switcher].GetComponent<WeaponManager>().SwitchStats();
+					player.GetComponent<Combat>().attackCollision = weapons[switcher];
 
 					if(weapons[0]  != null){
 						weapons[0].SetActive(false);
