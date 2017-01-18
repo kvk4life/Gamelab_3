@@ -34,6 +34,9 @@ public class SoundManager : MonoBehaviour {
         if (audio.isPlaying == false) {
             audio.PlayOneShot(heartbeat, 1);
         }
+        else {
+            audio.Stop();
+        }
     }
 
     public void EnemyHit() {
