@@ -4,7 +4,7 @@ using System.Collections;
 public class GemFloat : MonoBehaviour {
 
     private Vector3 startPosition;
-    public float speed, maxMoveAmount;
+    public float speed, maxMoveAmountHorizontal, maxMoveAmountVertical;
     public float rotateSpeed, minWaitTime, maxWaitTime, rotateTime; //is for rotating the wall
     private Quaternion beforeRotate, afterRotate;
     private float waitTime, time;
@@ -13,6 +13,8 @@ public class GemFloat : MonoBehaviour {
 
     void Start() {
         startPosition = transform.position;
+        right = true;
+        up = true;
     }
 
     void Update() {
@@ -26,11 +28,57 @@ public class GemFloat : MonoBehaviour {
     }
 
     void MoveAround() {
-        Vector3 temp;
         if (right) {
+            Vector3 temp;
+            float maxMove = startPosition.x;
+            maxMove += maxMoveAmountHorizontal;
             temp = transform.position;
             temp.x += speed * Time.deltaTime;
             transform.position = temp;
+            if(transform.position.x >= maxMove) {
+                right = false;
+
+            }
+        }
+        else {
+            Vector3 temp;
+            float maxMove = startPosition.x;
+            maxMove -= maxMoveAmountHorizontal;
+            temp = transform.position;
+            temp.x -= speed * Time.deltaTime;
+            transform.position = temp;
+
+            if (transform.position.x <= maxMove) {
+                right = true;
+
+            }
+        }
+
+        if (up) {
+            Vector3 temp;
+            float maxMove = startPosition.y;
+            maxMove += maxMoveAmountVertical;
+            temp = transform.position;
+            temp.y += speed * Time.deltaTime;
+            transform.position = temp;
+
+            if (transform.position.y >= maxMove) {
+                up = false;
+
+            }
+        }
+        else {
+            Vector3 temp;
+            float maxMove = startPosition.y;
+            maxMove -= maxMoveAmountVertical;
+            temp = transform.position;
+            temp.y -= speed * Time.deltaTime;
+            transform.position = temp;
+
+            if (transform.position.y <= maxMove) {
+                up = true;
+
+            }
         }
     }
 
@@ -38,7 +86,7 @@ public class GemFloat : MonoBehaviour {
         if (!check) { //does this at the start to save the rotations into variables.
             beforeRotate = transform.rotation;
             afterRotate = transform.rotation;
-            afterRotate.z += 90;
+            afterRotate.y += 90;
             check = true;
         }
 
