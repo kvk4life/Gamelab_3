@@ -6,7 +6,7 @@ public class SoundManager : MonoBehaviour {
     public AudioClip walking;
     public AudioClip heartbeat;
     public AudioClip enemyHit;
-    public AudioClip collect;
+    //public AudioClip collect;
     public AudioClip buttonSound;
     public AudioClip ggBoxSound;
     public AudioClip weaponAttack; //list nodig?
@@ -46,12 +46,12 @@ public class SoundManager : MonoBehaviour {
         }
     }
 
-    public void Collect() {
-        AudioSource audio = playerWalkObject[2].GetComponent<AudioSource>();
-        if (audio.isPlaying == false) {
-            audio.PlayOneShot(collect, 1);
-        }
-    }
+   // public void Collect() {
+       // AudioSource audio = playerWalkObject[2].GetComponent<AudioSource>();
+       // if (audio.isPlaying == false) {
+            //audio.PlayOneShot(collect, 1);
+       // }
+   // }
 
     public void ButtonSound() {
         AudioSource audio = buttonObject.GetComponent<AudioSource>();
