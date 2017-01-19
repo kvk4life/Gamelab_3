@@ -23,6 +23,8 @@ public class DelegateWeapons : MonoBehaviour {
 
 	public float countTimer;
 	public float maxTimer;
+
+	public Animator anim;
 	
 	void Start () {
 	
@@ -68,8 +70,12 @@ public class DelegateWeapons : MonoBehaviour {
 		if(getInputCharge == true){
 			if(charge != null){
 				print("LOL1");
+				anim.SetBool("Charge", true);
 				ChargeTimer();
 			}
+		}
+		else{
+			anim.SetBool("Charge", false);
 		}
 	}
 
