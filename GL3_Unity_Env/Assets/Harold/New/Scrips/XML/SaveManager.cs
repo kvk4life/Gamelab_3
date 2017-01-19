@@ -3,15 +3,11 @@ using System.Collections;
 
 public class SaveManager : MonoBehaviour {
 
-	  public StuffToSave stuffToSave;
-   // public GameObject player;
-  //  public GameObject upgradeJect;
+	public StuffToSave stuffToSave;
+    public HighScore highScoreClass;
 
     void Start() {
-       // boostScript = player.GetComponent<BoosterScript>();
-       // goldScript = player.GetComponent<GoldMaker>();
-      //  upgradeScript = upgradeJect.GetComponent<Upgrades>();
-        //hudScript = player.GetComponent<HudScript>();
+        highScoreClass = GameObject.FindGameObjectWithTag("Player").GetComponent<HighScore>();
     }
 
     public void LoadPress() {
@@ -21,11 +17,14 @@ public class SaveManager : MonoBehaviour {
     }
 
     public void SavePress() {
-      //  StuffToSave stuffToSave = new StuffToSave();
-       // stuffToSave.boost = (int)boostScript.rocketBoostStart;
+        for (int i = 0; i < stuffToSave.scoreList.Length; i++) {
+            stuffToSave.scoreList[i] = highScoreClass.scoreList[i];
+        }
     }
 
     void Loader() {
-      //  boostScript.rocketBoostStart = (float)stuffToSave.boost;
+        for (int i = 0; i < stuffToSave.scoreList.Length; i++) {
+            highScoreClass.scoreList[i] = stuffToSave.scoreList[i];
+        }
     }
 }

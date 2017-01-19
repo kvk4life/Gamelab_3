@@ -86,4 +86,8 @@ public class PointMng : MonoBehaviour {
             EndComboChain();
         }
     }
+
+    public void EndGame() {
+        GetComponent<HighScore>().CheckHighScore(curPoints);
+    }
 }
