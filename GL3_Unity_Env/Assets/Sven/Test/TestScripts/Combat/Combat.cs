@@ -86,6 +86,10 @@ public class Combat : MonoBehaviour {
 			if(checkAnim == 1){
 				anim.SetTrigger("Att H 0");
 			}
+
+			if(checkAnim == 3){
+				anim.SetTrigger("Ch Att 0");
+			}
 		}
 	}
 

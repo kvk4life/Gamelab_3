@@ -44,11 +44,11 @@ public class DelegateWeapons : MonoBehaviour {
 		getInputTriggers = Input.GetAxis("Triggers");
 		getInputCharge = Input.GetAxis("Triggers") < 0;
 
-		if(getInputTriggers < 0){
+	/*	if(getInputTriggers < 0){
 			if(rhHeavy != null){
 				rhHeavy (damageRHH, cooldownRHH, 3);
 			}
-		}
+		}*/
 		/*else if(getInputTriggers > 0){
 			if(lhHeavy != null){
 				lhHeavy (damageLHH, cooldownLHH);
@@ -67,15 +67,16 @@ public class DelegateWeapons : MonoBehaviour {
 			}
 		}
 
-		if(getInputCharge == true){
+		if(getInputCharge == true && anim.GetBool("Efist")){
 			if(charge != null){
 				print("LOL1");
-				anim.SetBool("Charge", true);
 				ChargeTimer();
+				anim.SetBool("Charge", true);
 			}
 		}
 		else{
 			anim.SetBool("Charge", false);
+			countTimer = 0;
 		}
 	}
 

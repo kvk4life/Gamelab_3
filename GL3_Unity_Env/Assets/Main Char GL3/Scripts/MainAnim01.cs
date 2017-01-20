@@ -137,10 +137,10 @@ public class MainAnim01 : MonoBehaviour
 
     void ChargeAttack()
     {
-        if (anim.GetBool("Ch Att"))
+     /*   if (anim.GetBool("Ch Att"))
         {
             anim.SetBool("Charge", false);
-        }
+        }*/
     }
     #endregion
 
