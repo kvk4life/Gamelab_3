@@ -7,21 +7,27 @@ using System.Collections.Generic;
 public class Combat : MonoBehaviour {
 
 	public int damage;
+	public int damagePar;
 
 	public bool mayAttack;
 	public bool lockSwitch;
 
 	public float radius;
 	public float damping;
+	public float rangeShit;
 
 	public GameObject attackCollision;
 	public GameObject camera;
 	public GameObject lookAtBody;
+	public GameObject shitParticle;
 	public Transform closestEnemy;
+	public Transform particleTrans;
 
 	public Animator anim;
 
 	public LayerMask mask;
+
+	public RaycastHit hit;
 
 	public List<Transform> lockedOn = new List<Transform>();
 
@@ -33,6 +39,7 @@ public class Combat : MonoBehaviour {
 
 		mayAttack = true;
 		delegateWeapon = GetComponent<DelegateWeapons>();
+		shitParticle.SetActive(false);
 	
 	}
 	
@@ -45,6 +52,7 @@ public class Combat : MonoBehaviour {
 			LockOn(lockSwitch);
 			GetClosestEnemy(lockedOn);
 		}
+
 		
 	}
 
@@ -89,6 +97,17 @@ public class Combat : MonoBehaviour {
 
 			if(checkAnim == 3){
 				anim.SetTrigger("Ch Att 0");
+				damagePar = damage;
+				/*if(Physics.Raycast(particleTrans.position, particleTrans.transform.up, out hit, rangeShit)){
+					print(hit);
+					Debug.DrawRay(particleTrans.position, particleTrans.transform.up, Color.red);
+					if(hit.transform.tag == "Enemy"){
+
+						hit.transform.gameObject.GetComponent<EnemyHealthTestSven>().EnemyHealth(damage);
+
+					}
+				}*/
+				StartCoroutine(ParticleEnabler());
 			}
 		}
 	}
@@ -142,6 +161,21 @@ public class Combat : MonoBehaviour {
 		yield return new WaitForSeconds(cooldown);
 		print("Recharged");
 		mayAttack = true;
+	}
+
+	IEnumerator ParticleEnabler (){
+
+		shitParticle.SetActive(true);
+		yield return new WaitForSeconds(0.8f);
+		print("Particle");
+		shitParticle.SetActive(false);
+		if(Physics.Raycast(particleTrans.position, particleTrans.transform.up, out hit, rangeShit)){
+			print(hit);
+			Debug.DrawRay(particleTrans.position, particleTrans.transform.up, Color.red);
+			if(hit.transform.tag == "Enemy"){
+				hit.transform.gameObject.GetComponent<EnemyHealthTestSven>().EnemyHealth(damagePar);
+			}
+		}
 	}
 
     void OnCollisionEnter()
