@@ -31,7 +31,7 @@ public class WeaponStorage : MonoBehaviour {
 		for(int i = 0; i < weaponStorage.Length; i ++){
 			if(wantedWeapon == weaponStorage[i].name){
 				curWeapon = Resources.Load(weaponStorage[i].name) as GameObject;
-				spawn = Instantiate(curWeapon, weaponSpawn.position, weaponSpawn.rotation) as GameObject;
+				spawn = Instantiate(curWeapon, weaponSpawn.position, curWeapon.transform.rotation) as GameObject;
 				spawn.transform.SetParent(weaponSpawn);
 			}
 		}
