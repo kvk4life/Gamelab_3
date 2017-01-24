@@ -6,6 +6,10 @@ public class SoundManager : MonoBehaviour {
     public AudioClip walking;
     public AudioClip heartbeat;
     public AudioClip enemyHit;
+    public AudioClip playerHit;
+    public AudioClip weaponSwitch;
+    public AudioClip playerJump;
+    public AudioClip playerDeath;
     //public AudioClip collect;
     public AudioClip buttonSound;
     public AudioClip ggBoxSound;
@@ -39,6 +43,34 @@ public class SoundManager : MonoBehaviour {
         }
     }
 
+    public void PlayerHit() {
+        AudioSource audio = playerWalkObject[2].GetComponent<AudioSource>();
+        if (audio.isPlaying == false) {
+            audio.PlayOneShot(playerHit, 1);
+        }
+    }
+
+    public void PlayerJump() {
+        AudioSource audio = playerWalkObject[3].GetComponent<AudioSource>();
+        if (audio.isPlaying == false) {
+            audio.PlayOneShot(playerJump, 1);
+        }
+    }
+
+    public void WeaponSwitch() {
+        AudioSource audio = playerWalkObject[4].GetComponent<AudioSource>();
+        if (audio.isPlaying == false) {
+            audio.PlayOneShot(weaponSwitch, 1);
+        }
+    }
+
+    public void PlayerDeath() {
+        AudioSource audio = playerWalkObject[5].GetComponent<AudioSource>();
+        if (audio.isPlaying == false) {
+            audio.PlayOneShot(playerDeath, 1);
+        }
+    }
+
     public void EnemyHit() {
         AudioSource audio = enemySoundObject.GetComponent<AudioSource>();
         if (audio.isPlaying == false) {
@@ -46,12 +78,6 @@ public class SoundManager : MonoBehaviour {
         }
     }
 
-   // public void Collect() {
-       // AudioSource audio = playerWalkObject[2].GetComponent<AudioSource>();
-       // if (audio.isPlaying == false) {
-            //audio.PlayOneShot(collect, 1);
-       // }
-   // }
 
     public void ButtonSound() {
         AudioSource audio = buttonObject.GetComponent<AudioSource>();
