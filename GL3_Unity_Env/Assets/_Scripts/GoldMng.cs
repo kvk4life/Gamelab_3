@@ -44,7 +44,6 @@ public class GoldMng : MonoBehaviour {
     }
 
     public void RemoveGold(int removedGold) {
-        curGold -= removedGold;
         if (curGold < 0) {
             curGold = 0;
             StartCoroutine(NoMoney());
