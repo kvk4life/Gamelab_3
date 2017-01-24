@@ -9,7 +9,7 @@ public class DemonBehaviour : MonoBehaviour
     private Unit unitClass;
     private DemonStats stats;
     public int damage;
-    public float distance, timeBetweenAttacks, myTargetChance, thinkingSpd, hp;
+    public float distance, timeBetweenAttacks, myTargetChance, thinkingSpd;
     private float decideTarget;
     private bool reCheck, attack;
     [HideInInspector]
