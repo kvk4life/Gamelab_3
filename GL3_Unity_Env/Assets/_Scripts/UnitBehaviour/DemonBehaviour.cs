@@ -5,10 +5,11 @@ using System.Collections.Generic;
 public class DemonBehaviour : MonoBehaviour
 {
 
-    private GameObject player;
+    public GameObject player;
     private Unit unitClass;
     private DemonStats stats;
     public int damage;
+    public int gold;
     public float distance, timeBetweenAttacks, myTargetChance, thinkingSpd;
     private float decideTarget;
     private bool reCheck, attack;
@@ -29,8 +30,9 @@ public class DemonBehaviour : MonoBehaviour
     {
         myUnit = GetComponent<Unit>();
         anim = GetComponent<Animator>();
-        player = GameObject.FindGameObjectWithTag("Champion");
-        controllObject = GameObject.FindGameObjectWithTag("ControllPoint");
+        player = GameObject.FindWithTag("Champion");
+        myUnit.target = player.transform;
+        controllObject = GameObject.FindWithTag("ControllPoint");
         controlPoint = controllObject.GetComponent<ControlPoint>();
         unitClass = GetComponent<Unit>();
         DecideTarget();
@@ -40,6 +42,7 @@ public class DemonBehaviour : MonoBehaviour
 
     public void EndLife()
     {
+        player.GetComponent<GoldMng>().AddGold(gold);
         GetComponent<DemonRag>().RagActive();
         StopCoroutine(curCoroutine);
     }
@@ -67,7 +70,7 @@ public class DemonBehaviour : MonoBehaviour
             myTarget = player.transform;
             curTar = player;
         }
-        myUnit.target = myTarget;
+        print("target = " + myTarget);
     }
 
     void CheckDistance()

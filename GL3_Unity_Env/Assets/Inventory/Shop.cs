@@ -11,7 +11,8 @@ public class Shop : MonoBehaviour
     public Transform spawnPos;
     void Start()
     {
-
+        player = GameObject.FindWithTag("Champion");
+        gold = player.GetComponent<GoldMng>();
     }
 
     void Update()
