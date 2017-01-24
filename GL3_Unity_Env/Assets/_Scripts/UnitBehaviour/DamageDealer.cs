@@ -16,7 +16,7 @@ public class DamageDealer : MonoBehaviour {
         damage = demonBehaviour.damage;
         if (col.transform.tag == target.tag) {
             if (col.transform.tag == "Champion") {
-                col.transform.GetComponent<Health>().GetDamage(damage);
+                col.transform.GetComponent<PlayerHealth>().GetDamage(damage);
             }
             else {
                 col.transform.GetComponent<ControlPoint>().HealthChecker(damage);
