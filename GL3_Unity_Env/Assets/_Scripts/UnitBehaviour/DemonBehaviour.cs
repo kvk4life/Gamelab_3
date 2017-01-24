@@ -8,13 +8,16 @@ public class DemonBehaviour : MonoBehaviour
     private GameObject player;
     private Unit unitClass;
     private DemonStats stats;
+    public int damage;
     public float distance, timeBetweenAttacks, myTargetChance, thinkingSpd, hp;
     private float decideTarget;
     private bool reCheck, attack;
     [HideInInspector]
     public GameObject controllObject;
-    private Transform myTarget;
-    private bool barbellTargeted;
+    [HideInInspector]
+    public Transform myTarget;
+    [HideInInspector]
+    public GameObject curTar;
     private Coroutine curCoroutine;
     private Animator anim;
     private ControlPoint controlPoint;
@@ -48,12 +51,6 @@ public class DemonBehaviour : MonoBehaviour
         curCoroutine = StartCoroutine(ThinkAboutNextAction());
     }
 
-    public void BarbellTarget(GameObject barbell)
-    {
-        myTarget = barbell.transform;
-        barbellTargeted = true;
-    }
-
     void DecideTarget()
     {
         if (controlPoint.myCrystal.activeSelf && player.activeSelf)
@@ -63,10 +60,12 @@ public class DemonBehaviour : MonoBehaviour
                 decideTarget = Random.Range(1, 101);
             }
             myTarget = (decideTarget < myTargetChance) ? player.transform : controllObject.transform;
+            curTar = (decideTarget < myTargetChance) ? player : controllObject;
         }
         else
         {
             myTarget = player.transform;
+            curTar = player;
         }
         myUnit.target = myTarget;
     }
@@ -77,10 +76,6 @@ public class DemonBehaviour : MonoBehaviour
         float dist = Vector3.Distance(myTarget.position, transform.position);
         if (dist <= distance)
         {
-            if (barbellTargeted)
-            {
-
-            }
             if (!attack)
             {
                 attackCoroutine = (StartCoroutine(Attack()));

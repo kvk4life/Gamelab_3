@@ -46,7 +46,7 @@ public class Grid : MonoBehaviour {
 		for (int x = 0; x < gridSizeX; x ++) {
             for (int y = 0; y < gridSizeY; y ++) {
             	Vector3 worldPoint = worldBottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.forward * (y * nodeDiameter + nodeRadius);
-                bool walkable = (Physics.CheckSphere(worldPoint, nodeRadius, unWalkableMask)) && !(Physics.CheckSphere(worldPoint, nodeRadius, LayerMask.GetMask("unwalkable")));
+                bool walkable = (Physics.CheckSphere(worldPoint, nodeRadius, unWalkableMask)) && !(Physics.CheckSphere(worldPoint, nodeRadius, LayerMask.GetMask("Unwalkable")));
 
                 grid[x,y] = new Node(x, y, worldPoint, walkable);
                 }
