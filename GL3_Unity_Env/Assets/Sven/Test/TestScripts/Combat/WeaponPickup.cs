@@ -10,6 +10,8 @@ public class WeaponPickup : MonoBehaviour {
 	public GameObject camera;
 	public GameObject player;
 
+	public Animator anim;
+
 	public RaycastHit hit;
 
 	public float distance;
@@ -34,6 +36,17 @@ public class WeaponPickup : MonoBehaviour {
 		WeaponSwitch ();
 		PickUp ();
 		ActivateGitGud ();
+
+		if(anim.GetBool("Efist")){
+
+			currentWeapon.SetActive(false);
+
+		}
+		else{
+
+			currentWeapon.SetActive(true);
+
+		}
 
 	}
 
