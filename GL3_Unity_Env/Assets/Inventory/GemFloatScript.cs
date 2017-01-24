@@ -25,7 +25,7 @@ public class GemFloatScript : MonoBehaviour
         {
             transform.position -= new Vector3(0, floatSpeed, 0) * Time.deltaTime;
         }
-        transform.Rotate(0,rotSpeed*Time.deltaTime,0);
+        transform.Rotate(0,0,rotSpeed*Time.deltaTime);
     }
 
     IEnumerator Float(bool upOrDown)
