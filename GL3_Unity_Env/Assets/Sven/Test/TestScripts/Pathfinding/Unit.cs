@@ -14,7 +14,6 @@ public class Unit : MonoBehaviour {
 	void Start () {
 
 		InvokeRepeating("StartNewPathProcess", 0, repeatRate);
-
 		//PathRequestManager.RequestPath (transform.position, target.position, OnPathFound);
 		
 	}

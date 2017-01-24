@@ -4,12 +4,12 @@ using System.Collections;
 public class DemonRag : MonoBehaviour {
 
 	public Rigidbody[] bones;
-	public Animator anim;
-
-	public bool assRape = false;
+	private Animator anim;
+    private Coroutine decay;
+    public float decaySpd;
 
 	// Use this for initialization
-	void Start () 
+	public void Start () 
 	{
 		anim = GetComponent<Animator> ();
 
@@ -22,21 +22,18 @@ public class DemonRag : MonoBehaviour {
 	
 	}
 
-	void RagActive()
+	public void RagActive()
 	{
+        decay = StartCoroutine(Decaying());
 		anim.enabled = false;
 		foreach (Rigidbody rb in bones) 
 		{
 			rb.isKinematic = false;
 		}
 	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-		if (assRape) 
-		{
-			RagActive ();
-		}
-	}
+
+    IEnumerator Decaying() {
+        yield return new WaitForSeconds(decaySpd);
+        Destroy(gameObject);   
+    }
 }

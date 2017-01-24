@@ -2,38 +2,42 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class MinionBehavior : MonoBehaviour
+public class DemonBehaviour : MonoBehaviour
 {
+
     private GameObject player;
     private Unit unitClass;
-    private MinionStats stats;
-    public float distance, timeBetweenAttacks, myTargetChance, thinkingSpd;
+    private DemonStats stats;
+    public float distance, timeBetweenAttacks, myTargetChance, thinkingSpd, hp;
     private float decideTarget;
     private bool reCheck, attack;
     [HideInInspector]
     public GameObject controllObject;
     private Transform myTarget;
+    private bool barbellTargeted;
     private Coroutine curCoroutine;
-    private PBAnim pBAnim;
+    private Animator anim;
     private ControlPoint controlPoint;
     private Coroutine attackCoroutine;
     private Unit myUnit;
 
+
     void Start()
     {
         myUnit = GetComponent<Unit>();
-        pBAnim = GetComponent<PBAnim>();
+        anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Champion");
         controllObject = GameObject.FindGameObjectWithTag("ControllPoint");
         controlPoint = controllObject.GetComponent<ControlPoint>();
         unitClass = GetComponent<Unit>();
         DecideTarget();
-        stats = GetComponent<MinionStats>();
+        stats = GetComponent<DemonStats>();
         curCoroutine = StartCoroutine(ThinkAboutNextAction());
     }
 
     public void EndLife()
     {
+        GetComponent<DemonRag>().RagActive();
         StopCoroutine(curCoroutine);
     }
 
@@ -41,8 +45,13 @@ public class MinionBehavior : MonoBehaviour
     {
         CheckDistance();
         yield return new WaitForSeconds(thinkingSpd);
-        DecideTarget();
         curCoroutine = StartCoroutine(ThinkAboutNextAction());
+    }
+
+    public void BarbellTarget(GameObject barbell)
+    {
+        myTarget = barbell.transform;
+        barbellTargeted = true;
     }
 
     void DecideTarget()
@@ -63,10 +72,15 @@ public class MinionBehavior : MonoBehaviour
     }
 
     void CheckDistance()
-    {
+    { // checks for the distance beteen the player and the enemy
+        DecideTarget();
         float dist = Vector3.Distance(myTarget.position, transform.position);
         if (dist <= distance)
         {
+            if (barbellTargeted)
+            {
+
+            }
             if (!attack)
             {
                 attackCoroutine = (StartCoroutine(Attack()));
@@ -101,7 +115,16 @@ public class MinionBehavior : MonoBehaviour
 
     IEnumerator Attack()
     {
-        pBAnim.Attack();
+        //speel de attack animatie af
+        int rollAttack = Random.Range(0, 2);
+        if (rollAttack < 1)
+        {
+            anim.SetTrigger("Attack1");
+        }
+        else
+        {
+            anim.SetTrigger("Attack2");
+        }
         yield return new WaitForSeconds(timeBetweenAttacks);
         attackCoroutine = (StartCoroutine(Attack()));
     }
