@@ -33,6 +33,7 @@ public class WeaponStorage : MonoBehaviour {
 				curWeapon = Resources.Load(weaponStorage[i].name) as GameObject;
 				spawn = Instantiate(curWeapon, weaponSpawn.position, curWeapon.transform.rotation) as GameObject;
 				spawn.transform.SetParent(weaponSpawn);
+				GetComponent<Combat>().attackCollision = spawn;
 			}
 		}
 	}

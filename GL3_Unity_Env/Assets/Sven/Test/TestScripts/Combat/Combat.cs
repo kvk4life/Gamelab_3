@@ -37,6 +37,7 @@ public class Combat : MonoBehaviour {
 
 	void Start () {
 
+		attackCollision = GetComponent<WeaponPickup>().weapons[0];
 		mayAttack = true;
 		delegateWeapon = GetComponent<DelegateWeapons>();
 		shitParticle.SetActive(false);
@@ -85,6 +86,7 @@ public class Combat : MonoBehaviour {
 		if(mayAttack == true){
 			StartCoroutine(CoolDown(cooldown));
 			attackCollision.GetComponent<DamageTest>().GetDamage(damage);
+			print(checkAnim);
 
 			if(checkAnim == 2){
 				anim.SetTrigger("Att L 0");
@@ -98,15 +100,6 @@ public class Combat : MonoBehaviour {
 			if(checkAnim == 3){
 				anim.SetTrigger("Ch Att 0");
 				damagePar = damage;
-				/*if(Physics.Raycast(particleTrans.position, particleTrans.transform.up, out hit, rangeShit)){
-					print(hit);
-					Debug.DrawRay(particleTrans.position, particleTrans.transform.up, Color.red);
-					if(hit.transform.tag == "Enemy"){
-
-						hit.transform.gameObject.GetComponent<EnemyHealthTestSven>().EnemyHealth(damage);
-
-					}
-				}*/
 				StartCoroutine(ParticleEnabler());
 			}
 		}
