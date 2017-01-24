@@ -8,6 +8,7 @@ public class Shop : MonoBehaviour
     public GoldMng gold;
     public GameObject player;
     public float price;
+    public Transform spawnPos;
     void Start()
     {
 
@@ -29,7 +30,7 @@ public class Shop : MonoBehaviour
         if(gold.curGold>=price)
         {
             //inventoryFunctionaliteit
-            Instantiate(itemSold[itemSoldLevel].itemPrefab,transform.position,transform.rotation);
+            Instantiate(itemSold[itemSoldLevel].itemPrefab,spawnPos.transform.position,spawnPos.transform.rotation);
             gold.RemoveGold((int)price);
             PrepareForNext();
         }
