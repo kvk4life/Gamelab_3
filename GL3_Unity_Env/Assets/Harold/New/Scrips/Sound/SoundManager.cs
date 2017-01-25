@@ -10,71 +10,79 @@ public class SoundManager : MonoBehaviour {
     public AudioClip weaponSwitch;
     public AudioClip playerJump;
     public AudioClip playerDeath;
-    //public AudioClip collect;
     public AudioClip buttonSound;
     public AudioClip ggBoxSound;
-    public AudioClip weaponAttack; //list nodig?
-    public AudioClip weaponHit; //list nodikg?
-    public GameObject[] weaponSoundObject; // kan een source meerdere afpelen?
+    public AudioClip weaponAttack;
+    public AudioClip weaponHit;
+    public GameObject[] weaponSoundObject;
     public GameObject enemySoundObject;
     public GameObject[] playerWalkObject;
     public GameObject buttonObject;
     public GameObject ggBoxObject;
+    public float globalVolume;
+    public int hearBeatTreshhold;
+    public bool lowHealth;
 
-    public void PlaySound(AudioClip clip, float volume) {
-        AudioSource audio = GetComponent<AudioSource>();
-        audio.PlayOneShot(clip, volume);
-    }
+    //GameObject.FindGameObjectWithTag("SpawnManager").GetComponent<SoundManager>()."soundclip";
 
     public void Walk() {
         AudioSource audio = playerWalkObject[0].GetComponent<AudioSource>();
         if (audio.isPlaying == false) {
-            audio.PlayOneShot(walking, 1);
+            audio.PlayOneShot(walking, globalVolume);
         }
     }
 
-    public void HeartBeat() {
+    public void HeartBeat(int healt) {
         AudioSource audio = playerWalkObject[1].GetComponent<AudioSource>();
-        if (audio.isPlaying == false) {
-            audio.PlayOneShot(heartbeat, 1);
+        if (lowHealth == false) {
+            if (healt <= hearBeatTreshhold) {
+
+                if (audio.isPlaying == false) {
+                    audio.PlayOneShot(heartbeat, globalVolume);
+                }
+                lowHealth = true;
+            }
         }
         else {
-            audio.Stop();
+            if (audio.isPlaying == true) {
+                audio.Stop();
+            }
         }
+
     }
 
     public void PlayerHit() {
         AudioSource audio = playerWalkObject[2].GetComponent<AudioSource>();
         if (audio.isPlaying == false) {
-            audio.PlayOneShot(playerHit, 1);
+            audio.PlayOneShot(playerHit, globalVolume);
         }
     }
 
     public void PlayerJump() {
         AudioSource audio = playerWalkObject[3].GetComponent<AudioSource>();
         if (audio.isPlaying == false) {
-            audio.PlayOneShot(playerJump, 1);
+            audio.PlayOneShot(playerJump, globalVolume);
         }
     }
 
     public void WeaponSwitch() {
         AudioSource audio = playerWalkObject[4].GetComponent<AudioSource>();
         if (audio.isPlaying == false) {
-            audio.PlayOneShot(weaponSwitch, 1);
+            audio.PlayOneShot(weaponSwitch, globalVolume);
         }
     }
 
     public void PlayerDeath() {
         AudioSource audio = playerWalkObject[5].GetComponent<AudioSource>();
         if (audio.isPlaying == false) {
-            audio.PlayOneShot(playerDeath, 1);
+            audio.PlayOneShot(playerDeath, globalVolume);
         }
     }
 
     public void EnemyHit() {
         AudioSource audio = enemySoundObject.GetComponent<AudioSource>();
         if (audio.isPlaying == false) {
-            audio.PlayOneShot(enemyHit, 1);
+            audio.PlayOneShot(enemyHit, globalVolume);
         }
     }
 
@@ -82,28 +90,28 @@ public class SoundManager : MonoBehaviour {
     public void ButtonSound() {
         AudioSource audio = buttonObject.GetComponent<AudioSource>();
         if (audio.isPlaying == false) {
-            audio.PlayOneShot(buttonSound, 1);
+            audio.PlayOneShot(buttonSound, globalVolume);
         }
     }
 
     public void GGBox() {
         AudioSource audio = ggBoxObject.GetComponent<AudioSource>();
         if (audio.isPlaying == false) {
-            audio.PlayOneShot(ggBoxSound, 1);
+            audio.PlayOneShot(ggBoxSound, globalVolume);
         }
     }
 
     public void WeaponAttack() {
         AudioSource audio = weaponSoundObject[0].GetComponent<AudioSource>();
         if (audio.isPlaying == false) {
-            audio.PlayOneShot(weaponAttack, 1);
+            audio.PlayOneShot(weaponAttack, globalVolume);
         }
     }
 
     public void WeaponHit() {
         AudioSource audio = weaponSoundObject[1].GetComponent<AudioSource>();
         if (audio.isPlaying == false) {
-            audio.PlayOneShot(weaponHit, 1);
+            audio.PlayOneShot(weaponHit, globalVolume);
         }
     }
 }
