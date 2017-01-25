@@ -45,6 +45,7 @@ public class DemonBehaviour : MonoBehaviour
         player.GetComponent<GoldMng>().AddGold(gold);
         GetComponent<DemonRag>().RagActive();
         StopCoroutine(curCoroutine);
+        GetComponent<DemonRoundSystem>().wave.EnemyKilled();
     }
 
     IEnumerator ThinkAboutNextAction()

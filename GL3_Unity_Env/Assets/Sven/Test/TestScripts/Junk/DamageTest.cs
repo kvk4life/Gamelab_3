@@ -18,9 +18,10 @@ public class DamageTest : MonoBehaviour {
 	}
 
 	void OnCollisionEnter (Collision col){
-
-		if(col.transform.tag == "Enemy" || col.transform.tag == "Minion" && player.GetComponent<Combat>().mayAttack == false){
-			col.gameObject.GetComponent<DemonStats>().Damage(damageTest);
+        print("Ran");
+		if(col.transform.tag == "Enemy" || col.transform.tag == "Minion"){
+            print("ifwentwell");
+			col.gameObject.GetComponent<DemonMakeShiftBs>().TakeDamage(damageTest);
 		}
 	}
 

@@ -3,16 +3,16 @@ using System.Collections;
 
 public class DamageDealer : MonoBehaviour {
     public GameObject demon;
-    private DemonBehaviour demonBehaviour;
+    private DemonMakeShiftBs demonBehaviour;
     private GameObject target;
     private int damage;
 
     public void Start() {
-        demonBehaviour = demon.GetComponent<DemonBehaviour>();
+        demonBehaviour = demon.GetComponent<DemonMakeShiftBs>();
     }
 
     public void OnTriggerEnter(Collider col) {
-        target = demonBehaviour.curTar;
+        target = demonBehaviour.player.gameObject;
         damage = demonBehaviour.damage;
         if (col.transform.tag == target.tag) {
             if (col.transform.tag == "Champion") {
