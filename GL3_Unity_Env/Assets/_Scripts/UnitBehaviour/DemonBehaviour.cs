@@ -4,32 +4,37 @@ using System.Collections.Generic;
 
 public class DemonBehaviour : MonoBehaviour
 {
-
     public GameObject player;
-    private Unit unitClass;
-    private DemonStats stats;
+    protected Unit unitClass;
+    protected DemonStats stats;
     public int damage;
     public int gold;
     public float distance, timeBetweenAttacks, myTargetChance, thinkingSpd;
-    private float decideTarget;
-    private bool reCheck, attack;
+    protected float decideTarget;
+    protected bool reCheck, attack;
     [HideInInspector]
     public GameObject controllObject;
     [HideInInspector]
     public Transform myTarget;
     [HideInInspector]
     public GameObject curTar;
-    private Coroutine curCoroutine;
-    private Animator anim;
-    private ControlPoint controlPoint;
-    private Coroutine attackCoroutine;
-    private Unit myUnit;
+    protected Coroutine curCoroutine;
+    protected Animator anim;
+    protected ControlPoint controlPoint;
+    protected Coroutine attackCoroutine;
+    protected Unit myUnit;
+    protected PBAnim pBAnim;
 
 
-    void Start()
+    public void Start()
     {
         myUnit = GetComponent<Unit>();
-        anim = GetComponent<Animator>();
+        if (GetComponent<PBAnim>() != null) {
+            pBAnim = GetComponent<PBAnim>();
+        }
+        else {
+            anim = GetComponent<Animator>();
+        }
         player = GameObject.FindWithTag("Champion");
         myUnit.target = player.transform;
         controllObject = GameObject.FindWithTag("ControllPoint");
@@ -52,6 +57,7 @@ public class DemonBehaviour : MonoBehaviour
     {
         CheckDistance();
         yield return new WaitForSeconds(thinkingSpd);
+        DecideTarget();
         curCoroutine = StartCoroutine(ThinkAboutNextAction());
     }
 
@@ -74,9 +80,8 @@ public class DemonBehaviour : MonoBehaviour
         print("target = " + myTarget);
     }
 
-    void CheckDistance()
+    public void CheckDistance()
     { // checks for the distance beteen the player and the enemy
-        DecideTarget();
         float dist = Vector3.Distance(myTarget.position, transform.position);
         if (dist <= distance)
         {
@@ -115,14 +120,19 @@ public class DemonBehaviour : MonoBehaviour
     IEnumerator Attack()
     {
         //speel de attack animatie af
-        int rollAttack = Random.Range(0, 2);
-        if (rollAttack < 1)
-        {
-            anim.SetTrigger("Attack1");
+        if (pBAnim != null) {
+            pBAnim.Attack();
         }
-        else
-        {
-            anim.SetTrigger("Attack2");
+        else {
+            int rollAttack = Random.Range(0, 2);
+            if (rollAttack < 1)
+            {
+                anim.SetTrigger("Attack1");
+            }
+            else
+            {
+                anim.SetTrigger("Attack2");
+            }
         }
         yield return new WaitForSeconds(timeBetweenAttacks);
         attackCoroutine = (StartCoroutine(Attack()));

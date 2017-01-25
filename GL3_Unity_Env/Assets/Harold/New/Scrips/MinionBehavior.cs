@@ -2,39 +2,46 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class MinionBehavior : MonoBehaviour
+public class MinionBehavior : DemonBehaviour
 {
-    private GameObject player;
-    private Unit unitClass;
-    private MinionStats stats;
-    public float distance, timeBetweenAttacks, myTargetChance, thinkingSpd;
-    private float decideTarget;
-    private bool reCheck, attack;
+    //private GameObject player;
+    //private Unit unitClass;
+    private MinionStats stat;
+    //public float distance, timeBetweenAttacks, myTargetChance, thinkingSpd;
+    //private float decideTarget;
+    //private bool reCheck, attack;
     [HideInInspector]
-    public GameObject controllObject;
-    private Transform myTarget;
-    private Coroutine curCoroutine;
-    private PBAnim pBAnim;
-    private ControlPoint controlPoint;
-    private Coroutine attackCoroutine;
-    private Unit myUnit;
+    //public GameObject controllObject;
+    //private Transform myTarget;
+    //private Coroutine curCoroutine;
+    //private PBAnim pBAnim;
+    //private ControlPoint controlPoint;
+    //private Coroutine attackCoroutine;
+    //private Unit myUnit;
 
-    void Start()
+    public new void Start()
     {
+        base.Start();
         myUnit = GetComponent<Unit>();
-        pBAnim = GetComponent<PBAnim>();
+        if (GetComponent<PBAnim>() != null) {
+            pBAnim = GetComponent<PBAnim>();
+        }
         player = GameObject.FindGameObjectWithTag("Champion");
         controllObject = GameObject.FindGameObjectWithTag("ControllPoint");
         controlPoint = controllObject.GetComponent<ControlPoint>();
         unitClass = GetComponent<Unit>();
         DecideTarget();
-        stats = GetComponent<MinionStats>();
+        stat = GetComponent<MinionStats>();
         curCoroutine = StartCoroutine(ThinkAboutNextAction());
     }
 
-    public void EndLife()
+    public new void EndLife()
     {
         StopCoroutine(curCoroutine);
+        player.GetComponent<GoldMng>().AddGold(gold);
+        GetComponent<DemonRag>().RagActive();
+        //StopCoroutine(curCoroutine);
+        GetComponent<DemonRoundSystem>().wave.EnemyKilled();
     }
 
     IEnumerator ThinkAboutNextAction()
@@ -62,7 +69,7 @@ public class MinionBehavior : MonoBehaviour
         myUnit.target = myTarget;
     }
 
-    void CheckDistance()
+    /*void CheckDistance()
     {
         float dist = Vector3.Distance(myTarget.position, transform.position);
         if (dist <= distance)
@@ -97,11 +104,13 @@ public class MinionBehavior : MonoBehaviour
             }
         }
 
-    }
+    }*/
 
     IEnumerator Attack()
     {
-        pBAnim.Attack();
+        if (pBAnim != null) {
+            pBAnim.Attack();
+        }
         yield return new WaitForSeconds(timeBetweenAttacks);
         attackCoroutine = (StartCoroutine(Attack()));
     }

@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class Fence : MonoBehaviour {
+    public GameObject fencePartner;
     private Animator anim;
     public int reqGold;
     public GoldMng goldMng;
@@ -47,7 +48,12 @@ public class Fence : MonoBehaviour {
     }
 
     public void ActivateFence() {
+        if (fencePartner != null) {
+            fencePartner.GetComponent<Fence>().ActivateFence();
+        }
+        goldMng.PressToInteract(false);
+        goldMng = null;
         anim.SetTrigger("open");
-
+        GetComponent<BoxCollider>().enabled = false;
     }	
 }
