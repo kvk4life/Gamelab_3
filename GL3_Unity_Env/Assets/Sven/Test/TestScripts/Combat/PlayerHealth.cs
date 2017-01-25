@@ -13,18 +13,15 @@ public class PlayerHealth : MonoBehaviour {
 	
 	}
 
-	void Update () {
-
-
-	
-	}
-
 	public void GetDamage (int damage) {
 
 		health -= damage;
 		anim.SetTrigger("Get Hit");
 
-		if(health <= 0){
+        GameObject.FindGameObjectWithTag("SpawnManager").GetComponent<SoundManager>().HeartBeat(health);
+        GameObject.FindGameObjectWithTag("SpawnManager").GetComponent<SoundManager>().PlayerHit();
+
+        if (health <= 0){
 
 			Destroy(gameObject);
 

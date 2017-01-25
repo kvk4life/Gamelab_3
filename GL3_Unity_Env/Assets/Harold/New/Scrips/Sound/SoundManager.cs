@@ -86,7 +86,6 @@ public class SoundManager : MonoBehaviour {
         }
     }
 
-
     public void ButtonSound() {
         AudioSource audio = buttonObject.GetComponent<AudioSource>();
         if (audio.isPlaying == false) {
