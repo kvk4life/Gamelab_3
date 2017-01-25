@@ -75,6 +75,7 @@ public class DemonMakeShiftBs : MonoBehaviour
             transform.tag = "Untagged";
             audio.PlayOneShot(demonRip);
             GetComponent<DemonRoundSystem>().wave.EnemyKilled();
+            player.GetComponent<GoldMng>().AddGold(10);
             spawnedPortal = (GameObject) Instantiate(portal,transform.position-new Vector3(0,-0.1f,0),transform.rotation);
             gtfoInPortal=true;
             agent.Stop();
@@ -103,7 +104,5 @@ public class DemonMakeShiftBs : MonoBehaviour
         }
     }
 
-    void Chase()
-    {
-    }
+
 }

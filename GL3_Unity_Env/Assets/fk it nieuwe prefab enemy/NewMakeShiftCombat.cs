@@ -13,7 +13,8 @@ public class NewMakeShiftCombat : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	if(Input.GetButtonDown("LB") && Physics.Raycast(transform.position,transform.forward, out hit, 2f) && combat.mayAttack)
+        print("Run");
+	if(Input.GetButtonDown("LB") && Physics.Raycast(transform.position,transform.forward, out hit, 2f))
         {
             print(hit.transform.name);
             if(hit.transform.tag=="Enemy")
@@ -21,10 +22,9 @@ public class NewMakeShiftCombat : MonoBehaviour {
                 hit.transform.GetComponent<DemonMakeShiftBs>().TakeDamage(damage);
             }
         }
-    if(Input.GetButtonDown("LB") && combat.mayAttack)
+    if(Input.GetButtonDown("LB"))
         {
             GetComponent<AudioSource>().PlayOneShot(swing);
-
         }
     }
 }

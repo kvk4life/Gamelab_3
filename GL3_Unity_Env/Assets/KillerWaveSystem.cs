@@ -73,7 +73,7 @@ public class KillerWaveSystem : MonoBehaviour
             }
         }
         int pickSpawn = Random.Range(0,spawnLocs.Length);
-        enemy.GetComponent<DemonRoundSystem>().wave=this;
+        enemy.GetComponent<DemonRoundSystem>().wave=this.GetComponent<KillerWaveSystem>();
         Instantiate(enemy,spawnLocs[pickSpawn].position,spawnLocs[pickSpawn].rotation);
         StartCoroutine("SlightDelay");
         currentAlive++;
@@ -98,8 +98,9 @@ public class KillerWaveSystem : MonoBehaviour
         source.PlayOneShot(end);
         anim.SetTrigger("End");
         yield return new WaitForSeconds(end.length);
-        maxSimultaniosSpawn = Mathf.RoundToInt(maxSimultaniosSpawn * 1.03f);
+        maxSimultaniosSpawn = Mathf.RoundToInt(maxSimultaniosSpawn * 2f);
         enemiesToSpawn = Mathf.RoundToInt(enemiesToSpawn * 1.5f);
+        tillNextRound=enemiesToSpawn;
         currentRound++;
         roundText.text = currentRound.ToString();
         source.PlayOneShot(begin);
